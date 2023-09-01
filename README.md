@@ -1,8 +1,48 @@
-# React + Vite
+# ⚙️ Stock Overflow
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+ 🛠️ Stock overflow a pour but de proposer une solution aux petites entreprises dans la gestion de leurs stocks.
 
-Currently, two official plugins are available:
+##  🎯  Objectifs de l'application
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Création d'un compte utilisateur
+- Se connecter
+- Accéder au dashboard
+- Consulter l'état des stocks de matières premières
+- Consulter l'état des stocks des produits
+- Intéragir avec les différents stocks
+- Créer de nouvelles matières premières, produits, recettes
+- Être notifier lorsqu'un stock arrive à un point critique
+- Effectuer une nouvelle commande de matières premières
+- Gérer la liste des utilisateurs
+- Gérer les différents rôles des utilisateurs
+
+
+##  🔧 Installation
+
+### Prérequis
+
+- Node.js v18
+- NPM 
+
+### Installation
+
+- Installer les dépendances
+- Lancer le projet
+
+#### Installer les dépendances
+
+```bash
+npm install
+```
+
+#### Lancer le projet
+
+```bash
+npm run dev
+```
+
+## Build
+
+```bash
+npm run build
+```
