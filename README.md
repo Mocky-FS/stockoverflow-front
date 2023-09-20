@@ -7,12 +7,10 @@
 - Création d'un compte utilisateur
 - Se connecter
 - Accéder au dashboard
-- Consulter l'état des stocks de matières premières
-- Consulter l'état des stocks des produits
+- Consulter l'état des stocks
 - Intéragir avec les différents stocks
-- Créer de nouvelles matières premières, produits, recettes
+- Ajouter un nouvel élement en stock
 - Être notifier lorsqu'un stock arrive à un point critique
-- Effectuer une nouvelle commande de matières premières
 - Gérer la liste des utilisateurs
 - Gérer les différents rôles des utilisateurs
 
