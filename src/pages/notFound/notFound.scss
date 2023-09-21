@@ -1,0 +1,18 @@
+.containers {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+    background-color: #f4f4f4;
+    position: fixed;
+    max-width: 100%;
+  }
+
+  .img-center {
+    display: flex; 
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
