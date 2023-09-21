@@ -2,67 +2,67 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Badge, Card, Flex, Metric, Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRow, Text, Title } from '@tremor/react';
 import './orders.scss'
-const Orders = props => {
+const MyOrders = props => {
 
     const data = [
         {
             name: 1,
             date: "12/12/2021",
-            client : 'Oclock'  ,
+            client: 'Oclock',
             status: "Expédiée",
         },
         {
             name: 2,
             date: "12/12/2021",
-            client : 'Oclock'  ,
+            client: 'Oclock',
             status: "En cours",
         },
         {
             name: 3,
             date: "12/12/2021",
-            client : 'Oclock'  ,
+            client: 'Oclock',
             status: "Expédiée",
         },
         {
             name: 4,
             date: "12/12/2021",
-            client : 'Oclock'  ,
+            client: 'Oclock',
             status: "Expédiée",
         },
         {
             name: 5,
             date: "12/12/2021",
-            client : 'Oclock'  ,
+            client: 'Oclock',
             status: "En cours",
         },
 
     ];
-    
+
 
 
 
     return (
         <div className='orders'>
-            
+
             <div className='cards'>
-            <Card  decoration="top" className='recap' >
-          <Flex justifyContent="start" className="space-x-4">
-           
-            <div className="truncate">
-              <Text>Commandes expédiées</Text>
-              <Metric className="truncate">3</Metric>
-            </div>
-          </Flex>
-        </Card>
-        <Card  decoration="top" className='recap' >
-          <Flex justifyContent="start" className="space-x-4">
-           
-            <div className="truncate">
-              <Text>Commandes en cours</Text>
-              <Metric className="truncate">2</Metric>
-            </div>
-          </Flex>
-        </Card>
+                <Card decoration="top" className='recap' >
+                    <Flex justifyContent="start" className="space-x-4">
+
+                        <div className="truncate">
+                            <Text>Commandes expédiées</Text>
+                            <Metric className="truncate">3</Metric>
+                        </div>
+                    </Flex>
+                </Card>
+                <Card decoration="top" className='recap' >
+                    <Flex justifyContent="start" className="space-x-4">
+
+                        <div className="truncate">
+                            <Text>En attente de validation</Text>
+                            <Metric className="truncate">2</Metric>
+                        </div>
+                    </Flex>
+                </Card>
             </div>
 
             <Card className='card' decoration='top'>
@@ -77,7 +77,7 @@ const Orders = props => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {data.map((item) => (
+                        {data?.map((item) => (
                             <TableRow key={item.name}>
                                 <TableCell>{item.name}</TableCell>
                                 <TableCell>
@@ -87,8 +87,8 @@ const Orders = props => {
                                     <Text>{item.client}</Text>
                                 </TableCell>
                                 <TableCell>
-                                    <Badge color={item.status === 'Expédiée' ? 'emerald' : 'orange'} i>
-                                       {item.status}
+                                    <Badge color={item.status === 'Expédiée' ? 'emerald' : 'orange'} >
+                                        {item.status}
                                     </Badge>
                                 </TableCell>
                             </TableRow>
@@ -100,8 +100,8 @@ const Orders = props => {
     );
 };
 
-Orders.propTypes = {
+MyOrders.propTypes = {
 
 };
 
-export default Orders;
+export default MyOrders;

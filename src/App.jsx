@@ -9,9 +9,11 @@ import NotFound from './pages/notFound/NotFound';
 
 import './assets/styles/global.scss'
 import 'react-toastify/dist/ReactToastify.css';
-import Orders from './pages/orders/Orders';
+import MyOrders from './pages/myOrders/MyOrders';
 import OrdersAdmin from './pages/ordersAdmin/OrdersAdmin';
 import Settings from './pages/settings/Settings';
+import Users from './pages/users/Users';
+import Shippings from './pages/shippings/Shippings';
 
 
 function App() {
@@ -41,16 +43,20 @@ function App() {
               element : <h2>Les stocks</h2>
             },
             {
-              path : 'orders',
-              element : <Orders />
+              path : 'my-shippings',
+              element : <MyOrders />
             },
             {
-              path : 'orders-history',
+              path : 'shippings',
+              element : <Shippings />
+            },
+            {
+              path : 'orders',
               element : <OrdersAdmin />
             },
             {
               path : 'users',
-              element : <h2>Les utilisateurs</h2>
+              element : <Users />
             },
             {
               path : 'profil',
