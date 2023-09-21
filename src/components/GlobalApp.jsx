@@ -1,14 +1,16 @@
 
 import { Outlet } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
+import Header from './header/Header';
 
 
 const GlobalApp = () => {
     return (
         <>
+        <Header />
             <ToastContainer
                 position="top-right"
-                autoClose={1000}
+                autoClose={2000}
                 hideProgressBar={false}
                 newestOnTop={false}
                 pauseOnFocusLoss={false}

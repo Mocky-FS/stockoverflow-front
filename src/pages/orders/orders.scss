@@ -1,0 +1,25 @@
+.orders{
+    width: 100%;
+    // background-color: red;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+
+    .card{
+        width: 50%;
+    }
+}
+
+.table-orders{
+    width: 100%;
+}
+
+.cards{
+    display: flex;
+    gap: 1rem;
+}
+
+.recap{
+    width: fit-content;
+}

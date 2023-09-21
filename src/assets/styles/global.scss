@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+.App{
+    height: 100vh;
+}
+
+input{
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 0.25rem;
+    font-size: 1rem;
+}
+
+.error{
+    color: red;
+    font-size: 0.8rem;
+    text-align: center;
+}
