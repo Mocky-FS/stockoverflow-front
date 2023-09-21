@@ -1,8 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Badge, Card, Flex, Metric, Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRow, Text, Title } from '@tremor/react';
-import './orders.scss'
-const MyOrders = props => {
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPaperPlane } from '@fortawesome/free-regular-svg-icons';
+import Modal from '../../components/modal/Modal';
+import './myShippings.scss';
+import SendShipping from './sendShipping/sendShipping';
+
+const MyShippings = () => {
 
     const data = [
         {
@@ -38,11 +43,21 @@ const MyOrders = props => {
 
     ];
 
-
-
+    const [isOpen, setIsOpen] = useState(false);
+    const openModal = () => setIsOpen(true);
+    const closeModal = () => setIsOpen(false);
 
     return (
         <div className='orders'>
+            <Modal
+                isOpen={isOpen}
+                closeModal={closeModal}
+                content={
+                   <SendShipping  closeModal={closeModal}/>
+                }
+
+            />
+
 
             <div className='cards'>
                 <Card decoration="top" className='recap' >
@@ -66,7 +81,10 @@ const MyOrders = props => {
             </div>
 
             <Card className='card' decoration='top'>
-                <Title>Historique de mes commandes</Title>
+                <Title className='title'>Historique de mes expéditions <button onClick={() => openModal('open')}><FontAwesomeIcon icon={faPaperPlane} size='lg' /> </button></Title>
+
+
+
                 <Table className="mt-5 table-orders">
                     <TableHead>
                         <TableRow>
@@ -100,8 +118,8 @@ const MyOrders = props => {
     );
 };
 
-MyOrders.propTypes = {
+MyShippings.propTypes = {
 
 };
 
-export default MyOrders;
+export default MyShippings;

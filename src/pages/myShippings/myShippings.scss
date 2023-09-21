@@ -20,6 +20,11 @@
 
         width: 95%;
         margin: 0 auto;
+
+        .title{
+            display: flex;
+            justify-content: space-between;
+        }
     }
 
 }

@@ -19,9 +19,9 @@ const Navbar = () => {
             <NavLink to='/dashboard/stock'><FontAwesomeIcon icon={faWarehouse} size='lg' /> Stock</NavLink>
             <NavLink to='/dashboard/my-shippings'><FontAwesomeIcon icon={faFileInvoiceDollar} size='lg' />Mes expéditions</NavLink>
             {/* <NavLink to='/dashboard/orders-history'><FontAwesomeIcon icon={faClockRotateLeft} size='lg' />Mes commandes expédiées</NavLink> */}
-            <NavLink to='/dashboard/users'><FontAwesomeIcon icon={faUsers} size='lg' /> Utilisateurs</NavLink>
             <NavLink to='/dashboard/shippings'><FontAwesomeIcon icon={faPaperPlane} size='lg' /> Expéditions</NavLink>
             <NavLink to='/dashboard/orders'><FontAwesomeIcon icon={faPaperPlane} flip='horizontal' size='lg' />Réaprovisionnements</NavLink>
+            <NavLink to='/dashboard/users'><FontAwesomeIcon icon={faUsers} size='lg' /> Utilisateurs</NavLink>
             <NavLink to='/dashboard/settings'><FontAwesomeIcon icon={faGear} size='lg' /> Réglages</NavLink>
 
 

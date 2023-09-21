@@ -9,11 +9,13 @@ import NotFound from './pages/notFound/NotFound';
 
 import './assets/styles/global.scss'
 import 'react-toastify/dist/ReactToastify.css';
-import MyOrders from './pages/myOrders/MyOrders';
 import OrdersAdmin from './pages/ordersAdmin/OrdersAdmin';
 import Settings from './pages/settings/Settings';
 import Users from './pages/users/Users';
 import Shippings from './pages/shippings/Shippings';
+import MyShippings from './pages/mySHippings/MyShippings';
+import Stock from './pages/stock/Stock';
+
 
 
 function App() {
@@ -40,11 +42,11 @@ function App() {
           children : [
             {
               path : 'stock',
-              element : <h2>Les stocks</h2>
+              element : <Stock />
             },
             {
               path : 'my-shippings',
-              element : <MyOrders />
+              element : <MyShippings />
             },
             {
               path : 'shippings',

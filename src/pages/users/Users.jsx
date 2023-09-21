@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Badge, Card, Flex, Metric, Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRow, Text, Title } from '@tremor/react';
+import { Badge, Card, Flex, Icon, Metric, Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRow, Text, Title } from '@tremor/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUserPlus } from '@fortawesome/free-solid-svg-icons';
+import { faCircleUser, faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import './users.scss'
 import Modal from '../../components/modal/Modal';
 import Register from '../register/Register';
@@ -15,32 +15,32 @@ const Users = () => {
         {
             id: 1,
             firstname: "Alexandre",
-            lastname : 'blabla'  ,
+            lastname: 'blabla',
             role: "Admin",
             email: "alex@test.fr",
         },
         {
             id: 2,
             firstname: "Arnaud",
-            lastname : 'lalala'  ,
+            lastname: 'lalala',
             role: "user",
             email: "arnaud@test.fr",
         },
         {
             id: 3,
             firstname: "Gael",
-            lastname : 'azazazaz'  ,
+            lastname: 'azazazaz',
             role: "Admin",
             email: "gael@test.fr",
         },
         {
             id: 4,
             firstname: "Joris",
-            lastname : 'sdsdsd'  ,
+            lastname: 'sdsdsd',
             role: "Admin",
             email: "joris@test.fr",
         },
-        
+
 
     ];
 
@@ -50,29 +50,6 @@ const Users = () => {
 
     return (
         <div className='users'>
-
-<div className='cards'>
-           
-           <Card decoration="top" className='recap' >
-               <Flex justifyContent="start" className="space-x-4">
-
-                   <div className="truncate">
-                       <Text>Nombre d'utilisateurs</Text>
-                       <Metric className="truncate">5</Metric>
-                   </div>
-               </Flex>
-           </Card>
-           <Card decoration="top" className='recap' >
-               <Flex justifyContent="start" className="space-x-4">
-
-                   <div className="truncate">
-                       <Text>Administrateurs</Text>
-                       <Metric className="truncate">3</Metric>
-                   </div>
-               </Flex>
-           </Card>
-       </div>
-            <Card className='card' decoration='top'>
             <Modal
                 isOpen={isOpen}
                 closeModal={closeModal}
@@ -82,8 +59,32 @@ const Users = () => {
                     />
                 }
             />
+            <div className='cards'>
+
+                <Card decoration="top" className='recap' >
+                    <Flex justifyContent="start" className="space-x-4">
+
+                        <div className="truncate">
+                       
+                            <Text>Nombre d'utilisateurs</Text>
+                            <Metric className="truncate">5</Metric>
+                        </div>
+                    </Flex>
+                </Card>
+                <Card decoration="top" className='recap' >
+                    <Flex justifyContent="start" className="space-x-4">
+
+                        <div className="truncate">
+                            <Text>Administrateurs</Text>
+                            <Metric className="truncate">3</Metric>
+                        </div>
+                    </Flex>
+                </Card>
+            </div>
+            <Card className='card' decoration='top'>
+
                 <Title className='title'>Liste des utilisateurs <button onClick={() => openModal()}><FontAwesomeIcon icon={faUserPlus} /></button></Title>
-                
+
                 <Table className="mt-5 table-orders">
                     <TableHead>
                         <TableRow>
@@ -111,11 +112,11 @@ const Users = () => {
                                 </TableCell>
                                 <TableCell>
                                     <Badge color={item.role === 'Admin' ? 'red' : 'green'}>
-                                       {item.role}
+                                        {item.role}
                                     </Badge>
                                 </TableCell>
                                 <TableCell>
-                                   
+
                                 </TableCell>
                             </TableRow>
                         ))}
@@ -127,7 +128,7 @@ const Users = () => {
 };
 
 Users.propTypes = {
-    
+
 };
 
 export default Users;
