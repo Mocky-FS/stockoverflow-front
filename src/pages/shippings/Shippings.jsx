@@ -11,30 +11,35 @@ const Shippings = () => {
             date: "12/12/2021",
             client: 'Oclock',
             status: "Expédiée",
+            user : 'Jean',
         },
         {
             name: 2,
             date: "12/12/2021",
             client: 'Oclock',
             status: "Expédiée",
+            user : 'Maxime',
         },
         {
             name: 3,
             date: "12/12/2021",
             client: 'Oclock',
             status: "Expédiée",
+            user : 'Antoine',
         },
         {
             name: 4,
             date: "12/12/2021",
             client: 'Oclock',
             status: "Expédiée",
+            user : 'Alex',
         },
         {
             name: 5,
             date: "12/12/2021",
             client: 'Oclock',
             status: "Expédiée",
+            user : 'Gael',
         },
 
     ];
@@ -61,6 +66,7 @@ const Shippings = () => {
                         <TableRow>
                             <TableHeaderCell>N° </TableHeaderCell>
                             <TableHeaderCell>Date</TableHeaderCell>
+                            <TableHeaderCell>Utilisateur</TableHeaderCell>
                             <TableHeaderCell>Client</TableHeaderCell>
                             <TableHeaderCell>Statut</TableHeaderCell>
                         </TableRow>
@@ -71,6 +77,9 @@ const Shippings = () => {
                                 <TableCell>{item.name}</TableCell>
                                 <TableCell>
                                     <Text>{item.date}</Text>
+                                </TableCell>
+                                <TableCell>
+                                    <Text>{item.user}</Text>
                                 </TableCell>
                                 <TableCell>
                                     <Text>{item.client}</Text>
