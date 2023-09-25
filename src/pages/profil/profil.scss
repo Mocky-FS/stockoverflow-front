@@ -1,5 +1,15 @@
-.profil {
+.dashboard {
     display: flex;
-    align-self: center;
-    flex-direction: column;
+    flex-direction: row;
 }
+
+.dashboard-nav {
+    flex: 1;
+  }
+  
+.profil {
+    flex: 4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }

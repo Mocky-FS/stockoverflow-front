@@ -38,7 +38,8 @@ function Profil() {
     <Card className="max-w-xs mx-auto" decoration="top" decorationColor="indigo">
       <h1>Profil de {user.firstName}</h1>
       <p>Téléphone: {user.phone}</p>
-      <input value={newPhone} onChange={(e) => setNewPhone(e.target.value)} />
+      { <input value={newPhone} onChange={(e) => setNewPhone(e.target.value)} /> }
+    
       <button onClick={updatePhone}>Mettre à jour le téléphone</button>
 
       <p>Email: {user.email}</p>
