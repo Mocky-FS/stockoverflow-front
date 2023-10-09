@@ -44,7 +44,7 @@ const Dashboard = () => {
 
     return (
 
-        <>
+        <div className='dashboard'>
 
             <Card className='w-1/4 h-fit'>
                 <Title>Export/Import Growth Rates (1970 to 2021)</Title>
@@ -58,7 +58,7 @@ const Dashboard = () => {
                     yAxisWidth={40}
                 />
             </Card>
-        </>
+        </div>
     );
 };
 
