@@ -1,3 +1,29 @@
-.details-order{
+.details{
+    display: flex;
+    flex-direction: column;
     padding: 1rem;
+    gap: 2rem;
+
+    .top{
+        display: flex;
+        justify-content: space-between;
+        
+
+        button{
+            svg{
+                width: 25px;
+            }
+        }
+        
+    }
+
+    .content{
+
+    }
+
+    .bottom{
+        display: flex;
+        gap: 1.5rem;
+        align-self: center;
+    }
 }
