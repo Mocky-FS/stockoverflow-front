@@ -8,12 +8,16 @@ module.exports = {
     // Path to the Tremor module
     "./node_modules/@tremor/**/*.{js,ts,jsx,tsx}",
   ],
+  darkMode : "class",
   theme: {
     transparent: "transparent",
     current: "currentColor",
-    darkMode : "class",
+   
     extend: {
       colors: {
+        // export dark mode
+
+        
         // light mode
         tremor: {
           brand: {
@@ -46,33 +50,33 @@ module.exports = {
         },
         // dark mode
         "dark-tremor": {
-          // brand: {
-          //   faint: "#0B1229", // custom
-          //   muted: "#172554", // blue-950
-          //   subtle: "#1e40af", // blue-800
-          //   DEFAULT: "#3b82f6", // blue-500
-          //   emphasis: "#60a5fa", // blue-400
-          //   inverted: "#030712", // gray-950
-          // },
-          // background: {
-          //   muted: "#131A2B", // custom
-          //   subtle: "#1f2937", // gray-800
-          //   DEFAULT: "#111827", // gray-900
-          //   emphasis: "#d1d5db", // gray-300
-          // },
-          // border: {
-          //   DEFAULT: "#1f2937", // gray-800
-          // },
-          // ring: {
-          //   DEFAULT: "#1f2937", // gray-800
-          // },
-          // content: {
-          //   subtle: "#4b5563", // gray-600
-          //   DEFAULT: "#6b7280", // gray-600
-          //   emphasis: "#e5e7eb", // gray-200
-          //   strong: "#f9fafb", // gray-50
-          //   inverted: "#000000", // black
-          // },
+          brand: {
+            faint: "#0B1229", // custom
+            muted: "#172554", // blue-950
+            subtle: "#1e40af", // blue-800
+            DEFAULT: "#3b82f6", // blue-500
+            emphasis: "#60a5fa", // blue-400
+            inverted: "#030712", // gray-950
+          },
+          background: {
+            muted: "#131A2B", // custom
+            subtle: "#1f2937", // gray-800
+            DEFAULT: "#111827", // gray-900
+            emphasis: "#d1d5db", // gray-300
+          },
+          border: {
+            DEFAULT: "#1f2937", // gray-800
+          },
+          ring: {
+            DEFAULT: "#1f2937", // gray-800
+          },
+          content: {
+            subtle: "#4b5563", // gray-600
+            DEFAULT: "#6b7280", // gray-600
+            emphasis: "#e5e7eb", // gray-200
+            strong: "#f9fafb", // gray-50
+            inverted: "#000000", // black
+          },
         },
       },
       boxShadow: {

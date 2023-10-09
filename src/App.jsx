@@ -15,6 +15,7 @@ import Users from './pages/users/Users';
 import Shippings from './pages/shippings/Shippings';
 import MyShippings from './pages/mySHippings/MyShippings';
 import Stock from './pages/stock/Stock';
+import Layout from './pages/Layout';
 
 
 
@@ -38,8 +39,12 @@ function App() {
         
         {
           path : '/dashboard',
-          element : <Dashboard />,
+          element : <Layout />,
           children : [
+            {
+              path : '',
+              element : <Dashboard />
+            },
             {
               path : 'stock',
               element : <Stock />
