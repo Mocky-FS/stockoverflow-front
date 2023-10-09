@@ -67,14 +67,13 @@ function App() {
             {
               path : 'settings',
               element : <Settings />
-            },
+            },        
           ]
         },
         {
           path: '*',
           element: <NotFound />
         }
-
       ],
       
 
