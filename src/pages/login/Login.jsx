@@ -24,31 +24,33 @@ const Login = () => {
     const [showPassword, setShowPassword] = useState(false);
 
 
-    const { mutate : loginMutate} = useMutation((data) => login(data), {
+    const { mutate : loginMutate} = useMutation((data) => console.log('in'), {
 
         onSuccess : (data) => {
 
-            axios.defaults.headers.common['Authorization'] = `Bearer ${data.token}`
+            // axios.defaults.headers.common['Authorization'] = `Bearer ${data.token}`
 
-            setUser({
-                isLogged : true,
-                firstname : data.firstname,
-                lastname : data.lastname,
-                email : data.email,
-                id : data.id,
-                token : data.token,
-                tokenExpiration : getExpirationTime(data.tokenExpiration),
-                isAdmin : data.isAdmin
-            })
+            // setUser({
+            //     isLogged : true,
+            //     firstname : data.firstname,
+            //     lastname : data.lastname,
+            //     email : data.email,
+            //     id : data.id,
+            //     token : data.token,
+            //     tokenExpiration : getExpirationTime(data.tokenExpiration),
+            //     isAdmin : data.isAdmin
+            // })
 
-            localStorage.setItem('user', JSON.stringify({
-                ...data,
-                tokenExpiration : getExpirationTime(data.tokenExpiration),
-                isLogged : true,
-                isAdmin : data.isAdmin
+            // localStorage.setItem('user', JSON.stringify({
+            //     ...data,
+            //     tokenExpiration : getExpirationTime(data.tokenExpiration),
+            //     isLogged : true,
+            //     isAdmin : data.isAdmin
 
-            }))
+            // }))
 
+            // navigate('/dashboard')
+            // toast.success(`Bonjour ${data.firstname} !}`)
             navigate('/dashboard')
             toast.success(`Bonjour ${data.firstname} !}`)
 
