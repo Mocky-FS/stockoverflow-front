@@ -1,40 +1,29 @@
-import { Button } from '@tremor/react';
+import { useForm } from 'react-hook-form';
 import { useState } from 'react';
-import { useForm } from "react-hook-form";
-import './register.scss'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye, faEyeSlash } from '@fortawesome/free-regular-svg-icons';
-import { faCircleXmark, faXmark } from '@fortawesome/free-solid-svg-icons';
 
-const Register = ({ closeModal = false }) => {
-
-    const { register, handleSubmit, watch, formState: { errors }, setError } = useForm();
-
+function Form() {
+    
     const [showPassword, setShowPassword] = useState(false);
 
-    const onSubmit = (data) => {
+  const { 
+    register, 
+    handleSubmit, 
+    formState: { errors },
+    watch 
+  } = useForm();
 
-        console.log(data)
-
-    }
-
-    return (
-        <div style={{ padding : '1rem', display : 'flex', flexDirection : 'column', gap : '1rem'}}>
-
-            {
-                closeModal &&
-                <button className='close-modal' onClick={closeModal}>
-                   <FontAwesomeIcon icon={faXmark} size='lg'/>
-                </button>
-
-            }
-            <form className='register-form' onSubmit={handleSubmit(onSubmit)}>
-                <h2 className='title'>{ closeModal ? `Créer un utilisateur` : "Formulaire d'inscription"}</h2>
-                <label htmlFor="lastname">Nom</label>
-                <input
-                    style={{ border: errors.lastname && '1px solid red' }}
-                    type="text"
-                    placeholder='Nom'
+  const onSubmit = (data) => {
+    // faire quelque chose avec les données 
+    console.log(data);
+  };
+  return (
+<form className='register-form' onSubmit={handleSubmit(onSubmit)}>
+    <h2 className='title'>{ closeModal ? "Créer un utilisateur" : "Formulaire d'inscription"} </h2>
+        <label htmlFor="lastname">Nom</label>
+            <input
+                style={{ border: errors.lastname && '1px solid red' }}
+                type="text"
+                placeholder='Nom'
                     {...register("lastname",
                         { required: true, minLength: 4 }
                     )}
@@ -100,10 +89,6 @@ const Register = ({ closeModal = false }) => {
                 {errors.confirmPassword && <span className='error'>{errors.confirmPassword.message}</span>}
 
                 <Button type='submit' className='register-btn' >{ closeModal ? 'Créer' : 'Login'}</Button>
-            </form>
-        </div>
-
-    );
-};
-
-export default Register;
+    </form>
+  )
+}
