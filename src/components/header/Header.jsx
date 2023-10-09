@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import './header.scss'
 import { useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext';
-
+import Logo from '../../assets/icons/logo.svg?react'
 
 
 const Header = () => {
@@ -15,8 +15,8 @@ const Header = () => {
     return (
         <header className='header'>
             <div className='title'>
-                <Link to={'/dashboard'}><h1> <FontAwesomeIcon icon={faScrewdriverWrench} size='lg' /> Stock'Overflow</h1></Link>
-                <p>Votre outils au quotidien</p>
+                <Link to={'/dashboard'}><h1> <Logo /> Stock'Overflow</h1></Link>
+                {/* <p>Votre outils au quotidien</p> */}
             </div>
            
         </header>

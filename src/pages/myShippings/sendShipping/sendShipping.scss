@@ -27,6 +27,12 @@
                 display: flex;
                 flex-direction: column;
                 gap: 0.25rem;
+
+                span{
+                    font-size: 0.8rem;
+                    color: red;
+                    align-self: flex-start;
+                }
             }
 
             button{

@@ -7,7 +7,7 @@ import Header from './header/Header';
 const GlobalApp = () => {
     return (
         <>
-        <Header />
+        {/* <Header /> */}
             <ToastContainer
                 position="top-right"
                 autoClose={2000}
