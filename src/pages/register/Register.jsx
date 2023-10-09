@@ -8,19 +8,15 @@ import { faCircleXmark, faXmark } from '@fortawesome/free-solid-svg-icons';
 
 const Register = ({ closeModal = false }) => {
 
-
     const { register, handleSubmit, watch, formState: { errors }, setError } = useForm();
 
-
     const [showPassword, setShowPassword] = useState(false);
-
 
     const onSubmit = (data) => {
 
         console.log(data)
 
     }
-
 
     return (
         <div style={{ padding : '1rem', display : 'flex', flexDirection : 'column', gap : '1rem'}}>

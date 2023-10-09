@@ -15,18 +15,28 @@
     "@fortawesome/free-regular-svg-icons": "^6.4.2",
     "@fortawesome/free-solid-svg-icons": "^6.4.2",
     "@fortawesome/react-fontawesome": "^0.2.0",
+    "@hookform/resolvers": "^3.3.1",
     "@tanstack/react-query": "^4.35.3",
     "@tremor/react": "^3.7.9",
+<<<<<<< HEAD
     "axios": "^1.5.0",
     "npm": "^10.1.0",
+=======
+    "axios": "^1.5.1",
+>>>>>>> feat/profile
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-hook-form": "^7.46.1",
+    "react-hook-form": "^7.47.0",
     "react-router-dom": "^6.16.0",
     "react-select": "^5.7.4",
     "react-toastify": "^9.1.3",
     "sass": "^1.67.0",
+<<<<<<< HEAD
     "vite-plugin-svgr": "^4.1.0"
+=======
+    "vite-plugin-svgr": "^4.1.0",
+    "yup": "^1.3.2"
+>>>>>>> feat/profile
   },
   "devDependencies": {
     "@types/react": "^18.2.15",
