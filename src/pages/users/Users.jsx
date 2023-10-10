@@ -48,6 +48,13 @@ const Users = () => {
     const openModal = () => setIsOpen(true);
     const closeModal = () => setIsOpen(false);
 
+    const [userDetails, setUserDetails] = useState(null);
+
+    const getUserDetails = (data) => {
+        setUserDetails(data);
+        openModal();
+    } 
+
     return (
         <Card className='users'>
             <Modal

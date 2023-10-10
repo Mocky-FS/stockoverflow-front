@@ -38,3 +38,13 @@ a{
   user-select: none;
 
 }
+
+
+@media screen and (max-width: 768px) {
+
+.layout{
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+}

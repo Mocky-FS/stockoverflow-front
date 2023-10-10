@@ -1,9 +1,5 @@
 
-import { Link, NavLink, Outlet } from 'react-router-dom';
 import './dashboard.scss'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBell, faClockRotateLeft, faFileInvoiceDollar, faTableColumns, faUsers, faWarehouse } from '@fortawesome/free-solid-svg-icons';
-import Navbar from '../../components/navbar/Navbar';
 import { AreaChart, Badge, BarChart, Card, DonutChart, Flex, Icon, LineChart, Metric, Subtitle, Text, Title } from '@tremor/react';
 import Doc from '../../assets/icons/doc.svg?react'
 
@@ -100,7 +96,6 @@ const Dashboard = () => {
             "Exportations": 1.88,
             "Importations": 1.67,
         },
-        //...
     ];
 
     const dataFormatter1 = (number) => `${Intl.NumberFormat("us").format(number).toString()}%`;
@@ -111,12 +106,13 @@ const Dashboard = () => {
     return (
 
         <Card className='dashboard'>
+
             <div className='top'>
                 <Card decoration="top" className='test' decorationColor='blue' >
                     <Flex justifyContent="start" className="space-x-4">
                         <Icon icon={Doc} variant="light" size="xl" color={'blue'} />
                         <div className="truncate">
-                            <Text>{`Nombre d'utilisateurs`}</Text>
+                            <Text>{`Commandes Octobre 2023`}</Text>
                             <Metric className="truncate">36</Metric>
                         </div>
                     </Flex>
@@ -149,13 +145,13 @@ const Dashboard = () => {
                         </div>
                     </Flex>
                 </Card>
-
-
-
+                
             </div>
+            
+
             <div className='middle'>
 
-                <Card className='w-3/4'>
+                <Card className='w-3/4 graph' decoration="top">
                     <Title>Newsletter revenue over time (USD)</Title>
                     <AreaChart
                         className="h-72 mt-4"
@@ -166,7 +162,7 @@ const Dashboard = () => {
                         valueFormatter={dataFormatter}
                     />
                 </Card>
-                <Card className="w-1/4">
+                <Card className="w-1/4 graph"decoration="top" >
                     <Title>Exportations</Title>
                     <DonutChart
                         className="mt-6"
@@ -181,7 +177,7 @@ const Dashboard = () => {
 
             </div>
             <div className='bottom'>
-                <Card className="w-1/4">
+                <Card className="w-1/4 graph "decoration="top">
                     <Title>Importations</Title>
                     <DonutChart
                         className="mt-6"
@@ -193,7 +189,7 @@ const Dashboard = () => {
                     />
                 </Card>
 
-                <Card className='w-3/4'>
+                <Card className='w-3/4 graph'decoration="top">
                     <Title>Exportations / Importations depuis (2020 à 2023)</Title>
                     <LineChart
                         className="mt-6"

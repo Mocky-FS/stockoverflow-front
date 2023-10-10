@@ -8,7 +8,7 @@ const AuthProvider = ({ children }) => {
     const timeOutTokenRef = useRef(null);
 
     const [user, setUser] = useState({
-        firstname : 'Alexandre',
+        firstname : 'Méduse',
         lastname : null,
         email : null,
         id : null,

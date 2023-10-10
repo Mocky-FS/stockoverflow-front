@@ -27,8 +27,7 @@ const Navbar = () => {
     const { user, logout } = useContext(AuthContext)
     const { theme, setTheme } = useContext(ThemeContext)
     
-    // const [isDarkMode, setIsDarkMode] = useState(false)
-    const [isMenuOpen, setIsMenuOpen] = useState(false)
+    const [isMenuOpen, setIsMenuOpen] = useState(true)
 
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen)
@@ -38,7 +37,6 @@ const Navbar = () => {
     const links = [
 
         {
-
             title: 'Dashboard',
             icon: Dashboard,
             path: '/dashboard',
@@ -50,7 +48,7 @@ const Navbar = () => {
             path: '/dashboard/stock',
         },
         {
-            title: 'Envois',
+            title: 'Mes envois',
             icon: Package,
             path: '/dashboard/my-shippings',
         },

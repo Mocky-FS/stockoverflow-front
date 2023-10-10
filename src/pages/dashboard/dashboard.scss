@@ -3,38 +3,142 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    gap: 4rem;
-    padding: 1rem;
+    justify-content: flex-start;
+    gap: 1rem;
     height: 100%;
     border-radius: 0 !important;
+    overflow: auto;
+    padding: 0.5rem !important;
 
     .top{
-        align-self: center;
+        // align-self: center;
         display: flex;
-        justify-content: center;
-        align-items: center;
+        justify-content: flex-start;
         gap: 1rem;
-        width: 80%;
+        width: 100%;
+        // flex-wrap: wrap;
+        padding: 1rem;
 
-        .test{
-            width: 25%;
-        }
+        // justify-content: center;
+        // align-items: center;
+        // gap: 1rem;
+        // width: 80%;
+
+        // .test{
+        //     // width: 24%;
+        // }
+        // background-color: red;
 
     }
 
     .middle{
-        width: 80%;
-        align-self: center;
+        width: 100%;
+        // align-self: center;
         display: flex;
+        justify-content: space-between;
+        // flex-wrap: wrap;
+
+        // align-items: center;
+        // gap: 0.5rem;
         gap: 1rem;
+        padding: 1rem;
+        // background-color: red;
+
+       
+
 
     } 
 
     .bottom{
-        width: 80%;
-        align-self: center;
+        width: 100%;
+
+        // align-self: center;
         display: flex;
         gap: 1rem;
+        padding: 1rem;
+
+        // background-color: red;
+
     }
+}
+
+@media screen and (max-width: 1310px) {
+
+    .dashboard{
+
+        .top{
+            padding: 0;
+            justify-content: center;
+            // flex-direction: column;
+            flex-wrap: wrap;
+
+            .test{
+                width: 48%;
+            }
+        }
+
+        .middle{
+            // flex-direction: column;
+            gap: 0.5rem;
+
+            .graph{
+                width: 50%;
+            }
+        }
+
+        .bottom{
+            
+            gap: 0.5rem;
+
+            .graph{
+                width: 50%;
+            }
+        }
+    }
+
+
+}
+
+@media screen and (max-width: 768px) {
+
+    .dashboard{
+        gap: 0;
+        .top{
+            flex-direction: column;
+            gap: 0.5rem;
+            padding: 1rem;
+            
+            .test{
+                width: 100%;
+                align-self: center;
+                padding: 0.5rem;
+                // background-color: red;
+                
+
+                svg{
+                    width: 30px;
+                }
+            }
+           
+        }
+
+        .middle{
+            flex-direction: column;
+            gap: 0.5rem;
+
+            .graph{
+                width: 100%;
+            }
+        }
+
+        .bottom{
+            flex-direction: column;
+            gap: 0.5rem;
+
+            .graph{
+                width: 100%;
+            }
+        }
+    }
+    
 }

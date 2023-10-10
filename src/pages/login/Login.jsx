@@ -1,9 +1,7 @@
-import { faEye, faEyeSlash } from '@fortawesome/free-regular-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useContext, useState } from 'react';
-import { useForm } from "react-hook-form"
+import { Controller, useForm } from "react-hook-form"
 import { Link, useNavigate } from 'react-router-dom';
-import { Button } from '@tremor/react';
+import { Button, Card, Flex, Text, TextInput, Title } from '@tremor/react';
 import { toast } from 'react-toastify';
 import './login.scss'
 import { useMutation } from '@tanstack/react-query';
@@ -12,12 +10,17 @@ import { AuthContext } from '../../context/AuthContext';
 import { getExpirationTime } from '../../utils/functions';
 import { login } from '../../api';
 
+import Eye from '../../assets/icons/eye.svg?react'
+import Email from '../../assets/icons/email.svg?react'
+
+import EyeSlash from '../../assets/icons/eyeSlash.svg?react'
+
 
 const Login = () => {
 
-    const { setUser } = useContext(AuthContext)
+    const { setUser, user } = useContext(AuthContext)
 
-    const { register, reset, handleSubmit, watch, formState: { errors }, setError } = useForm();
+    const { register, reset, handleSubmit, watch, formState: { errors }, setError, control } = useForm();
 
     const navigate = useNavigate()
 
@@ -68,61 +71,67 @@ const Login = () => {
     // })
 
     const onSubmit = () => {
-        toast.success('Bonjour Alexandre !')
+        toast.success(`Bonjour ${user.firstname} !`)
         navigate('/dashboard')
     }
- 
+
 
     return (
-        <div className='login'>
+     
+        <Card className='h-full !rounded-none flex items-center justify-center'>
+            <Card decoration='top' className='w-96' >
+                <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col gap-4 w-full'>
+                    <Title className='text-center text-2xl italic'>Stock' Overflow</Title>
+                    <Text className='self-center text-xl'>Connexion</Text>
+                    <Text>Email</Text>
+                  
+                            <TextInput
+                                {...register('email', {  required: `Merci de saisir votre adresse mail`,
+                                    pattern: {
+                                        value: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                                        message: 'Merci de saisir un email valide',
+                                    } })}
+                                type="email"
+                                placeholder="Adresse mail"
+                                error={errors.email}
+                                autoFocus={true}
+                                maxLength={50}
+                                icon={Email}
+                            />
+                       
+                    {errors.email && <span className='text-red-500 text-sm '>{errors.email.message}</span>}
+                    <Text className='flex items-center gap-4'>Mot de passe
+                        {/* <button
+                            type='button'
+                            onClick={() => setShowPassword(!showPassword)}>
+                            {!showPassword ? <Eye className='w-5' /> : <EyeSlash className='w-5' />}
+                        </button> */}
+                    </Text>
+             
+                            <TextInput
+                                {...register('password', { 
+                                    required: `Merci de saisir votre mot de passe` })}
+                                type={showPassword ? 'text' : 'password'}
+                                placeholder="Votre mot de passe"
+                                error={errors.password}
+                                icon={showPassword ? Eye : EyeSlash}
+                                
+                            />
+                      
+                    {errors.password && <span className='text-red-500 text-sm '>{errors.password.message}</span>}
+                    <Button type='submit' className='w-fit self-center' >Se connecter</Button>
+                    <Flex className='flex flex-col gap-6 mt-5'>
+                        <Text><Link to={'/register'}>Pas encore de compte ?</Link></Text>
+                        <Text className='cursor-not-allowed'>Mot de passe oublié ?</Text>
+                    </Flex>
+                </form>
+            </Card>
 
-            <form className='login-form' onSubmit={handleSubmit(onSubmit)}>
-
-                <h2 className='title'>Se connecter</h2>
-                <label htmlFor="email">Email</label>
-                <input
-                    style={{ border: errors.email && '1px solid red' }}
-                    type="email"
-                    placeholder='Adresse mail'
-                    {...register("email", {
-                        required: true,
-                        pattern: {
-                            value: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-                            message: 'Merci de saisir une adresse mail valide',
-                        }
-                    }
-                    )}
-                />
-                {errors.email?.message && <span className='error'>{errors.email.message}</span>}
 
 
-                <label htmlFor="password" className='eyes'>Mot de passe
-                    <button
-                        type='button'
-                        onClick={() => setShowPassword(!showPassword)}
-                        className='eye-button'>
-                        {showPassword ? <FontAwesomeIcon icon={faEye} /> : <FontAwesomeIcon icon={faEyeSlash} />}
-                    </button>
-                </label>
-                <input
-                    style={{ border: errors.password && '1px solid red' }}
-                    type={showPassword ? 'text' : 'password'}
-                    placeholder='Mot de passe'
-                    {...register("password",
-                        {
-                            required: true,
-                        })}
-                />
-                {errors.password?.message && <span className='error'>{errors.password.message}</span>}
 
 
-                {/* <p className='forgot'>Mot de passe oublié ?</p> */}
-
-                <Button type='submit' className='login-btn'>Connexion</Button>
-                <Link to='/register' className='link-register'>Pas encore de compte ?</Link>
-            </form>
-
-        </div>
+        </Card>
 
     );
 };

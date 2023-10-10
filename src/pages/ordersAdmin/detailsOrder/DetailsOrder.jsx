@@ -27,7 +27,7 @@ const DetailsOrder = ({ item, closeModal }) => {
                 <button onClick={closeModal}><Cross /></button>
             </div>
             <div className='content'>
-                <Card decoration="top"  className='test' decorationColor='blue' >
+                <Card  className='test' decorationColor='blue' >
                     <Flex justifyContent="start" className="space-x-4">
                         <Icon icon={Doc} variant="light" size="xl" color={'blue'} />
                         <div className="truncate">
@@ -38,7 +38,7 @@ const DetailsOrder = ({ item, closeModal }) => {
                         </div>
                     </Flex>
                 </Card>
-                <Card decoration="top" decorationColor='blue' className='test'>
+                <Card decorationColor='blue' className='test'>
                     <Flex justifyContent="start" className="space-x-4">
                         <Icon icon={User} variant="light" size="xl" color={'blue'} />
                         <div className="truncate">
@@ -47,7 +47,7 @@ const DetailsOrder = ({ item, closeModal }) => {
                         </div>
                     </Flex>
                 </Card>
-                <Card decoration="top" decorationColor='blue' className='test'>
+                <Card decorationColor='blue' className='test'>
                     <Flex justifyContent="start" className="space-x-4">
                         <Icon icon={Logo} variant="light" size="xl" color='blue' />
                         <div className="truncate">
@@ -56,7 +56,7 @@ const DetailsOrder = ({ item, closeModal }) => {
                         </div>
                     </Flex>
                 </Card>
-                <Card decoration="top" decorationColor='blue' className='test'>
+                <Card decorationColor='blue' className='test'>
                     <Flex justifyContent="start" className="space-x-4">
                         <Icon icon={Package} variant="light" size="xl" color='blue' />
                         <div className="truncate">
@@ -65,7 +65,7 @@ const DetailsOrder = ({ item, closeModal }) => {
                         </div>
                     </Flex>
                 </Card>
-                <Card decoration="top" decorationColor='blue' className='test'>
+                <Card decorationColor='blue' className='test'>
                     <Flex justifyContent="start" className="space-x-4">
                         <Icon icon={Euro} variant="light" size="xl" color={'blue'} />
                         <div className="truncate">

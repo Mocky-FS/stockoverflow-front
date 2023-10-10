@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Card } from "@tremor/react";
+import { Card, Text, TextInput } from "@tremor/react";
 import { Button, Title } from "@tremor/react";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
@@ -32,163 +32,135 @@ const Profil = () => {
   };
 
   return (
-    <div
-      className="profil"
-      style={{
-        padding: "1rem",
-        display: "flex",
-        width: "100%",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
+    <Card className='profil'>
+
       <Card decoration="top" decorationColor="indigo" className="w-2/4 h-fit ">
         <Title>Mon profil </Title>
-        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-2">
-          <label className="flex flex-col">
-            <span>Nom</span>
-            <Controller
-              control={control}
-              name="lastname"
-              rules={{ required: `Merci d'indiquer votre nom` }}
-              render={({ field }) => (
-                <input
-                  {...field}
-                  type="text"
-                  placeholder="Nom de famille"
-                  style={{ borderColor: errors.lastname ? "red" : "" }}
-                  disabled
-                />
-              )}
-            />
-            {errors.lastname && (
-              <span className="error">{errors.lastname.message}</span>
+        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-2 mt-5">
+          <Text>Nom</Text>
+          <Controller
+            control={control}
+            name="lastname"
+            rules={{ required: `Merci d'indiquer votre nom` }}
+            render={({ field }) => (
+              // <input
+              <TextInput
+                {...field}
+                type="text"
+                style={{ 
+                  cursor:  "not-allowed",
+                 }}
+                disabled
+              />
             )}
-          </label>
-          <label className="flex flex-col">
-            <span>Prénom</span>
-            <Controller
-              control={control}
-              name="firstname"
-              rules={{ required: `Merci d'indiquer votre prénom` }}
-              render={({ field }) => (
-                <input
-                  {...field}
-                  type="text"
-                  placeholder="Prénom"
-                  style={{ borderColor: errors.firstname ? "red" : "" }}
-                  disabled
-                />
-              )}
-            />
-            {errors.firstname && (
-              <span className="error">{errors.firstname.message}</span>
+          />
+
+
+
+          <Text>Prénom</Text>
+          <Controller
+            control={control}
+            name="firstname"
+            rules={{ required: `Merci d'indiquer votre prénom` }}
+            render={({ field }) => (
+              <TextInput
+                {...field}
+                type="text"
+                disabled
+                style={{ 
+                  cursor: "not-allowed",
+                 }}
+
+              />
             )}
-          </label>
-          <label className="flex flex-col">
-            <span>
-              Email <span className="required">*</span>
-            </span>
-            <Controller
-              control={control}
-              name="email"
-              rules={{ required: `Merci de saisir un email` }}
-              render={({ field }) => (
-                <input
-                  {...field}
-                  type="email"
-                  placeholder="Adresse mail"
-                  style={{
-                    borderColor: errors.name ? "red" : "",
-                    cursor: update ? "pointer" : "not-allowed",
-                  }}
-                  disabled={!update}
-                />
-              )}
-            />
-            {errors.email && (
-              <span className="error">{errors.email.message}</span>
+          />
+          {errors.firstname && (
+            <span className="error">{errors.firstname.message}</span>
+          )}
+
+          <Text>Email</Text>
+          <Controller
+            control={control}
+            name="email"
+            rules={{ required: `Merci de saisir un email` }}
+            render={({ field }) => (
+              <TextInput
+                {...field}
+                type="email"
+                placeholder="Adresse mail"
+                style={{
+                  borderColor: errors.name ? "red" : "",
+                  cursor: update ? "pointer" : "not-allowed",
+                }}
+                disabled={!update}
+              />
             )}
-          </label>
+          />
+          {errors.email && (
+            <span className="error">{errors.email.message}</span>
+          )}
+
           {update && (
             <>
-              <label className="flex flex-col">
-                <span>
-                  Mot de passe actuel<span className="required">*</span>
-                </span>
-                <Controller
-                  control={control}
-                  name="oldPassword"
-                  rules={{ required: `Merci d'indiquer un nom de projet` }}
-                  render={({ field }) => (
-                    <input
-                      {...field}
-                      type="password"
-                      placeholder="Mot de passe"
-                      style={{ borderColor: errors.password ? "red" : "" }}
-                      autoFocus
-                    />
-                  )}
-                />
-                {/* {errors.name && <span className='error'>{errors.name.message}</span>} */}
-              </label>
+              <Text>Mot de passe</Text>
+              <Controller
+                control={control}
+                name="oldPassword"
+                rules={{ required: `Merci d'indiquer votre ancien mot de passe` }}
+                render={({ field }) => (
+                  <TextInput
+                    {...field}
+                    type="password"
+                    placeholder="Mot de passe actuel"
+                    style={{ borderColor: errors.password ? "red" : "" }}
+                    autoFocus
+                    error={errors.oldPassword}
+                  />
+                )}
+              />
+              {errors.oldPassword && <span className='text-red-500 text-sm '>{errors.oldPassword.message}</span>}
 
-              <label className="flex flex-col">
-                <span>
-                  Nouveau mot de passe<span className="required">*</span>
-                </span>
-                <Controller
-                  control={control}
-                  name="newPassword"
-                  rules={{ required: `Merci d'indiquer un nom de projet` }}
-                  render={({ field }) => (
-                    <input
-                      {...field}
-                      type="password"
-                      placeholder="Mot de passe"
-                      style={{
-                        borderColor: errors.confirmPassword ? "red" : "",
-                      }}
-                    />
-                  )}
-                />
-                {errors.confirmPassword && (
-                  <span className="error">
-                    {errors.confirmPassword.message}
-                  </span>
+              <Text>Nouveau mot de passe</Text>
+
+              <Controller
+                control={control}
+                name="newPassword"
+                rules={{ required: `Merci d'indiquer un mot de passe` }}
+                render={({ field }) => (
+                  <TextInput
+                    {...field}
+                    type="password"
+                    placeholder="Votre nouveau mot de passe"
+                    error={errors.newPassword}
+                  />
                 )}
-              </label>
-              <label className="flex flex-col">
-                <span>
-                  Confirmation nouveau mot de passe
-                  <span className="required">*</span>
-                </span>
-                <Controller
-                  control={control}
-                  name="confirmPassword"
-                  rules={{
-                    required: `Merci d'indiquer un nom de projet`,
-                    validate: (value) =>
-                      value === watch("newPassword") ||
-                      "Le mots de passe ne correspond pas",
-                  }}
-                  render={({ field }) => (
-                    <input
-                      {...field}
-                      type="password"
-                      placeholder="Mot de passe"
-                      style={{
-                        borderColor: errors.confirmPassword ? "red" : "",
-                      }}
-                    />
-                  )}
-                />
-                {errors.confirmPassword && (
-                  <span className="error">
-                    {errors.confirmPassword.message}
-                  </span>
+              />
+              {errors.newPassword && <span className='text-red-500 text-sm '>{errors.newPassword.message}</span>}
+
+
+              <Text>Confirmation nouveau mot de passe</Text>
+              <Controller
+                control={control}
+                name="confirmPassword"
+                rules={{
+                  required: `Merci d'indiquer un mot de passe`,
+                  validate: (value) =>
+                    value === watch("newPassword") ||
+                    "Le mots de passe ne correspond pas",
+                }}
+                render={({ field }) => (
+                  <TextInput
+                    {...field}
+                    type="password"
+                    placeholder="Confirmez nouveau mot de passe"
+                    style={{
+                      borderColor: errors.confirmPassword ? "red" : "",
+                    }}
+                    error={errors.confirmPassword}
+                  />
                 )}
-              </label>
+              />
+              {errors.confirmPassword && errors.newPassword && <span className='text-red-500 text-sm '>{errors.newPassword.message}</span>}
             </>
           )}
           <div className="flex flex-row justify-center gap-6">
@@ -211,7 +183,7 @@ const Profil = () => {
           </div>
         </form>
       </Card>
-    </div>
+    </Card>
   );
 };
 

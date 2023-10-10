@@ -8,8 +8,11 @@ const NotFound = () => {
         <div className="containers">
             <div className="container">
                 <div className="img-center">
-                    <img className="error" alt="image 404" src={IMG}/>
-                    <Button><Link to='/dashboard'>Retour à l&apos;accueil </Link></Button>
+                    <img className="error" alt="image 404" src={IMG} />
+                    <Button
+                        variant='secondary'
+                    ><Link to='/dashboard'>Retour à l&apos;accueil </Link>
+                    </Button>
                 </div>
             </div>
         </div>
