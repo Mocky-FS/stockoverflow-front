@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Badge, Card, Flex, Icon, Metric, ProgressBar, Tab, TabGroup, TabList, TabPanel, TabPanels, Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRow, Text, TextInput, Title } from '@tremor/react';
+import { Badge, Bold, Card, Flex, Icon, Metric,  Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRow, Text, TextInput, Title } from '@tremor/react';
 import './stock.scss'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBoxesStacked, faCartShopping, faCheck, faPlus, faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
@@ -8,15 +8,24 @@ import Modal from '../../components/modal/Modal';
 import OrderStock from './orderStock/OrderStock';
 import { Select, SelectItem } from "@tremor/react";
 import { badgeColor, filterArray } from '../../utils/functions';
+import Logo from '../../assets/icons/logo.svg?react'
+import Warning from '../../assets/icons/warning.svg?react'
+import Check from '../../assets/icons/Check.svg?react'
+import { Tooltip } from '@nextui-org/react';
+import Cart from '../../assets/icons/cart.svg?react'
 
 const Stock = () => {
+
+
+    // get the actual theme mode
+
 
     const data = [
         {
             id: 1,
             category: "Papier bulle",
             product: 'TAH452',
-            quantity: 50,
+            quantity: 1,
             updateDate: '27/01/2021'
 
         },
@@ -40,7 +49,7 @@ const Stock = () => {
             id: 4,
             category: "Papier A3",
             product: 'PAK765',
-            quantity: 121,
+            quantity: 210,
             updateDate: '27/01/2021'
 
         },
@@ -110,8 +119,36 @@ const Stock = () => {
 
 
 
+    const listProdutcs = data.map(item => (
+        <div key={item.id} className='tooltip'>
+            <p style={{ textAlign: 'right' }}>{item.product}</p>
+            <p>{item.category}</p>
+        </div>
+    ))
+
+    const criticalStockList = data.filter(item => item.quantity < 50).map(item => (
+        <div key={item.id} className='tooltip'>
+            <p>{item.product}</p>
+            <p>{item.category}</p>
+        </div>
+    ))
+
+    const mediumStockList = data.filter(item => item.quantity >= 50 && item.quantity < 100).map(item => (
+        <div key={item.id} style={{ display: 'flex', width: '100%', justifyContent: 'space-between', gap: '1rem' }}>
+            <p>{item.product}</p>
+            <p>{item.category}</p>
+        </div>
+    ))
+
+    const correctStockList = data.filter(item => item.quantity >= 100).map(item => (
+        <div key={item.id} style={{ display: 'flex', width: '100%', justifyContent: 'space-between', gap: '1rem' }}>
+            <p>{item.product}</p>
+            <p>{item.category}</p>
+        </div>
+    ))
+
     return (
-        <div className='stock'>
+        <Card className='stock'>
 
             <Modal
                 isOpen={isOpen}
@@ -119,59 +156,54 @@ const Stock = () => {
                 content={
                     <OrderStock closeModal={closeModal} />
                 }
-
             />
             <div className='cards'>
-                <Card decoration="top" className='recap' decorationColor='emerald'>
-
-                    <div className="truncate">
-
-                        <Title> Total produits</Title>
-                        <div className='stats'>
-                        <FontAwesomeIcon icon={faBoxesStacked} size='xl' color='green'/>
-                            <Text> {data.length} </Text>
-                        </div>
-                    </div>
-                </Card>
-
-
-                <Card decoration="top" className='recap' decorationColor='red'>
-
-                    <div className="truncate">
-
-                        <Title> Stock critique </Title>
-                        <div className='stats'>
-                            <FontAwesomeIcon icon={faTriangleExclamation} size='xl' color='red' />
-                            <Text> {criticalStock} {criticalStock > 1 ? 'produits' : 'produit'} </Text>
-                        </div>
-                    </div>
-                </Card>
-                <Card decoration="top" className='recap' decorationColor='orange'>
-
-                    <div className="truncate">
-                        <Title> Stock faible </Title>
-                        <div className='stats'>
-                            <FontAwesomeIcon icon={faTriangleExclamation} size='xl' color='orange' />
-                            <Text>{lowStock} {lowStock > 1 ? 'produits' : 'produit'}</Text>
-                        </div>
-                    </div>
-                </Card>
-                <Card decoration="top" className='recap' decorationColor='emerald'>
-
-                    <div className="truncate">
-                        <Title> Stock correct </Title>
-                        <div className='stats'>
-                            <FontAwesomeIcon icon={faCheck} size='xl' color='green' />
-                            <Text> {correctStock} {correctStock > 1 ? 'produits' : 'produit'}</Text>
-                        </div>
-
-
-                    </div>
-                    {/* </Flex> */}
-                </Card>
-
+                <Tooltip content={listProdutcs} placement='bottom' className=' flex flex-col justify-between' size='lg' color='primary'>
+                    <Card decoration="left" decorationColor='blue' className='card-top'>
+                        <Flex justifyContent="start" className="space-x-4">
+                            <Icon icon={Logo} variant="light" size="xl" color={'blue'} />
+                            <div className="truncate">
+                                <Text>{'Total produits'}</Text>
+                                <Metric className="truncate">{10}</Metric>
+                            </div>
+                        </Flex>
+                    </Card>
+                </Tooltip>
+                <Tooltip content={criticalStockList} placement='bottom' className=' flex flex-col justify-between' size='lg' color='danger'>
+                    <Card decoration="left" decorationColor='red' className='card-top'>
+                        <Flex justifyContent="start" className="space-x-4">
+                            <Icon icon={Warning} variant="light" size="xl" color={'red'} />
+                            <div className="truncate">
+                                <Text>{'Stock critique'}</Text>
+                                <Metric className="truncate">{criticalStockList.length}</Metric>
+                            </div>
+                        </Flex>
+                    </Card>
+                </Tooltip>
+                <Tooltip content={mediumStockList} placement='bottom' className=' flex flex-col justify-between' size='lg' color='warning'>
+                    <Card decoration="left" decorationColor='orange' className='card-top'>
+                        <Flex justifyContent="start" className="space-x-4">
+                            <Icon icon={Warning} variant="light" size="xl" color={'orange'} />
+                            <div className="truncate">
+                                <Text>{'Stock faible'}</Text>
+                                <Metric className="truncate">{mediumStockList.length}</Metric>
+                            </div>
+                        </Flex>
+                    </Card>
+                </Tooltip>
+                <Tooltip content={correctStockList} placement='bottom' className=' flex flex-col justify-between' size='lg' color='success' >
+                    <Card decoration="left" decorationColor='emerald' className='card-top' >
+                        <Flex justifyContent="start" className="space-x-4">
+                            <Icon icon={Check} variant="light" size="xl" color={'emerald'} />
+                            <div className="truncate">
+                                <Text>{'Stock correct'}</Text>
+                                <Metric className="truncate">{correctStockList.length}</Metric>
+                            </div>
+                        </Flex>
+                    </Card>
+                </Tooltip>
             </div>
-            <Card className='card' decoration='top' decorationColor='neutral'>
+            <Card className='card' decoration='top' decorationColor='blue'>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     <Title className='title'>Récapitulatif du stock </Title>
                     <div style={{ display: 'flex', gap: "2rem", width: 'fit-content' }}>
@@ -188,14 +220,18 @@ const Stock = () => {
                                 <SelectItem value="Critique" />
                             </Select>
                         </div>
-                        <button onClick={() => openModal()}><FontAwesomeIcon icon={faCartShopping} size='lg' /></button>
+                        <Tooltip content='Passer une commande' placement='bottom' color='foreground' >
+                            <button className='text-tremor-content dark:text-dark-tremor-content-muted flex items-center gap-2 '
+                                onClick={() => openModal()}>
+                                <Cart /> <Text>Commander <br></br>un produit</Text>
+                            </button>
+
+
+                        </Tooltip>
                     </div>
                 </div>
 
                 <div className='scroll'>
-
-
-
                     <Table className="mt-5 table-stock">
                         <TableHead >
                             <TableRow>
@@ -206,9 +242,6 @@ const Stock = () => {
                             </TableRow>
                         </TableHead>
                         <TableBody >
-
-
-
                             {
                                 filterArray(selectedOption, data)?.map((item) => (
                                     <TableRow key={item.id}>
@@ -220,8 +253,6 @@ const Stock = () => {
                                             <Text>{item.product}</Text>
                                         </TableCell>
                                         <TableCell>
-
-
                                             <Badge color={badgeColor(item.quantity)} className='badge'>
                                                 {item.quantity}
                                                 {item.quantity < 50 && <FontAwesomeIcon bounce icon={faTriangleExclamation} size='lg' />}
@@ -233,8 +264,6 @@ const Stock = () => {
                                         <TableCell>
                                             {item.updateDate}
                                         </TableCell>
-
-
                                     </TableRow>
                                 ))
                             }
@@ -242,7 +271,7 @@ const Stock = () => {
                     </Table>
                 </div>
             </Card>
-        </div>
+        </Card>
     );
 };
 

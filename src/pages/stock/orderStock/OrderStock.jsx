@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import './orderStock.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
-import { Button, NumberInput } from '@tremor/react';
+import { Button, NumberInput, Title } from '@tremor/react';
 import Select from 'react-select';
 import { toast } from 'react-toastify';
 import { useForm, Controller } from 'react-hook-form';
@@ -33,7 +33,7 @@ const OrderStock = ({ closeModal }) => {
     return (
         <div className='order-stock'>
             <div className='top'>
-                <h2 className='title'>Réaprovisionnements de stock</h2>
+                <Title className='title'>Réaprovisionnements de stock</Title>
                 <button><FontAwesomeIcon icon={faXmark} size='lg' onClick={() => closeModal()} /></button>
             </div>
             <div className='content'>
@@ -47,7 +47,9 @@ const OrderStock = ({ closeModal }) => {
                             rules={{ required: 'Veuillez selectionner une catégorie' }}
                             render={({ field }) => (
                                 <Select
+                                className='text-tremor-content dark:text-dark-tremor-content-muted  '
                                     {...field}
+                                    autoFocus
                                     placeholder='Sélectionnez une catégorie'
                                     options={options}
                                     styles={{
@@ -70,6 +72,7 @@ const OrderStock = ({ closeModal }) => {
                             rules={{ required: 'Veuillez selectionner un produit' }}
                             render={({ field }) => (
                                 <Select
+                                 className='text-tremor-content dark:text-dark-tremor-content-muted  '
                                     {...field}
                                     placeholder='Sélectionnez un produit'
                                     options={options}

@@ -48,7 +48,7 @@ const MyShippings = () => {
     const closeModal = () => setIsOpen(false);
 
     return (
-        <div className='orders'>
+        <Card className='orders'>
             <Modal
                 isOpen={isOpen}
                 closeModal={closeModal}
@@ -114,7 +114,7 @@ const MyShippings = () => {
                     </TableBody>
                 </Table>
             </Card>
-        </div>
+        </Card>
     );
 };
 

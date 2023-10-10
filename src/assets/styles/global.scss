@@ -2,9 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
 
 .App{
     height: 100vh;
+    font-family: 'Montserrat', sans-serif;
 }
 
 input{
@@ -18,4 +21,20 @@ input{
     color: red;
     font-size: 0.8rem;
     text-align: center;
+}
+
+button,
+textarea,
+input,
+select,
+.hamburger-menu,
+a{
+ -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+ -webkit-tap-highlight-color: transparent;
+ -webkit-user-select: none;
+ -khtml-user-select: none;
+ -moz-user-select: none;
+ -ms-user-select: none;
+  user-select: none;
+
 }

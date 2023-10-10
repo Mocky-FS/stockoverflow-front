@@ -46,7 +46,7 @@ const Shippings = () => {
 
 
     return (
-        <div className='shippings'>
+        <Card className='shippings'>
             <div className='cards'>
                 <Card decoration="top" className='recap' >
                     <Flex justifyContent="start" className="space-x-4">
@@ -94,7 +94,7 @@ const Shippings = () => {
                     </TableBody>
                 </Table>
             </Card>
-        </div>
+        </Card>
     );
 };
 

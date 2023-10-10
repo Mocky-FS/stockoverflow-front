@@ -1,10 +1,11 @@
-import { Button } from '@tremor/react';
+import { Button, Card } from '@tremor/react';
 import { useState } from 'react';
 import { useForm } from "react-hook-form";
 import './register.scss'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-regular-svg-icons';
 import { faCircleXmark, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { toast } from 'react-toastify';
 
 const Register = ({ closeModal = false }) => {
 
@@ -15,11 +16,13 @@ const Register = ({ closeModal = false }) => {
     const onSubmit = (data) => {
 
         console.log(data)
+        closeModal()
+        toast.success('Utilisateur créé avec succès !')
 
     }
 
     return (
-        <div style={{ padding : '1rem', display : 'flex', flexDirection : 'column', gap : '1rem'}}>
+        <Card className='register'>
 
             {
                 closeModal &&
@@ -99,9 +102,9 @@ const Register = ({ closeModal = false }) => {
                 />
                 {errors.confirmPassword && <span className='error'>{errors.confirmPassword.message}</span>}
 
-                <Button type='submit' className='register-btn' >{ closeModal ? 'Créer' : 'Login'}</Button>
+                <Button type='submit' className='register-btn' >Créer</Button>
             </form>
-        </div>
+        </Card>
 
     );
 };

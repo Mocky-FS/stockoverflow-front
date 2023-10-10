@@ -1,31 +1,79 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Badge, Button } from '@tremor/react';
+import { Badge, Bold, Button, Flex, Icon, Metric, Subtitle, Text } from '@tremor/react';
 import './detailsOrder.scss'
 import Cross from '../../../assets/icons/cross.svg?react'
 import { toast } from 'react-toastify';
+
+import User from '../../../assets/icons/userSingle.svg?react'
+import Time from '../../../assets/icons/time.svg?react'
+import Logo from '../../../assets/icons/logo.svg?react'
+import Euro from '../../../assets/icons/euro.svg?react'
+import Package from '../../../assets/icons/package.svg?react'
+import Doc from '../../../assets/icons/doc.svg?react'
+import { Card } from '@tremor/react';
 
 const DetailsOrder = ({ item, closeModal }) => {
 
     const [confirmDelete, setConfirmDelete] = useState(false);
     const [cancelOrder, setCancelOrder] = useState(false);
 
-    
+
 
     return (
 
         <div className='details'>
             <div className='top'>
-
-                <h3>{`Détails de la commande n° ${item?.id}`}</h3>
-                <button onClick={closeModal}><Cross/></button>
-
+                <button onClick={closeModal}><Cross /></button>
             </div>
             <div className='content'>
-                <div >Statut : <Badge color={item.status === 'Validée' ? 'emerald' : 'orange'} >{item.status}</Badge></div>
-                <p>Element : Papier bulle</p>
-                <p>Quantité : 5</p>
-                <p>Prix HT : 350 €</p>
+                <Card decoration="top"  className='test' decorationColor='blue' >
+                    <Flex justifyContent="start" className="space-x-4">
+                        <Icon icon={Doc} variant="light" size="xl" color={'blue'} />
+                        <div className="truncate">
+                            <Text>{`Commande n° ${item.id}`}</Text>
+
+                            <Badge color={item.status === 'Validée' ? 'emerald' : 'orange'} >{item.status}</Badge>
+
+                        </div>
+                    </Flex>
+                </Card>
+                <Card decoration="top" decorationColor='blue' className='test'>
+                    <Flex justifyContent="start" className="space-x-4">
+                        <Icon icon={User} variant="light" size="xl" color={'blue'} />
+                        <div className="truncate">
+                            <Text>{'Utilisateur'}</Text>
+                            <Bold className="truncate">{item.user}</Bold>
+                        </div>
+                    </Flex>
+                </Card>
+                <Card decoration="top" decorationColor='blue' className='test'>
+                    <Flex justifyContent="start" className="space-x-4">
+                        <Icon icon={Logo} variant="light" size="xl" color='blue' />
+                        <div className="truncate">
+                            <Text>{'Element'}</Text>
+                            <Bold className="truncate">{item.stuff}</Bold>
+                        </div>
+                    </Flex>
+                </Card>
+                <Card decoration="top" decorationColor='blue' className='test'>
+                    <Flex justifyContent="start" className="space-x-4">
+                        <Icon icon={Package} variant="light" size="xl" color='blue' />
+                        <div className="truncate">
+                            <Text>{'Quantité'}</Text>
+                            <Bold className="truncate">{item.quantity}</Bold>
+                        </div>
+                    </Flex>
+                </Card>
+                <Card decoration="top" decorationColor='blue' className='test'>
+                    <Flex justifyContent="start" className="space-x-4">
+                        <Icon icon={Euro} variant="light" size="xl" color={'blue'} />
+                        <div className="truncate">
+                            <Text>{'Prix en euros'}</Text>
+                            <Bold className="truncate">{item.amount}€</Bold>
+                        </div>
+                    </Flex>
+                </Card>
             </div>
 
             <div className='bottom'>
@@ -34,10 +82,10 @@ const DetailsOrder = ({ item, closeModal }) => {
                 {
                     item.status === 'En attente' && !confirmDelete && !cancelOrder &&
                     <>
-                        <Button  variant='secondary' onClick={() => {
-                           setCancelOrder(true)
+                        <Button variant='secondary' onClick={() => {
+                            setCancelOrder(true)
                         }}>Annuler la commande</Button>
-                        <Button   onClick={() => {
+                        <Button onClick={() => {
                             // closeModal()
                             // toast.success('Commande approuvée')
                             setConfirmDelete(true)
@@ -50,14 +98,14 @@ const DetailsOrder = ({ item, closeModal }) => {
                     confirmDelete &&
                     <div>
                         <h2>Etes vous sur de vouloir valider cette commande ? </h2>
-                        <div style={{ display : 'flex', gap : "2rem", justifyContent : 'center', margin : '1rem 0' }}>
+                        <div style={{ display: 'flex', gap: "2rem", justifyContent: 'center', padding: '0.5rem' }}>
                             <Button color='red' onClick={() => {
                                 setConfirmDelete(false)
-                            }}>Non</Button>
+                            }}>Retour</Button>
                             <Button color='green' onClick={() => {
                                 closeModal()
                                 toast.success('Commande approuvée')
-                            }}>Oui</Button>
+                            }}>Approuver</Button>
 
                         </div>
                     </div>
@@ -67,18 +115,18 @@ const DetailsOrder = ({ item, closeModal }) => {
                     cancelOrder &&
 
                     <div>
-                    <h2>Etes vous sur de vouloir annuler cette commande ? </h2>
-                    <div style={{ display : 'flex', gap : "2rem", justifyContent : 'center', margin : '1rem 0' }}>
-                        <Button color='red' onClick={() => {
-                            setCancelOrder(false)
-                        }}>Non</Button>
-                        <Button color='green' onClick={() => {
-                            closeModal()
-                            toast.success('Commande refusée')
-                        }}>Oui</Button>
+                        <h2>Etes vous sur de vouloir annuler cette commande ? </h2>
+                        <div style={{ display: 'flex', gap: "2rem", justifyContent: 'center', padding: '0.5rem' }}>
+                            <Button color='red' onClick={() => {
+                                setCancelOrder(false)
+                            }}>Retour</Button>
+                            <Button color='green' onClick={() => {
+                                closeModal()
+                                toast.success('Commande refusée')
+                            }}>Refuser</Button>
 
+                        </div>
                     </div>
-                </div>
                 }
 
                 {

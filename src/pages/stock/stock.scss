@@ -4,6 +4,7 @@
     flex-direction: column;   
     gap: 2rem;
     padding: 1rem;
+    border-radius: 0 !important;
 
     .title{
         display: flex;
@@ -20,37 +21,16 @@
         align-items: center;
         justify-content: center;
         gap: 2rem;
+        width: 95%;
+        align-self: center;
 
 
-        .recap{
-            width:250px;
-            padding: 0.5rem;
-            display: flex;
-            flex-direction: row;
-           
-            .truncate{
-                display: flex;
-                flex-direction: column;
-                gap: 0.5rem;
-                width: 100%;
-
-
-                p{
-                    text-align: center;
-                }
-                .stats{
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    gap: 1rem;
-
-                    p{
-                        font-size: 1.5rem;
-                    }
-                }
-            }
-            
+        .card-top{
+            width: 300px;
         }
+
+        
+       
     }
 
     .card{
@@ -61,15 +41,17 @@
         padding: 1rem;
         
         .scroll{
+
             overflow: scroll;
             height: 100%;
+
             .table-stock{
-               
                 padding: 1rem;
-                
-               
-               
             }
+        }
+
+        svg{
+            width: 30px;
         }
         
        
@@ -83,4 +65,12 @@
             gap: 1rem;
         }
    }
+}
+
+.tooltip{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    gap: 1rem;
 }

@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Badge, Button, Card, Flex, Metric, Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRow, Text, Title } from '@tremor/react';
+import { Badge, Card, Flex, Metric, Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRow, Text, Title } from '@tremor/react';
 import './ordersAdmin.scss'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircleCheck } from '@fortawesome/free-regular-svg-icons';
+
 import Modal from '../../components/modal/Modal'
 import DetailsOrder from './detailsOrder/DetailsOrder';
 const OrdersAdmin = () => {
@@ -14,40 +13,53 @@ const OrdersAdmin = () => {
             date: "12/12/2021",
             client: 'Oclock',
             status: "Expédiée",
-            user: 'Alexandre'
+            user: 'Alexandre',
+            stuff: 'Papier A4',
+            amount: 750,
+            quantity: 120
         },
         {
             id: 2,
             date: "12/12/2021",
             client: 'Oclock',
             status: "En attente",
-            user: 'Alexandre'
+            user: 'Alexandre',
+            stuff: 'Papier A3',
+            amount: 918,
+            quantity: 63
         },
         {
             id: 3,
             date: "12/12/2021",
             client: 'Oclock',
             status: "Expédiée",
-            user: 'Gael'
+            user: 'Gael',
+            stuff: 'Rouleau bulles',
+            amount: 1400,
+            quantity: 500
         },
         {
             id: 4,
             date: "12/12/2021",
             client: 'Oclock',
             status: "Expédiée",
-            user: 'Arnaud'
+            user: 'Arnaud',
+            stuff: 'Papier A4',
+            amount: 123,
+            quantity: 23
         },
         {
             id: 5,
             date: "12/12/2021",
             client: 'Oclock',
             status: "En attente",
-            user: 'Joris'
+            user: 'Joris',
+            stuff: 'Papier A3',
+            amount: 7859,
+            quantity: 189
         },
 
     ];
-
-
 
     const [isOpen, setIsOpen] = useState(false);
     const openModal = () => setIsOpen(true);
@@ -56,7 +68,6 @@ const OrdersAdmin = () => {
         // setItemDetails(null);
     };
 
-    // get item details for modal
     const [itemDetails, setItemDetails] = useState(null);
     const getItemDetails = (item) => {
         setItemDetails(item);
@@ -66,19 +77,19 @@ const OrdersAdmin = () => {
 
 
     return (
-        <div className='orders-admin'>
-            <Modal 
-            isOpen={isOpen}
-            closeModal={closeModal}
-            content={
-               <DetailsOrder 
-               item={itemDetails}
-               closeModal={closeModal}
-               />
-            }
+        <Card className='orders-admin'>
+            <Modal
+                isOpen={isOpen}
+                closeModal={closeModal}
+                content={
+                    <DetailsOrder
+                        item={itemDetails}
+                        closeModal={closeModal}
+                    />
+                }
             />
             <div className='cards'>
-           
+
                 <Card decoration="top" className='recap' >
                     <Flex justifyContent="start" className="space-x-4">
 
@@ -110,16 +121,15 @@ const OrdersAdmin = () => {
                             <TableHeaderCell>Utilisateur</TableHeaderCell>
                             <TableHeaderCell>Client</TableHeaderCell>
                             <TableHeaderCell>Statut</TableHeaderCell>
-                            <TableHeaderCell>Actions</TableHeaderCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         {data?.map((item) => (
-                            
-                            <TableRow key={item.id} onClick={() => {
+
+                            <TableRow  className='cursor-pointer'key={item.id} onClick={() => {
                                 getItemDetails(item)
                             }}>
-                                
+
                                 <TableCell>{item.id}</TableCell>
                                 <TableCell>
                                     <Text>{item.date}</Text>
@@ -135,21 +145,12 @@ const OrdersAdmin = () => {
                                         {item.status}
                                     </Badge>
                                 </TableCell>
-                                <TableCell>
-                                    {item.status === 'En attente' ?
-                                        <button className='valid-btn' onClick={() => {
-                                            if (window.confirm('Voulez-vous vraiment valider cette commande ?')) {
-                                                alert('Commande validée !')
-                                            }
-                                        }}  >
-                                            <FontAwesomeIcon icon={faCircleCheck} size='lg' bounce/>Valider</button> : null}
-                                </TableCell>
                             </TableRow>
                         ))}
                     </TableBody>
                 </Table>
             </Card>
-        </div>
+        </Card>
     );
 };
 

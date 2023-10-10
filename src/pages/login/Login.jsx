@@ -24,54 +24,59 @@ const Login = () => {
     const [showPassword, setShowPassword] = useState(false);
 
 
-    const { mutate : loginMutate} = useMutation((data) => console.log('in'), {
+    // const { mutate : loginMutate} = useMutation((data) => console.log('in'), {
 
-        onSuccess : (data) => {
+    //     onSuccess : (data) => {
 
-            // axios.defaults.headers.common['Authorization'] = `Bearer ${data.token}`
+    //         // axios.defaults.headers.common['Authorization'] = `Bearer ${data.token}`
 
-            // setUser({
-            //     isLogged : true,
-            //     firstname : data.firstname,
-            //     lastname : data.lastname,
-            //     email : data.email,
-            //     id : data.id,
-            //     token : data.token,
-            //     tokenExpiration : getExpirationTime(data.tokenExpiration),
-            //     isAdmin : data.isAdmin
-            // })
+    //         // setUser({
+    //         //     isLogged : true,
+    //         //     firstname : data.firstname,
+    //         //     lastname : data.lastname,
+    //         //     email : data.email,
+    //         //     id : data.id,
+    //         //     token : data.token,
+    //         //     tokenExpiration : getExpirationTime(data.tokenExpiration),
+    //         //     isAdmin : data.isAdmin
+    //         // })
 
-            // localStorage.setItem('user', JSON.stringify({
-            //     ...data,
-            //     tokenExpiration : getExpirationTime(data.tokenExpiration),
-            //     isLogged : true,
-            //     isAdmin : data.isAdmin
+    //         // localStorage.setItem('user', JSON.stringify({
+    //         //     ...data,
+    //         //     tokenExpiration : getExpirationTime(data.tokenExpiration),
+    //         //     isLogged : true,
+    //         //     isAdmin : data.isAdmin
 
-            // }))
+    //         // }))
 
-            // navigate('/dashboard')
-            // toast.success(`Bonjour ${data.firstname} !}`)
-            navigate('/dashboard')
-            toast.success(`Bonjour ${data.firstname} !}`)
-
-
-        },
-
-        onError : (error) => {
-            console.log(error)
-            toast.error('Une erreur est survenue')
-        },
+    //         // navigate('/dashboard')
+    //         // toast.success(`Bonjour ${data.firstname} !}`)
+    //         navigate('/dashboard')
+    //         toast.success(`Bonjour ${data.firstname} !}`)
 
 
+    //     },
+
+    //     onError : (error) => {
+    //         console.log(error)
+    //         toast.error('Une erreur est survenue')
+    //     },
 
 
-    })
 
+
+    // })
+
+    const onSubmit = () => {
+        toast.success('Bonjour Alexandre !')
+        navigate('/dashboard')
+    }
+ 
 
     return (
         <div className='login'>
 
-            <form className='login-form' onSubmit={handleSubmit(loginMutate)}>
+            <form className='login-form' onSubmit={handleSubmit(onSubmit)}>
 
                 <h2 className='title'>Se connecter</h2>
                 <label htmlFor="email">Email</label>

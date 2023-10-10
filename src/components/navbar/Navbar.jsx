@@ -17,21 +17,21 @@ import ArrowLeft from '../../assets/icons/arrowLeft.svg?react'
 import ArrowRight from '../../assets/icons/arrowRight.svg?react'
 import { Tooltip } from "@nextui-org/react";
 import './navbar.scss'
+import { Card } from '@tremor/react';
+import { ThemeContext } from '../../context/ThemeContext';
 
 const Navbar = () => {
 
     const navigate = useNavigate()
 
     const { user, logout } = useContext(AuthContext)
-    const [isDarkMode, setIsDarkMode] = useState(false)
-
-    const [isMenuOpen, setIsMenuOpen] = useState(true)
+    const { theme, setTheme } = useContext(ThemeContext)
+    
+    // const [isDarkMode, setIsDarkMode] = useState(false)
+    const [isMenuOpen, setIsMenuOpen] = useState(false)
 
     const toggleMenu = () => {
-
-
         setIsMenuOpen(!isMenuOpen)
-
     }
 
 
@@ -72,25 +72,23 @@ const Navbar = () => {
     ]
 
 
-
     return (
-        <div className={`dashboard-nav ${!isMenuOpen ? 'close-menu' : ''}`}>
-            <div className='top' style={{ flexDirection: !isMenuOpen ? 'column' : 'row', alignItems: 'center', gap: !isMenuOpen ? '1rem' : '' }}>
+        <div className={`bg-tremor-background   dark:bg-dark-tremor-background  dashboard-nav ${!isMenuOpen ? 'close-menu' : ''} `}>
+            <Card className='top text-tremor-content dark:text-dark-tremor-content-muted' style={{ flexDirection: !isMenuOpen ? 'column' : 'row', alignItems: 'center', gap: !isMenuOpen ? '1rem' : '' }}>
                 <Logo />
 
                 {isMenuOpen &&
                     <div className='titles'>
                         <h2>Stock&apos;Overflow </h2>
-                        {/* <p>Votre outils au quotidien</p> */}
                     </div>
                 }
 
-                <Tooltip placement="right" content={isMenuOpen ? 'Fermer le menu' : 'Ouvrir le menu'}>
+                <Tooltip placement="right" content={isMenuOpen ? 'Fermer le menu' : 'Ouvrir le menu'} color='foreground' offset={50}>
                     <button onClick={toggleMenu} style={{ alignSelf: !isMenuOpen ? 'center' : '' }}>
                         {isMenuOpen ? <ArrowLeft /> : <ArrowRight />}
                     </button>
                 </Tooltip>
-            </div>
+            </Card>
 
             <div className='links' >
 
@@ -101,18 +99,20 @@ const Navbar = () => {
                             placement="right"
                             content={link.title}
                             isDisabled={isMenuOpen}
+                            color='foreground'
+                            offset={50}
                         >
                             <NavLink to={link.path} end={link.end} style={{ width: !isMenuOpen ? 'fit-content' : '' }} >
-                                <link.icon />
-                                {isMenuOpen && <p>{link.title}</p>}
+                                <link.icon className='text-tremor-content dark:text-dark-tremor-content-muted'/>
+                                {isMenuOpen && <p className='text-tremor-content dark:text-dark-tremor-content-muted'>{link.title}</p>}
                             </NavLink>
                         </Tooltip>
                     )
                 })}
 
             </div>
-            <div className={`infos `} style={{ justifyContent: !isMenuOpen ? 'flex-start' : '', flexDirection: !isMenuOpen ? 'column' : 'row', gap: '1rem' }}>
-                <Tooltip placement="right" content={'Profil'} >
+            <Card className={`infos text-tremor-content dark:text-dark-tremor-content-muted`} style={{ justifyContent: !isMenuOpen ? 'flex-start' : '', flexDirection: !isMenuOpen ? 'column' : 'row', gap: '1rem' }}>
+                <Tooltip placement={!isMenuOpen ? 'right' : 'top'} content={'Profil'} color='foreground' offset={50}>
                     <button
                         className='infos-btn'
                         onClick={() => {
@@ -121,19 +121,24 @@ const Navbar = () => {
                         <User /> {isMenuOpen && user.firstname}
                     </button>
                 </Tooltip>
-                <Tooltip placement="right" content={isMenuOpen ? 'Mode jour' : 'Mode nuit'} >
+                <Tooltip placement={!isMenuOpen ? 'right' : 'top'} content={theme ==='dark' ? 'Mode jour' : 'Mode nuit'} color='foreground' offset={50}>
                     <button
-                        title={isDarkMode ? 'Mode jour' : 'Mode nuit'}
+                     
                         onClick={() => {
-                            setIsDarkMode(!isDarkMode)
+                           setTheme(theme === 'light' ? 'dark' : 'light')
                             document.body.classList.toggle('dark')
+                            if (theme === 'light') {
+                                localStorage.setItem('theme', 'dark')
+                            } else {
+                                localStorage.setItem('theme', 'light')
+                            }
                         }
                         }
                     >
-                        {isDarkMode ? <Sun /> : <Moon />}
+                        {theme === 'dark' ? <Sun /> : <Moon />}
                     </button>
                 </Tooltip>
-                <Tooltip placement="right" content={'Se déconnecter'} >
+                <Tooltip placement={!isMenuOpen ? 'right' : 'top'} content={'Se déconnecter'} color='foreground' offset={50}>
                     <button
                         onClick={() => {
                             if (window.confirm('Voulez-vous vous déconnecter ?')) {
@@ -144,7 +149,7 @@ const Navbar = () => {
                         < Logout />
                     </button>
                 </Tooltip>
-            </div>
+            </Card>
         </div>
     );
 };

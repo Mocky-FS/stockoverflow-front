@@ -16,7 +16,7 @@ module.exports = {
    
     extend: {
       colors: {
-        // export dark mode
+       
 
         
         // light mode

@@ -49,7 +49,7 @@ const Users = () => {
     const closeModal = () => setIsOpen(false);
 
     return (
-        <div className='users'>
+        <Card className='users'>
             <Modal
                 isOpen={isOpen}
                 closeModal={closeModal}
@@ -123,7 +123,7 @@ const Users = () => {
                     </TableBody>
                 </Table>
             </Card>
-        </div>
+        </Card>
     );
 };
 

@@ -19,7 +19,7 @@ const Modal = ({isOpen, closeModal, content}) => {
             </Transition.Child>
             <div className="fixed inset-0 overflow-y-auto">
        
-                <div className="flex min-h-full items-center justify-center p-4 text-center">
+                <div className="flex min-h-full items-center justify-center p-4 text-center ">
                     <Transition.Child
                         as={Fragment}
                         enter="ease-out duration-300"
@@ -30,10 +30,12 @@ const Modal = ({isOpen, closeModal, content}) => {
                         leaveTo="opacity-0 scale-95"
                     >
                         <Dialog.Panel
-                            className="w-full max-w-xl transform overflow-hidden ring-tremor bg-white
-                                p-1 text-left align-middle shadow-tremor transition-all rounded-xl modal"
+                            className=" w-full max-w-xl transform overflow-hidden ring-tremor bg-white
+                                p-1 text-left align-middle shadow-tremor transition-all rounded-xl modal
+                                bg-tremor-background dark:bg-dark-tremor-background-subtle dark:text-dark-tremor-content-emphasis
+                                "
                         >       
-                         
+                         {/* bg-tremor-background ring-tremor-ring shadow-tremor-card dark:bg-dark-tremor-background dark:ring-dark-tremor-ring dark:shadow-dark-tremor-card border-tremor-brand dark:border-dark-tremor-brand */}
                             {content}
                         </Dialog.Panel>
                     </Transition.Child>
