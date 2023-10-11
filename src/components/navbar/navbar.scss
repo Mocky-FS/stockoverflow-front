@@ -74,10 +74,12 @@
             gap: 2rem;
             padding: 0.5rem;
             width: 250px;
-            border: 1px solid transparent;
+            border: 2px solid transparent;
             border-radius: 0.5rem;
             transition: all 0.2s ease-in-out;
             overflow: hidden;
+            
+           
 
             svg {
                 width: 32px;
@@ -90,18 +92,21 @@
 
         a:hover {
 
-            border-radius: 12px;
-            background: #e0e0e0;
-            box-shadow: inset -5px 5px 10px #bebebe,
-                inset 5px -5px 10px #ffffff;
+            // border-radius: 12px;
+            // background: #e0e0e0;
+            // box-shadow: inset -5px 5px 10px #bebebe,
+            //     inset 5px -5px 10px #ffffff;
         }
 
         .active {
+           
+            
+       
 
-            border-radius: 12px;
-            background: #e0e0e0;
-            box-shadow: inset -5px 5px 10px #bebebe,
-                inset 5px -5px 10px #ffffff;
+            // border-radius: 50px;
+            // background: #ffffff;
+            // box-shadow: inset 20px 20px 60px #d9d9d9,
+            //             inset -20px -20px 60px #ffffff;
         }
     }
 

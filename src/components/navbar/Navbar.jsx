@@ -1,5 +1,5 @@
 
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 import Logo from '../../assets/icons/logo.svg?react'
@@ -24,14 +24,23 @@ const Navbar = () => {
 
     const navigate = useNavigate()
 
+    // get path from url with react router
+    const location = useLocation()
+
+    console.log(location.pathname)
+
+
+
+
     const { user, logout } = useContext(AuthContext)
     const { theme, setTheme } = useContext(ThemeContext)
-    
+
     const [isMenuOpen, setIsMenuOpen] = useState(true)
 
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen)
     }
+
 
 
     const links = [
@@ -69,13 +78,6 @@ const Navbar = () => {
         },
     ]
 
-useEffect(() => {
-    if (window.innerWidth < 768) {
-        setIsMenuOpen(false)
-    }
-}, [])
-
-
     return (
         <div className={`bg-tremor-background   dark:bg-dark-tremor-background  dashboard-nav ${!isMenuOpen ? 'close-menu' : ''} `}>
             <Card className='top text-tremor-content dark:text-dark-tremor-content' style={{ flexDirection: !isMenuOpen ? 'column' : 'row', alignItems: 'center', gap: !isMenuOpen ? '1rem' : '' }}>
@@ -95,7 +97,8 @@ useEffect(() => {
             </Card>
 
             <div className='links' >
-
+                {/* className='hover:text-tremor-content-inverted text-tremor-content dark:text-dark-tremor-content' */}
+                {/* className='text-tremor-content dark:text-dark-tremor-content ' */}
                 {links.map((link, index) => {
                     return (
                         <Tooltip
@@ -106,9 +109,20 @@ useEffect(() => {
                             color='foreground'
                             offset={50}
                         >
-                            <NavLink to={link.path} end={link.end} style={{ width: !isMenuOpen ? 'fit-content' : '' }} >
-                                <link.icon className='text-tremor-content dark:text-dark-tremor-content'/>
-                                {isMenuOpen && <p className='text-tremor-content dark:text-dark-tremor-content'>{link.title}</p>}
+                            <NavLink to={link.path} end={link.end} style={{ width: !isMenuOpen ? 'fit-content' : '' }}
+                            //     className=' 
+                         
+                            // dark:hover:hover:bg-dark-tremor-content-subtle 
+                            // dark:hover text-tremor-content-subtle ({isActive}) ? 'text-tremor-brand' : ''}
+                            // '
+                            className={ ({isActive}) => isActive ? 
+                                'bg-tremor-brand text-tremor-content-inverted dark:bg-slate-800 dark:text-tremor-background ' :
+                                '  dark:text-tremor-content-subtle'
+                            }
+
+                            >
+                                <link.icon />
+                                {isMenuOpen && <p >{link.title}</p>}
                             </NavLink>
                         </Tooltip>
                     )
@@ -125,11 +139,11 @@ useEffect(() => {
                         <User /> {isMenuOpen && user.firstname}
                     </button>
                 </Tooltip>
-                <Tooltip placement={!isMenuOpen ? 'right' : 'top'} content={theme ==='dark' ? 'Mode jour' : 'Mode nuit'} color='foreground' offset={50}>
+                <Tooltip placement={!isMenuOpen ? 'right' : 'top'} content={theme === 'dark' ? 'Mode jour' : 'Mode nuit'} color='foreground' offset={50}>
                     <button
-                     
+
                         onClick={() => {
-                           setTheme(theme === 'light' ? 'dark' : 'light')
+                            setTheme(theme === 'light' ? 'dark' : 'light')
                             document.body.classList.toggle('dark')
                             if (theme === 'light') {
                                 localStorage.setItem('theme', 'dark')
@@ -142,7 +156,7 @@ useEffect(() => {
                         {theme === 'dark' ? <Sun /> : <Moon />}
                     </button>
                 </Tooltip>
-                <Tooltip placement={!isMenuOpen  ? 'right' : 'top'} content={'Se déconnecter'} color='foreground' offset={50}>
+                <Tooltip placement={!isMenuOpen ? 'right' : 'top'} content={'Se déconnecter'} color='foreground' offset={50}>
                     <button
                         onClick={() => {
                             if (window.confirm('Voulez-vous vous déconnecter ?')) {

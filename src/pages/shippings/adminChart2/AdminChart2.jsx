@@ -16,17 +16,25 @@ const AdminChart2 = () => {
             name: "Assassin's Creed",
             "Quantité": 743,
         },
+        {
+            name: "Assassin's Creed",
+            "Quantité": 743,
+        },
+        {
+            name: "Assassin's Creed",
+            "Quantité": 743,
+        },
     ];
 
 
     return (
-        <div className='h-full w-fullflex flex-col items-center'>
-            <Title>Top 3  jeux</Title>
+        <div className='h-full w-full flex flex-col'>
+            <Title>Top 5  jeux</Title>
             <Subtitle> Nombre d'exportations par jeux  </Subtitle>
               
            
             <BarChart
-                className="mt-6"
+                className="mt-6 h-4/4"
                 data={chartdata}
                 index="name"
                 categories={[ "Quantité"]}

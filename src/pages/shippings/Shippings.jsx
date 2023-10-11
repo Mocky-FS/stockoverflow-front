@@ -8,13 +8,13 @@ import AdminChart2 from './adminChart2/AdminChart2';
 
 const Shippings = () => {
 
-   
+
 
 
     return (
         <Card className='!rounded-none flex  flex-col gap-4 p-4'>
             <Card className='h-2/4'>
-        <AdminReview />
+                <AdminReview />
             </Card>
             <div className='flex h-2/4 gap-4'>
                 <Card className='h-full'>
