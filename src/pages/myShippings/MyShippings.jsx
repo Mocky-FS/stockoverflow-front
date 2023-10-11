@@ -13,7 +13,7 @@ const MyShippings = () => {
 
 
     return (
-        <Card className='flex !rounded-none gap-4 '> 
+        <Card className='flex !rounded-none gap-4 p-4 '> 
             {/* <Card decoration='top'  > */}
             <Review />
             {/* </Card> */}

@@ -13,7 +13,7 @@ const Stock = () => {
 
 
     return (
-        <Card className=' flex !rounded-none gap-4 '>
+        <Card className=' flex !rounded-none gap-4 p-4'>
             <Review />
             <div className='flex flex-col gap-4 w-2/4 '>
                 <Card className='h-2/4 w-full flex flex-col items-center ' >
