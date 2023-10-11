@@ -5,7 +5,7 @@ import Review from './review/Review';
 import { DonutChart } from "@tremor/react";
 import Chart from './chart/Chart';
 
-const MyShippings = () => {
+const MyExports = () => {
 
 
 
@@ -31,8 +31,5 @@ const MyShippings = () => {
     );
 };
 
-MyShippings.propTypes = {
 
-};
-
-export default MyShippings;
+export default MyExports;

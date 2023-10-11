@@ -25,9 +25,7 @@ const Navbar = () => {
     const navigate = useNavigate()
 
     // get path from url with react router
-    const location = useLocation()
 
-    console.log(location.pathname)
 
 
 
@@ -64,12 +62,12 @@ const Navbar = () => {
         {
             title: 'Exportations',
             icon: Export,
-            path: '/dashboard/shippings',
+            path: '/dashboard/exports',
         },
         {
             title: 'Importations',
             icon: Import,
-            path: '/dashboard/orders',
+            path: '/dashboard/imports',
         },
         {
             title: 'Utilisateurs',
@@ -145,6 +143,7 @@ const Navbar = () => {
                         onClick={() => {
                             setTheme(theme === 'light' ? 'dark' : 'light')
                             document.body.classList.toggle('dark')
+                            
                             if (theme === 'light') {
                                 localStorage.setItem('theme', 'dark')
                             } else {

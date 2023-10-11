@@ -32,8 +32,8 @@ const Profil = () => {
   };
 
   return (
-    <Card className='profil'>
-
+    <Card className="!rounded-none p-4">
+      <div className="h-full ">
       <Card decoration="top" decorationColor="indigo" className="w-2/4 h-fit ">
         <Title>Mon profil </Title>
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-2 mt-5">
@@ -183,6 +183,9 @@ const Profil = () => {
           </div>
         </form>
       </Card>
+      </div>
+
+    
     </Card>
   );
 };

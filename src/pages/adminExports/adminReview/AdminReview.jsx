@@ -67,7 +67,7 @@ const AdminReview = () => {
 
     return (
         <>
-        <Title>Exportations</Title>
+        <Title>Commandes expédiées</Title>
             <Table className="mt-5 table-shippings">
                     <TableHead>
                         <TableRow>

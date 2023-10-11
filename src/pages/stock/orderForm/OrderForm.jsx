@@ -26,7 +26,7 @@ const OrderForm = () => {
 
     return (
         <>
-            <Title className='self-start'>Ajouter des articles </Title>
+            <Title className='self-start'>Commander des articles </Title>
             <span className='text-red-500 text-sm mt-5'>* Toute commande devra être validée par un administrateur </span>
 
             <form onSubmit={handleSubmit(submitForm)} className='flex flex-col gap-4 mt-10 w-2/3 '>

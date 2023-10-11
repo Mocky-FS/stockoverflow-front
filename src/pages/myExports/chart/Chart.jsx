@@ -25,7 +25,7 @@ const Chart = () => {
     return (
         <Card className="w-2/4 mx-auto overflow-auto  flex flex-col" >
             
-                <Title>Recap commandes expediées</Title>
+                <Title>Nombre de commandes par employés</Title>
 
             <Legend categories={data.map((user) => user.name)} className="my-2 self-center" />
             <DonutChart

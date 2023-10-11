@@ -4,49 +4,28 @@ import { toast } from "react-toastify";
 import { TextInput } from "@tremor/react";
 import { useNavigate } from "react-router-dom";
 
-import "./register.scss";
-
-const Register = ({ user = false }) => {
+const Register = () => {
   const {
     register,
     watch,
     handleSubmit,
     formState: { errors },
   } = useForm();
+
   const navigate = useNavigate();
 
-  const onSubmit = async  (data) => {
+  const onSubmit = async (data) => {
 
-
-    if (user) {
-
-      toast.success("Utilisateur crée");
-
-    } else {
-
-      try {
-
-        // const response = await registerUser(data)
-
-        // console.log(response)
-
-
-        toast.success("Votre compte a bien été crée");
-
-        navigate("/");
-
-      } catch (error){
-        console.log(error)
-      }
-     
-    }
+    console.log(data)
+    toast.success('Compte crée')
+    navigate('/')
   };
 
   return (
     <Card className="w-full h-full !rounded-none flex justify-center items-center ">
       <Card className="w-1/3 self-center flex flex-col gap-6">
         <Title className="text-center mb-5">
-          {user ? "Créer un utilisateur" : "Création de compte"}
+          Création de compte
         </Title>
         <form
           className="flex flex-col gap-4 h-full"

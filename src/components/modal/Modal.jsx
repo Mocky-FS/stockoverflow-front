@@ -35,7 +35,6 @@ const Modal = ({isOpen, closeModal, content}) => {
                                 bg-tremor-background dark:bg-dark-tremor-background-subtle dark:text-dark-tremor-content-emphasis
                                 "
                         >       
-                         {/* bg-tremor-background ring-tremor-ring shadow-tremor-card dark:bg-dark-tremor-background dark:ring-dark-tremor-ring dark:shadow-dark-tremor-card border-tremor-brand dark:border-dark-tremor-brand */}
                             {content}
                         </Dialog.Panel>
                     </Transition.Child>

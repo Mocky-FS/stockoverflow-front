@@ -1,18 +1,20 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
+
+
+import './assets/styles/global.scss'
+import 'react-toastify/dist/ReactToastify.css';
+
 import GlobalApp from './components/GlobalApp';
 import Register from './pages/register/Register';
 import Login from './pages/login/Login';
 import Dashboard from './pages/dashboard/Dashboard';
 import Profil from './pages/profil/Profil';
 import NotFound from './pages/notFound/NotFound';
-
-import './assets/styles/global.scss'
-import 'react-toastify/dist/ReactToastify.css';
-import OrdersAdmin from './pages/ordersAdmin/OrdersAdmin';
-import Users from './pages/users/Users';
-import Shippings from './pages/shippings/Shippings';
-import MyShippings from './pages/mySHippings/MyShippings';
+import AdminImports from './pages/adminImports/AdminImports';
+import AdminUsers from './pages/adminUsers/AdminUsers';
+import AdminExports from './pages/adminExports/AdminExports';
+import MyExports from './pages/myExports/MyExports';
 import Stock from './pages/stock/Stock';
 import Layout from './pages/Layout';
 
@@ -50,19 +52,19 @@ function App() {
             },
             {
               path : 'my-shippings',
-              element : <MyShippings />
+              element : <MyExports />
             },
             {
-              path : 'shippings',
-              element : <Shippings />
+              path : 'exports',
+              element : <AdminExports />
             },
             {
-              path : 'orders',
-              element : <OrdersAdmin />
+              path : 'imports',
+              element : <AdminImports />
             },
             {
               path : 'users',
-              element : <Users />
+              element : <AdminUsers />
             },
             {
               path : 'profil',

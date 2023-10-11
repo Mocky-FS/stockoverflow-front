@@ -11,8 +11,7 @@ module.exports = {
   ],
   darkMode : "class",
   theme: {
-    transparent: "transparent",
-    current: "currentColor",
+    
    
     extend: {
       colors: {

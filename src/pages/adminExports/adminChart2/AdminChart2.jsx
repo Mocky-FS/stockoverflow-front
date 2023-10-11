@@ -1,6 +1,6 @@
-import React from 'react';
 import { BarChart, Subtitle, Title } from "@tremor/react";
-import { Card } from '@nextui-org/react';
+
+
 const AdminChart2 = () => {
 
     const chartdata = [
@@ -29,7 +29,7 @@ const AdminChart2 = () => {
 
     return (
         <div className='h-full w-full flex flex-col'>
-            <Title>Top 5  jeux</Title>
+            <Title>Classement TOP 5  jeux</Title>
             <Subtitle> Nombre d'exportations par jeux  </Subtitle>
               
            
