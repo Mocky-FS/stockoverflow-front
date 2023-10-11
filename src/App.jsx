@@ -10,7 +10,6 @@ import NotFound from './pages/notFound/NotFound';
 import './assets/styles/global.scss'
 import 'react-toastify/dist/ReactToastify.css';
 import OrdersAdmin from './pages/ordersAdmin/OrdersAdmin';
-import Settings from './pages/settings/Settings';
 import Users from './pages/users/Users';
 import Shippings from './pages/shippings/Shippings';
 import MyShippings from './pages/mySHippings/MyShippings';
@@ -69,10 +68,7 @@ function App() {
               path : 'profil',
               element : <Profil />
             },
-            {
-              path : 'settings',
-              element : <Settings />
-            },        
+            
           ]
         },
         {
