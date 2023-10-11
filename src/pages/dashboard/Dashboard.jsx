@@ -108,7 +108,7 @@ const Dashboard = () => {
         <Card className='dashboard'>
 
             <div className='top'>
-                <Card decoration="top" className='test' decorationColor='blue' >
+                <Card  className='test' decorationColor='blue' >
                     <Flex justifyContent="start" className="space-x-4">
                         <Icon icon={Doc} variant="light" size="xl" color={'blue'} />
                         <div className="truncate">
@@ -117,7 +117,7 @@ const Dashboard = () => {
                         </div>
                     </Flex>
                 </Card>
-                <Card decoration="top" className='test' decorationColor='blue' >
+                <Card  className='test' decorationColor='blue' >
                     <Flex justifyContent="start" className="space-x-4">
                         <Icon icon={Doc} variant="light" size="xl" color={'blue'} />
                         <div className="truncate">
@@ -127,7 +127,7 @@ const Dashboard = () => {
                         </div>
                     </Flex>
                 </Card>
-                <Card decoration="top" className='test' decorationColor='blue' >
+                <Card  className='test' decorationColor='blue' >
                     <Flex justifyContent="start" className="space-x-4">
                         <Icon icon={Doc} variant="light" size="xl" color={'blue'} />
                         <div className="truncate">
@@ -136,7 +136,7 @@ const Dashboard = () => {
                         </div>
                     </Flex>
                 </Card>
-                <Card decoration="top" className='test' decorationColor='blue' >
+                <Card  className='test' decorationColor='blue' >
                     <Flex justifyContent="start" className="space-x-4">
                         <Icon icon={Doc} variant="light" size="xl" color={'blue'} />
                         <div className="truncate">
@@ -151,7 +151,7 @@ const Dashboard = () => {
 
             <div className='middle'>
 
-                <Card className='w-3/4 graph' decoration="top">
+                <Card className='w-3/4 graph' >
                     <Title>Newsletter revenue over time (USD)</Title>
                     <AreaChart
                         className="h-72 mt-4"
@@ -162,7 +162,7 @@ const Dashboard = () => {
                         valueFormatter={dataFormatter}
                     />
                 </Card>
-                <Card className="w-1/4 graph"decoration="top" >
+                <Card className="w-1/4 graph" >
                     <Title>Exportations</Title>
                     <DonutChart
                         className="mt-6"
@@ -177,7 +177,7 @@ const Dashboard = () => {
 
             </div>
             <div className='bottom'>
-                <Card className="w-1/4 graph "decoration="top">
+                <Card className="w-1/4 graph ">
                     <Title>Importations</Title>
                     <DonutChart
                         className="mt-6"
@@ -189,7 +189,7 @@ const Dashboard = () => {
                     />
                 </Card>
 
-                <Card className='w-3/4 graph'decoration="top">
+                <Card className='w-3/4 graph'>
                     <Title>Exportations / Importations depuis (2020 à 2023)</Title>
                     <LineChart
                         className="mt-6"

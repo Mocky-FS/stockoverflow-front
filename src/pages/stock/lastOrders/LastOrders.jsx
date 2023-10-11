@@ -1,4 +1,4 @@
-import { Flex, Select, SelectItem, Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRow, Text, Title } from '@tremor/react';
+import { Card, Flex, Select, SelectItem, Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRow, Text, Title } from '@tremor/react';
 import React, { useState } from 'react';
 import { filterArray } from '../../../utils/functions';
 
@@ -58,7 +58,7 @@ const LastOrders = () => {
 
 
     return (
-        <>
+        <Card className='h-full overflow-hidden'>
             <Flex className="space-x-4 my-4 w-full justify-content">
                 <Title className='title'>Mes dernières commandes </Title>
                 <Select
@@ -105,7 +105,7 @@ const LastOrders = () => {
                     }
                 </TableBody>
             </Table>
-        </>
+        </Card>
     );
 };
 

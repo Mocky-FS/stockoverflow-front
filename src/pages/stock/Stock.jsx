@@ -13,16 +13,16 @@ const Stock = () => {
 
 
     return (
-        <Card className=' flex rounded-none gap-4 ' style={{ borderRadius: '0' }}>
+        <Card className=' flex !rounded-none gap-4 '>
             <Review />
-            <Card className='flex flex-col gap-4 w-2/4 p-4 ' decoration='top'>
+            <div className='flex flex-col gap-4 w-2/4 '>
                 <Card className='h-2/4 w-full flex flex-col items-center ' >
                     <OrderForm />
                 </Card>
-                <Card className='h-full overflow-hidden' >
+                {/* <Card className='h-full overflow-hidden' > */}
                     <LastOrders />
-                </Card>
-            </Card>
+                {/* </Card> */}
+            </div>
         </Card>
     );
 };

@@ -1,6 +1,6 @@
 
 import { NavLink, useNavigate } from 'react-router-dom';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 import Logo from '../../assets/icons/logo.svg?react'
 import Dashboard from '../../assets/icons/dashboard.svg?react'
@@ -69,10 +69,16 @@ const Navbar = () => {
         },
     ]
 
+useEffect(() => {
+    if (window.innerWidth < 768) {
+        setIsMenuOpen(false)
+    }
+}, [])
+
 
     return (
         <div className={`bg-tremor-background   dark:bg-dark-tremor-background  dashboard-nav ${!isMenuOpen ? 'close-menu' : ''} `}>
-            <Card className='top text-tremor-content dark:text-dark-tremor-content-muted' style={{ flexDirection: !isMenuOpen ? 'column' : 'row', alignItems: 'center', gap: !isMenuOpen ? '1rem' : '' }}>
+            <Card className='top text-tremor-content dark:text-dark-tremor-content' style={{ flexDirection: !isMenuOpen ? 'column' : 'row', alignItems: 'center', gap: !isMenuOpen ? '1rem' : '' }}>
                 <Logo />
 
                 {isMenuOpen &&
@@ -101,15 +107,15 @@ const Navbar = () => {
                             offset={50}
                         >
                             <NavLink to={link.path} end={link.end} style={{ width: !isMenuOpen ? 'fit-content' : '' }} >
-                                <link.icon className='text-tremor-content dark:text-dark-tremor-content-muted'/>
-                                {isMenuOpen && <p className='text-tremor-content dark:text-dark-tremor-content-muted'>{link.title}</p>}
+                                <link.icon className='text-tremor-content dark:text-dark-tremor-content'/>
+                                {isMenuOpen && <p className='text-tremor-content dark:text-dark-tremor-content'>{link.title}</p>}
                             </NavLink>
                         </Tooltip>
                     )
                 })}
 
             </div>
-            <Card className={`infos text-tremor-content dark:text-dark-tremor-content-muted`} style={{ justifyContent: !isMenuOpen ? 'flex-start' : '', flexDirection: !isMenuOpen ? 'column' : 'row', gap: '1rem' }}>
+            <Card className={`infos text-tremor-content dark:text-dark-tremor-content`} style={{ justifyContent: !isMenuOpen ? 'flex-start' : '', flexDirection: !isMenuOpen ? 'column' : 'row', gap: '1rem' }}>
                 <Tooltip placement={!isMenuOpen ? 'right' : 'top'} content={'Profil'} color='foreground' offset={50}>
                     <button
                         className='infos-btn'
@@ -136,7 +142,7 @@ const Navbar = () => {
                         {theme === 'dark' ? <Sun /> : <Moon />}
                     </button>
                 </Tooltip>
-                <Tooltip placement={!isMenuOpen ? 'right' : 'top'} content={'Se déconnecter'} color='foreground' offset={50}>
+                <Tooltip placement={!isMenuOpen  ? 'right' : 'top'} content={'Se déconnecter'} color='foreground' offset={50}>
                     <button
                         onClick={() => {
                             if (window.confirm('Voulez-vous vous déconnecter ?')) {

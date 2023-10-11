@@ -38,15 +38,15 @@ const OrderForm = () => {
                     render={({ field }) => (
                         <Select
                             {...field}
-                            items={options}
                             label="Catégorie"
                             placeholder="Selectionner une catégorie"
                             className=" w-full text-tremor-content dark:text-dark-tremor-content-muted "
+                            enableClear={false}
                         // errorMessage={errors.category ? 'Veuillez selectionner une catégorie' : ''}
                         >
-                            <SelectItem value="1" className='text-tremor-content dark:text-dark-tremor-content-muted '>Papiers</SelectItem>
-                            <SelectItem value="2" className='text-tremor-content dark:text-dark-tremor-content-muted '>Feuilles</SelectItem>
-                            <SelectItem value="3" className='text-tremor-content dark:text-dark-tremor-content-muted '>Divers</SelectItem>
+                            <SelectItem value="1" >Papiers</SelectItem>
+                            <SelectItem value="2" >Feuilles</SelectItem>
+                            <SelectItem value="3" >Divers</SelectItem>
                         </Select>
 
                     )}
@@ -64,14 +64,14 @@ const OrderForm = () => {
                     render={({ field }) => (
                         <Select
                             {...field}
-                            items={options}
                             label="Produit"
                             placeholder="Selectionnez un produit"
                             className=" w-full text-tremor-content dark:text-dark-tremor-content-muted "
+                            enableClear={false}
                         >
-                            <SelectItem value="1" className='text-tremor-content dark:text-dark-tremor-content-muted '>Feuille A4</SelectItem>
-                            <SelectItem value="2" className='text-tremor-content dark:text-dark-tremor-content-muted '>Feuille A3</SelectItem>
-                            <SelectItem value="3" className='text-tremor-content dark:text-dark-tremor-content-muted '>Papier Bulle</SelectItem>
+                            <SelectItem value="1">Feuille A4</SelectItem>
+                            <SelectItem value="2">Feuille A3</SelectItem>
+                            <SelectItem value="3">Papier Bulle</SelectItem>
 
                         </Select>
                     )}
@@ -89,7 +89,7 @@ const OrderForm = () => {
                             type="number"
                             placeholder='Quantité'
                             min={0}
-                            error={errors.quantity}
+                            // error={errors.quantity}
 
                         />
                     )}
