@@ -62,7 +62,7 @@ const Users = () => {
                 closeModal={closeModal}
                 content={
                     <Register
-                        closeModal={closeModal}
+                        user={true}
                     />
                 }
             />
