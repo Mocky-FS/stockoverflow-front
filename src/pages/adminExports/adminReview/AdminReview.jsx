@@ -67,15 +67,15 @@ const AdminReview = () => {
 
     return (
         <>
-        <Title>Commandes expédiées</Title>
-            <Table className="mt-5 table-shippings">
-                    <TableHead>
-                        <TableRow>
-                            <TableHeaderCell>N° </TableHeaderCell>
-                            <TableHeaderCell>Date</TableHeaderCell>
-                            <TableHeaderCell>Utilisateur</TableHeaderCell>
-                            <TableHeaderCell>Client</TableHeaderCell>
-                            <TableHeaderCell>Statut</TableHeaderCell>
+        {/* <Title>Commandes expédiées</Title> */}
+            <Table className="h-full overflow-auto " >
+                    <TableHead >
+                        <TableRow  >
+                            <TableHeaderCell className='bg-slate-800'>N° </TableHeaderCell>
+                            <TableHeaderCell className='bg-slate-800'>Date</TableHeaderCell>
+                            <TableHeaderCell className='bg-slate-800'>Utilisateur</TableHeaderCell>
+                            <TableHeaderCell className='bg-slate-800'>Client</TableHeaderCell>
+                            <TableHeaderCell className='bg-slate-800'>Statut</TableHeaderCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>

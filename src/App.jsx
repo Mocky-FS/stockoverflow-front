@@ -1,4 +1,4 @@
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom';
 
 
 
@@ -17,10 +17,15 @@ import AdminExports from './pages/adminExports/AdminExports';
 import MyExports from './pages/myExports/MyExports';
 import Stock from './pages/stock/Stock';
 import Layout from './pages/Layout';
+import { useContext } from 'react';
+import { AuthContext } from './context/AuthContext';
+import { isAdmin, isTokenValid } from './utils/token';
 
 
 
 function App() {
+
+  const { user } = useContext(AuthContext)
 
   const routes = [
 
@@ -35,12 +40,12 @@ function App() {
         },
         {
           path : 'register',
-          element : <Register />
+          element :  <Register /> 
         },
         
         {
           path : '/dashboard',
-          element : <Layout />,
+          element :   <Layout /> ,
           children : [
             {
               path : '',
@@ -56,15 +61,15 @@ function App() {
             },
             {
               path : 'exports',
-              element : <AdminExports />
+              element :  user?.token && isAdmin(user.token) ? <AdminExports /> : <Navigate to='/dashboard' />
             },
             {
               path : 'imports',
-              element : <AdminImports />
+              element : user?.token && isAdmin(user.token) ? <AdminImports /> : <Navigate to='/dashboard' />
             },
             {
               path : 'users',
-              element : <AdminUsers />
+              element : user?.token && isAdmin(user.token) ?  <AdminUsers /> : <Navigate to='/dashboard' />
             },
             {
               path : 'profil',

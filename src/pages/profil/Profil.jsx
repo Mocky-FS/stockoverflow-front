@@ -1,13 +1,18 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Card, Text, TextInput } from "@tremor/react";
 import { Button, Title } from "@tremor/react";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 
 import "./profil.scss";
+import { AuthContext } from "../../context/AuthContext";
 // import TestSVG from '../../assets/icons/icons.svg?react'
 
 const Profil = () => {
+
+  const { user } = useContext(AuthContext);
+
+// Au refresh regler le pb
   const {
     handleSubmit,
     watch,
@@ -16,16 +21,17 @@ const Profil = () => {
     reset,
   } = useForm({
     defaultValues: {
-      firstname: "Alex",
-      lastname: "Rousseau",
-      email: "alex@test.fr",
+      firstname: user?.firstname,
+      lastname: user?.lastname,
+      email: user?.email,
     },
   });
 
   const [update, setUpdate] = useState(false);
 
   const onSubmit = (data) => {
-    console.log(data);
+    
+    
     reset();
     toast.success("Mot de passe a été changé");
     setUpdate(false);

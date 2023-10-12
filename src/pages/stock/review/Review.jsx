@@ -4,96 +4,24 @@ import { useState } from 'react';
 import { badgeColor, filterArray } from '../../../utils/functions';
 import Warning from '../../../assets/icons/warning.svg?react'
 import Check from '../../../assets/icons/Check.svg?react'
+import { keys } from '../../../../query-key-factory';
+import { getProducts } from '../../../api/products';
+import { useQuery } from '@tanstack/react-query';
+
 const Review = () => {
 
     const [selectedOption, setSelectedOption] = useState('Tout');
     const data = [
-        {
-            id: 1,
-            category: "Papier bulle",
-            product: 'TAH452',
-            quantity: 1,
-            updateDate: '27/01/2021'
-
-        },
-        {
-            id: 2,
-            category: "Papier carton",
-            product: 'OPN765',
-            quantity: 100,
-            updateDate: '27/01/2021'
-
-        },
-        {
-            id: 3,
-            category: "Papier A4",
-            product: 'QDC430',
-            quantity: 34,
-            updateDate: '27/01/2021'
-
-        },
-        {
-            id: 4,
-            category: "Papier A3",
-            product: 'PAK765',
-            quantity: 210,
-            updateDate: '27/01/2021'
-
-        },
-        {
-            id: 5,
-            category: "Papier bulle",
-            product: 'TAH452',
-            quantity: 50,
-            updateDate: '27/01/2021'
-
-        },
-        {
-            id: 6,
-            category: "Papier carton",
-            product: 'OPN765',
-            quantity: 100,
-            updateDate: '27/01/2021'
-
-        },
-        {
-            id: 7,
-            category: "Papier A4",
-            product: 'QDC430',
-            quantity: 340,
-            updateDate: '27/01/2021'
-
-        },
-        {
-            id: 8,
-            category: "Papier A3",
-            product: 'PAK765',
-            quantity: 121,
-            updateDate: '27/01/2021'
-
-        },
-        {
-            id: 9,
-            category: "Papier bulle",
-            product: 'TAH452',
-            quantity: 120,
-            updateDate: '27/01/2021'
-
-        },
-        {
-            id: 10,
-            category: "Papier bulle",
-            product: 'TAH452',
-            quantity: 122,
-            updateDate: '27/01/2021'
-
-        },
-
-
-
-
+        
 
     ];
+
+    const { data: productsList, isLoading: productsLoading } = useQuery(
+        keys.products({}),
+        () => getProducts(),
+    )
+
+
 
 
 

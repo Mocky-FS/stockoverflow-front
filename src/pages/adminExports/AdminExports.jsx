@@ -10,7 +10,7 @@ const AdminExports = () => {
 
     return (
         <Card className='!rounded-none flex  flex-col gap-4 p-4'>
-            <Card className='h-2/4'>
+            <Card className='h-2/4 overflow-hidden'>
                 <AdminReview />
             </Card>
             <div className='flex h-2/4 gap-4'>

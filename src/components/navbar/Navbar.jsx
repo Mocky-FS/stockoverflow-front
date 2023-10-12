@@ -19,16 +19,11 @@ import { Tooltip } from "@nextui-org/react";
 import './navbar.scss'
 import { Card } from '@tremor/react';
 import { ThemeContext } from '../../context/ThemeContext';
+import { isAdmin } from '../../utils/token';
 
 const Navbar = () => {
 
     const navigate = useNavigate()
-
-    // get path from url with react router
-
-
-
-
 
     const { user, logout } = useContext(AuthContext)
     const { theme, setTheme } = useContext(ThemeContext)
@@ -55,26 +50,34 @@ const Navbar = () => {
             path: '/dashboard/stock',
         },
         {
+            
             title: 'Mes envois',
             icon: Package,
             path: '/dashboard/my-shippings',
-        },
-        {
-            title: 'Exportations',
-            icon: Export,
-            path: '/dashboard/exports',
-        },
-        {
-            title: 'Importations',
-            icon: Import,
-            path: '/dashboard/imports',
-        },
-        {
-            title: 'Utilisateurs',
-            icon: Users,
-            path: '/dashboard/users',
-        },
+        }
     ]
+
+    
+    if (isAdmin(user?.token)) {
+        links.push(
+            {
+                title: 'Exportations',
+                icon: Export,
+                path: '/dashboard/exports',
+            },
+            {
+                title: 'Importations',
+                icon: Import,
+                path: '/dashboard/imports',
+            },
+            {
+                title: 'Utilisateurs',
+                icon: Users,
+                path: '/dashboard/users',
+            }
+        );
+    }
+    
 
     return (
         <div className={`bg-tremor-background   dark:bg-dark-tremor-background  dashboard-nav ${!isMenuOpen ? 'close-menu' : ''} `}>
@@ -108,11 +111,6 @@ const Navbar = () => {
                             offset={50}
                         >
                             <NavLink to={link.path} end={link.end} style={{ width: !isMenuOpen ? 'fit-content' : '' }}
-                            //     className=' 
-                         
-                            // dark:hover:hover:bg-dark-tremor-content-subtle 
-                            // dark:hover text-tremor-content-subtle ({isActive}) ? 'text-tremor-brand' : ''}
-                            // '
                             className={ ({isActive}) => isActive ? 
                                 'bg-tremor-brand text-tremor-content-inverted dark:bg-slate-800 dark:text-tremor-background ' :
                                 '  dark:text-tremor-content-subtle'

@@ -7,16 +7,32 @@ const AuthProvider = ({ children }) => {
     const timeOutTokenRef = useRef(null);
 
     const [user, setUser] = useState({
-        firstname : 'Méduse',
+        firstname : null,
         lastname : null,
         email : null,
         id : null,
         token : null,
-        tokenExpiration : null,
-        isLogged : false,
-        isAdmin : false
-
+        tokenExpiration : null,      
     })
+
+    useEffect(() => {
+    const storedUser = JSON.parse(localStorage.getItem('user'));
+
+    console.log(storedUser)
+
+    if (storedUser ) {
+       setUser({
+         id : storedUser.id,
+        firstname : storedUser.firstname,
+        lastname : storedUser.lastname,
+        email : storedUser.email,
+        token : storedUser.token,
+        tokenExpiration : storedUser.tokenExpiration,
+       })
+    }
+
+    
+    }, [])
 
     const logout = () => {
 
@@ -27,8 +43,6 @@ const AuthProvider = ({ children }) => {
             id : null,
             token : null,
             tokenExpiration : null,
-            isLogged : false,
-            isAdmin : false
         })
 
         localStorage.removeItem('user');
@@ -43,7 +57,7 @@ const AuthProvider = ({ children }) => {
           timeOutTokenRef.current = setTimeout(() => {
             
             logout();
-            alert('Votre session a expiré, veuillez vous reconnecter')
+            // alert('Votre session a expiré, veuillez vous reconnecter')
             
           }, expiration);
     

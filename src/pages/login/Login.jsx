@@ -4,11 +4,10 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Button, Card, Flex, Text, TextInput, Title } from '@tremor/react';
 import { toast } from 'react-toastify';
 import { useMutation } from '@tanstack/react-query';
-import axios from 'axios';
 import { AuthContext } from '../../context/AuthContext';
-import { getExpirationTime } from '../../utils/functions';
-import { login } from '../../api';
+import { login } from '../../api/users/index';
 import Email from '../../assets/icons/email.svg?react'
+import { getExpirationTime } from '../../utils/token';
 
 
 
@@ -22,52 +21,60 @@ const Login = () => {
 
 
 
-    // const { mutate : loginMutate} = useMutation((data) => console.log('in'), {
+    const { mutate : loginMutate} = useMutation((data) => login(data), {
 
-    //     onSuccess : (data) => {
+        onSuccess : (data) => {
 
-    //         // axios.defaults.headers.common['Authorization'] = `Bearer ${data.token}`
+            // axios.defaults.headers.common['Authorization'] = `Bearer ${data.token}`
 
-    //         // setUser({
-    //         //     isLogged : true,
-    //         //     firstname : data.firstname,
-    //         //     lastname : data.lastname,
-    //         //     email : data.email,
-    //         //     id : data.id,
-    //         //     token : data.token,
-    //         //     tokenExpiration : getExpirationTime(data.tokenExpiration),
-    //         //     isAdmin : data.isAdmin
-    //         // })
+            setUser({
+                isLogged : true,
+                firstname : data.firstname,
+                lastname : data.lastname,
+                email : data.email,
+                id : data.id,
+                token : data.token,
+                tokenExpiration : getExpirationTime(data.token),
+            })
 
-    //         // localStorage.setItem('user', JSON.stringify({
-    //         //     ...data,
-    //         //     tokenExpiration : getExpirationTime(data.tokenExpiration),
-    //         //     isLogged : true,
-    //         //     isAdmin : data.isAdmin
-
-    //         // }))
-
-    //         // navigate('/dashboard')
-    //         // toast.success(`Bonjour ${data.firstname} !}`)
-    //         navigate('/dashboard')
-    //         toast.success(`Bonjour ${data.firstname} !}`)
+            localStorage.setItem('user', JSON.stringify({
+                ...data,
+                tokenExpiration : getExpirationTime(data.token),
+              
 
 
-    //     },
+            }))
+            reset()
 
-    //     onError : (error) => {
-    //         console.log(error)
-    //         toast.error('Une erreur est survenue')
-    //     },
+            const hour = new Date().getHours()
+            
+            if (hour >= 20 || hour <= 6) {
+                toast(`Bonsoir ${data.firstname} !`)
+            } else {
+                toast(`Bonjour ${data.firstname} !`)
+            }
+            navigate('/dashboard')
+        
+        },
+
+        onError : (error) => {
+            if (error.code === 401 ) {
+                setError('email', { type: 'manual', message: 'Identifiants incorrects' })
+                 setError('password', { type: 'manual', message: 'Identifiants incorrects' })
+            } else {
+                // alert('Une erreur est survenue, merci de réessayer')
+            }
+        },
 
 
 
 
-    // })
+    })
 
-    const onSubmit = () => {
-        toast.success(`Bonjour ${user.firstname} !`)
-        navigate('/dashboard')
+    const onSubmit = (data) => {
+        // toast.success(`Bonjour ${user.firstname} !`)
+        // navigate('/dashboard')
+        loginMutate(data)
     }
 
     return (

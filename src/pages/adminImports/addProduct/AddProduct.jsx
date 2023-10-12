@@ -54,6 +54,23 @@ const AddProduct = ({index}) => {
                 {errors.description && (<span className="text-red-500 text-xs "> {errors.description.message} </span>)}
                 <Controller
                     control={control}
+                    name='price'
+                    defaultValue={''}
+                    rules={{ required: 'Veuillez indiquer un prix' }}
+                    render={({ field }) => (
+                        <NumberInput
+                            {...field}
+                            type="number"
+                            placeholder='Prix en euros'
+                            min={0}
+
+                        />
+                    )}
+                />
+                
+                {errors.price && <span className='text-red-500 text-xs '>{errors.price.message}</span>}
+                <Controller
+                    control={control}
                     name='quantity'
                     defaultValue={''}
                     render={({ field }) => (
@@ -68,6 +85,7 @@ const AddProduct = ({index}) => {
                 />
                 <Text className='!text-red-500 text-xs '>Saisir quantité si le produit est déja reçu</Text>
                 {errors.quantity && <span className='text-red-500 text-xs '>{errors.quantity.message}</span>}
+               
 
                 <Button type='submit' className='w-fit self-center'>Ajouter</Button>
             </form>

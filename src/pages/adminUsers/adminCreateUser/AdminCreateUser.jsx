@@ -2,22 +2,81 @@ import { Button, TextInput, Title } from '@tremor/react';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
+import { createUser } from '../../../api/users';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { keys } from '../../../../query-key-factory';
 
 const AdminCreateUser = () => {
+
 
     const {
         register,
         watch,
         handleSubmit,
         formState: { errors },
-        reset
+        reset,
+        setError
     } = useForm();
 
 
-    const onSubmit = (data) => {
-        console.log(data)
-        reset()
-        toast.success('Utilisateur crée')
+    const queryClient = useQueryClient();
+
+
+
+    const { mutate: addUserMutation } = useMutation((data) => createUser(data), {
+
+        onMutate: async (data) => {
+            // await queryClient.cancelQueries(keys.users({}))
+            // const previousUsers = queryClient.getQueryData(keys.users({}))
+            // queryClient.setQueryData(keys.users({}), (old) => [...old, data])
+            // return { previousUsers }
+
+           
+        },
+
+        onSuccess: () => {
+                toast.success('Utilisateur créé avec succès')
+                reset()
+        },
+        onError: () => {
+            toast.error('Une erreur est survenue lors de la création')
+        },
+        onSettled: () => {
+            queryClient.invalidateQueries({ queryKey: keys.users })
+
+
+        }
+
+    })
+
+
+
+
+
+    const onSubmit = async (data) => {
+
+        addUserMutation(data)
+
+        //     try {
+        //     const response = await createUser(data)
+
+
+        //     if (response.status === 201) {
+        //       toast.success("L'utilisateur a bien été créé")        
+        //       reset() 
+        //     }
+
+        //   } catch (error) {
+
+        //     if (error.code === 409 && error.message === `L'adresse e-mail existe déjà`) {
+        //       return setError('email', { type: 'manual', message: 'L\'adresse e-mail existe déjà' });
+        //     } else {
+        //       alert('Une erreur est survenue, merci de réessayer')
+        //     }
+
+        //   }
+
+
 
     };
 

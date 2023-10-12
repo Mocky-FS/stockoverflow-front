@@ -3,23 +3,85 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { TextInput } from "@tremor/react";
 import { useNavigate } from "react-router-dom";
+import { createUser, login } from "../../api/users";
+import { AuthContext } from "../../context/AuthContext";
+import { useContext } from "react";
+import { getExpirationTime } from "../../utils/token";
+
 
 const Register = () => {
   const {
     register,
     watch,
     handleSubmit,
+    setError,
     formState: { errors },
   } = useForm();
 
   const navigate = useNavigate();
 
+  const { user, setUser } = useContext(AuthContext)
+
   const onSubmit = async (data) => {
 
-    console.log(data)
-    toast.success('Compte crée')
-    navigate('/')
+    try {
+
+      const response = await createUser(data)
+
+
+      if (response.status === 201) {
+          await autoLogin(data)
+      }
+
+    } catch (error) {
+
+      if (error.code === 409 && error.message === `L'adresse e-mail existe déjà`) {
+        return setError('email', { type: 'manual', message: 'L\'adresse e-mail existe déjà' });
+      } else {
+        alert('Une erreur est survenue, merci de réessayer')
+      }
+
+    }
+
+
   };
+
+  const autoLogin = async (data) => {
+
+    try {
+      const response = await login(data)
+
+
+      if (response.token) {
+
+        setUser({
+          isLogged: true,
+          firstname: response.firstname,
+          lastname: response.lastname,
+          email: response.email,
+          id: response.id,
+          token: response.token,
+          tokenExpiration: getExpirationTime(response.token),
+          isAdmin: response.role
+        })
+
+        localStorage.setItem('user', JSON.stringify({
+          ...response,
+          tokenExpiration: getExpirationTime(response.token),
+          isAdmin: response.isAdmin
+        }))
+
+    
+        navigate('/dashboard');
+        toast.success(`Votre compte a bien été créé ${response.firstname}`)
+      }
+
+    } catch (error) {
+      console.log(error)
+      alert('Une erreur est survenue,')
+    }
+
+  }
 
   return (
     <Card className="w-full h-full !rounded-none flex justify-center items-center ">
