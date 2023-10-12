@@ -1,8 +1,9 @@
-import { Badge, Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRow, Text, Title } from '@tremor/react';
-import React from 'react';
-
+import { Badge, Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRow, Text, TextInput, Title } from '@tremor/react';
+import React, { useState } from 'react';
+import Search from '../../../assets/icons/search.svg?react';
 const AdminReview = () => {
 
+    const [search, setSearch] = useState('')
     const data = [
         {
             id: 1,
@@ -96,7 +97,7 @@ const AdminReview = () => {
         },
         {
             id: 10,
-            date: "12/12/2021",
+            date: "12/12/2023",
             client: 'Oclock',
             status: "En Attente",
             user: 'Joris',
@@ -107,17 +108,28 @@ const AdminReview = () => {
 
     ];
 
-
-    // const getItemDetails = (item) => {
-    //     // setItemDetails(item);
-    //     // openModal();
-    // }
-
-
+    const resultFiltered = data?.filter((product) => (
+        product.user.toLowerCase().includes(search.toLowerCase()) ||
+        product.stuff.toLowerCase().includes(search.toLowerCase()) ||
+        product.status.toLowerCase().includes(search.toLowerCase()) ||
+        product.amount.toString().includes(search.toLowerCase()) ||
+        product.quantity.toString().includes(search.toLowerCase()) ||
+        product.date.toString().includes(search.toLowerCase())
+    ));
 
     return (
         <>
-        <Title>Toutes les importations</Title>
+            <div className="flex justify-between">
+                <Title>Toutes les importations</Title>
+                <TextInput
+                    className='w-fit'
+                    placeholder='Rechercher'
+                    icon={Search}
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+
+                />
+            </div>
             <Table className="mt-5 table-orders">
                 <TableHead>
                     <TableRow>
@@ -130,10 +142,9 @@ const AdminReview = () => {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {data?.map((item) => (
+                    {resultFiltered?.map((item) => (
 
                         <TableRow className='cursor-pointer' key={item.id} onClick={() => {
-                           
                         }}>
 
                             <TableCell>{item.id}</TableCell>

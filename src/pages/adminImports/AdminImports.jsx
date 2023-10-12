@@ -34,7 +34,7 @@ const AdminImports = () => {
                     </Card>
                 </div>
                 <Card className='h-2/4 w-full'>
-                    <Title>test</Title>
+                   
                 </Card>
             </div>
         </Card>

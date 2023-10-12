@@ -46,13 +46,27 @@ export function getExpirationTime(token) {
 export function isAdmin(token) {
 
   if (!token) {
-    return false;
+    return null; 
+  }
+  
+  const jwt = token.split('.');
+  if (jwt.length !== 3) {
+    return null; 
   }
 
-    const jwt = token?.split('.');
-    const payload = JSON?.parse(atob(jwt[1]));
+  const payload = JSON.parse(atob(jwt[1]));
+  if (!payload.exp) {
+   
+    return null; 
+  }
 
-    const isAdmin = payload.admin
+  const expirationTime = payload.exp * 1000;
+  const currentTime = Date.now();
 
-    return isAdmin;
+  if (currentTime >= expirationTime) {
+  
+    return null; 
+  }
+
+  return payload.admin; 
 }

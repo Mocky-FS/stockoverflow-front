@@ -9,12 +9,12 @@ const AdminExports = () => {
 
 
     return (
-        <Card className='!rounded-none flex  flex-col gap-4 p-4'>
+        <Card className='!rounded-none flex  flex-col gap-4 p-4 overflow-auto'>
             <Card className='h-2/4 overflow-hidden'>
                 <AdminReview />
             </Card>
             <div className='flex h-2/4 gap-4'>
-                <Card className='h-full'>
+                <Card className='h-full p-6'>
                     <AdminChart />
                 </Card>
                 <Card className='h-full'>

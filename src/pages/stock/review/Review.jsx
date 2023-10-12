@@ -1,9 +1,11 @@
 import { Tooltip } from '@nextui-org/react';
-import { Badge, Card, Flex, Icon, Metric, Select, Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRow, Text, Title, SelectItem } from '@tremor/react';
+import { Badge, Card, Flex, Icon, Metric, Select, Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRow, Text, Title, SelectItem, TextInput } from '@tremor/react';
 import { useState } from 'react';
 import { badgeColor, filterArray } from '../../../utils/functions';
 import Warning from '../../../assets/icons/warning.svg?react'
 import Check from '../../../assets/icons/Check.svg?react'
+import Search from '../../../assets/icons/search.svg?react'
+
 import { keys } from '../../../../query-key-factory';
 import { getProducts } from '../../../api/products';
 import { useQuery } from '@tanstack/react-query';
@@ -11,6 +13,7 @@ import { useQuery } from '@tanstack/react-query';
 const Review = () => {
 
     const [selectedOption, setSelectedOption] = useState('Tout');
+    const [search, setSearch] = useState('')
     const data = [
         
 
@@ -46,6 +49,15 @@ const Review = () => {
             <p>{item.category}</p>
         </div>
     ))
+
+    const resultFiltered = data?.filter((product) => (
+        product.name.toLowerCase().includes(search.toLowerCase()) ||
+        product.description.toLowerCase().includes(search.toLowerCase()) ||
+        product.status.toLowerCase().includes(search.toLowerCase()) ||
+        product.price.toString().includes(search.toLowerCase()) ||
+        product.quantity.toString().includes(search.toLowerCase()) ||
+        product.category.toString().includes(search.toLowerCase())
+    ));
 
 
     return (
@@ -86,13 +98,25 @@ const Review = () => {
                     </Card>
                 </Tooltip>
             </Flex>
-            <Flex>
+            <Flex className='justify-between'> 
+                {/* <div className='flex'> */}
                 <Title className='title'>Récapitulatif du stock </Title>
+                
+                {/* <TextInput
+                    className='w-fit'
+                    placeholder='Rechercher'
+                    icon={Search}
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                    
+
+                /> */}
+               
                 <Select
                     placeholder='Filtrer par état'
                     value={selectedOption}
                     onChange={(e) => setSelectedOption(e)}
-                    className='w-1/4'
+                    className='w-fit'
                     enableClear={false}
 
                 >
@@ -101,6 +125,7 @@ const Review = () => {
                     <SelectItem value="Faible" />
                     <SelectItem value="Critique" />
                 </Select>
+                {/* </div> */}
             </Flex>
             <div className='overflow-hidden'>
             <Table className="mt-5 h-fit overflow-auto">

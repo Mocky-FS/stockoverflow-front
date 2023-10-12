@@ -1,7 +1,10 @@
-import { Badge, Card, Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRow, Text, Title } from '@tremor/react';
-
+import { Badge, Card, Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRow, Text, TextInput, Title } from '@tremor/react';
+import Search from '../../../assets/icons/search.svg?react';
+import { useState } from 'react';
 const Review = () => {
 
+
+    const [search, setSearch] = useState('')
     const data = [
         {
             id: 1,
@@ -85,10 +88,28 @@ const Review = () => {
     ];
 
 
+    const resultFiltered = data?.filter((order) => (
+        order.user.toLowerCase().includes(search.toLowerCase()) ||
+        order.client.toLowerCase().includes(search.toLowerCase()) ||
+        order.status.toLowerCase().includes(search.toLowerCase()) ||
+        order.id.toString().includes(search.toLowerCase()) ||
+        order.date.toString().includes(search.toLowerCase())
+    ));
+
 
     return (
         <Card  className='w-2/4'  >
+            <div className='flex justify-between'>
                <Title>Les commandes expédiées</Title>
+               <TextInput
+                    className='w-fit'
+                    placeholder='Rechercher'
+                    icon={Search}
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+
+                />
+            </div>
                 <Table className="mt-5 table-orders">
                     <TableHead>
                         <TableRow>
@@ -101,7 +122,7 @@ const Review = () => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {data?.map((item) => (
+                        {resultFiltered?.map((item) => (
                             <TableRow key={item.id}>
                                 <TableCell>{item.id}</TableCell>
                                 <TableCell>

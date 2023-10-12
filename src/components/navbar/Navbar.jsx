@@ -1,27 +1,20 @@
 
-import { NavLink, useLocation, useNavigate } from 'react-router-dom';
-import { useContext, useEffect, useState } from 'react';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { useContext, useState } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 import Logo from '../../assets/icons/logo.svg?react'
-import Dashboard from '../../assets/icons/dashboard.svg?react'
-import Stock from '../../assets/icons/stock.svg?react'
-import Export from '../../assets/icons/exports.svg?react'
-import Import from '../../assets/icons/import.svg?react'
-import Users from '../../assets/icons/usersList.svg?react'
 import Logout from '../../assets/icons/logout.svg?react'
-import User from '../../assets/icons/user.svg?react'
+import UserIcon from '../../assets/icons/user.svg?react'
 import Moon from '../../assets/icons/moon.svg?react'
 import Sun from '../../assets/icons/sun.svg?react'
-import Package from '../../assets/icons/package.svg?react'
 import ArrowLeft from '../../assets/icons/arrowLeft.svg?react'
 import ArrowRight from '../../assets/icons/arrowRight.svg?react'
 import { Tooltip } from "@nextui-org/react";
-import './navbar.scss'
 import { Card } from '@tremor/react';
 import { ThemeContext } from '../../context/ThemeContext';
-import { isAdmin } from '../../utils/token';
+import './navbar.scss'
 
-const Navbar = () => {
+const Navbar = ({ modules }) => {
 
     const navigate = useNavigate()
 
@@ -34,50 +27,6 @@ const Navbar = () => {
         setIsMenuOpen(!isMenuOpen)
     }
 
-
-
-    const links = [
-
-        {
-            title: 'Dashboard',
-            icon: Dashboard,
-            path: '/dashboard',
-            end: true
-        },
-        {
-            title: 'Stock',
-            icon: Stock,
-            path: '/dashboard/stock',
-        },
-        {
-            
-            title: 'Mes envois',
-            icon: Package,
-            path: '/dashboard/my-shippings',
-        }
-    ]
-
-    
-    if (isAdmin(user?.token)) {
-        links.push(
-            {
-                title: 'Exportations',
-                icon: Export,
-                path: '/dashboard/exports',
-            },
-            {
-                title: 'Importations',
-                icon: Import,
-                path: '/dashboard/imports',
-            },
-            {
-                title: 'Utilisateurs',
-                icon: Users,
-                path: '/dashboard/users',
-            }
-        );
-    }
-    
 
     return (
         <div className={`bg-tremor-background   dark:bg-dark-tremor-background  dashboard-nav ${!isMenuOpen ? 'close-menu' : ''} `}>
@@ -98,9 +47,8 @@ const Navbar = () => {
             </Card>
 
             <div className='links' >
-                {/* className='hover:text-tremor-content-inverted text-tremor-content dark:text-dark-tremor-content' */}
-                {/* className='text-tremor-content dark:text-dark-tremor-content ' */}
-                {links.map((link, index) => {
+                {modules?.filter(e => e.navbar)?.map((link, index) => {
+
                     return (
                         <Tooltip
                             key={index}
@@ -110,12 +58,11 @@ const Navbar = () => {
                             color='foreground'
                             offset={50}
                         >
-                            <NavLink to={link.path} end={link.end} style={{ width: !isMenuOpen ? 'fit-content' : '' }}
-                            className={ ({isActive}) => isActive ? 
-                                'bg-tremor-brand text-tremor-content-inverted dark:bg-slate-800 dark:text-tremor-background ' :
-                                '  dark:text-tremor-content-subtle'
-                            }
-
+                            <NavLink to={`/dashboard/${link.path}`} end={link.end} style={{ width: !isMenuOpen ? 'fit-content' : '' }}
+                                className={({ isActive }) => isActive ?
+                                    'bg-tremor-brand text-tremor-content-inverted dark:bg-slate-800 dark:text-tremor-background ' :
+                                    '  dark:text-tremor-content-subtle'
+                                }
                             >
                                 <link.icon />
                                 {isMenuOpen && <p >{link.title}</p>}
@@ -132,7 +79,7 @@ const Navbar = () => {
                         onClick={() => {
                             navigate('/dashboard/profil')
                         }}>
-                        <User /> {isMenuOpen && user.firstname}
+                        <UserIcon /> {isMenuOpen && user.firstname}
                     </button>
                 </Tooltip>
                 <Tooltip placement={!isMenuOpen ? 'right' : 'top'} content={theme === 'dark' ? 'Mode jour' : 'Mode nuit'} color='foreground' offset={50}>
@@ -141,7 +88,7 @@ const Navbar = () => {
                         onClick={() => {
                             setTheme(theme === 'light' ? 'dark' : 'light')
                             document.body.classList.toggle('dark')
-                            
+
                             if (theme === 'light') {
                                 localStorage.setItem('theme', 'dark')
                             } else {

@@ -22,80 +22,108 @@ import { AuthContext } from './context/AuthContext';
 import { isAdmin, isTokenValid } from './utils/token';
 
 
+import DashboardIcon from './assets/icons/dashboard.svg?react'
+import StockIcon from './assets/icons/stock.svg?react'
+import ExportIcon from './assets/icons/exports.svg?react'
+import ImportIcon from './assets/icons/import.svg?react'
+import UsersIcon from './assets/icons/usersList.svg?react'
+import ProfilIcon from './assets/icons/user.svg?react'
+
+
+
+
 
 function App() {
 
   const { user } = useContext(AuthContext)
 
-  const routes = [
+  const modules = [
+    {
+      path: '',
+      element: <Dashboard />,
+      title: 'Dashboard',
+      icon: DashboardIcon,
+      navbar: true,
+    },
+    {
+      path: 'stock',
+      element: <Stock />,
+      title: 'Stock',
+      icon: StockIcon,
+      navbar: true,
+    },
+    {
+      path: 'my-shyppings',
+      element: <MyExports />,
+      title: 'Mes envois',
+      icon: ExportIcon,
+      navbar: true,
+    },
+
+    ...(user?.token && isAdmin(user.token) ? [
+
+      {
+        path: 'exports',
+        element: <AdminExports />,
+        title: 'Exports',
+        icon: ExportIcon,
+        navbar: true,
+      },
+      {
+        path: 'imports',
+        element: <AdminImports />,
+        title: 'Imports',
+        icon : ImportIcon,
+        navbar: true,
+      },
+      {
+        path: 'users',
+        element: <AdminUsers />,
+        title: 'Utilisateurs',
+        icon: UsersIcon,
+        navbar: true,
+      },
+    ] : []),
 
     {
-      path : '/',
-      element : <GlobalApp />,
-      children : [
+      path: 'profil',
+      element: <Profil />,
+      title: 'Profil',
+      icon: ProfilIcon,
+    },
+  ]
 
+  const routes = [
+    {
+      path: '/',
+      element: <GlobalApp />,
+      children: [
         {
-          path : '',
-          element : <Login />
+          path: '',
+          element: <Login />
         },
         {
-          path : 'register',
-          element :  <Register /> 
+          path: 'register',
+          element: <Register />
         },
-        
         {
-          path : '/dashboard',
-          element :   <Layout /> ,
-          children : [
-            {
-              path : '',
-              element : <Dashboard />
-            },
-            {
-              path : 'stock',
-              element : <Stock />
-            },
-            {
-              path : 'my-shippings',
-              element : <MyExports />
-            },
-            {
-              path : 'exports',
-              element :  user?.token && isAdmin(user.token) ? <AdminExports /> : <Navigate to='/dashboard' />
-            },
-            {
-              path : 'imports',
-              element : user?.token && isAdmin(user.token) ? <AdminImports /> : <Navigate to='/dashboard' />
-            },
-            {
-              path : 'users',
-              element : user?.token && isAdmin(user.token) ?  <AdminUsers /> : <Navigate to='/dashboard' />
-            },
-            {
-              path : 'profil',
-              element : <Profil />
-            },
-            
-          ]
+          path: '/dashboard',
+          element: isTokenValid(user.token) ? <Layout modules={modules} /> : <Navigate to='/' />,
+          children: modules
         },
         {
           path: '*',
           element: <NotFound />
         }
-      ],
-      
-
-    },
-
-    
-
+      ]
+    }
   ]
 
   const router = createBrowserRouter(routes)
 
   return (
     <div className='App'>
-      <RouterProvider  router={router}/>
+      <RouterProvider router={router} />
     </div>
   )
 }

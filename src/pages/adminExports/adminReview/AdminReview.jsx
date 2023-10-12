@@ -1,60 +1,63 @@
-import { Badge, Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRow, Text, Title } from '@tremor/react';
-import React from 'react';
-
+import { Badge, Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRow, Text, TextInput, Title } from '@tremor/react';
+import React, { useState } from 'react';
+import Search from '../../../assets/icons/search.svg?react';
 const AdminReview = () => {
+
+    const [search, setSearch] = useState('')
+
 
     const data = [
         {
-            name: 1,
+            id: 1,
             date: "12/12/2021",
             client: 'Fnac',
             status: "Expédiée",
             user : 'Jean',
         },
         {
-            name: 2,
+            id: 2,
             date: "12/12/2021",
             client: 'Darty',
             status: "Expédiée",
             user : 'Maxime',
         },
         {
-            name: 3,
+            id: 3,
             date: "12/12/2021",
             client: 'Boulanger',
             status: "Expédiée",
             user : 'Antoine',
         },
         {
-            name: 4,
+            id: 4,
             date: "12/12/2021",
             client: 'Micromania',
             status: "Expédiée",
             user : 'Alex',
         },
         {
-            name: 5,
+            id: 5,
             date: "12/12/2021",
             client: 'Micromania',
             status: "Expédiée",
             user : 'Gael',
         },
         {
-            name: 6,
+            id: 6,
             date: "12/12/2021",
             client: 'Boulanger',
             status: "Expédiée",
             user : 'Antoine',
         },
         {
-            name: 7,
+            id: 7,
             date: "12/12/2021",
             client: 'Micromania',
             status: "Expédiée",
             user : 'Alex',
         },
         {
-            name: 8,
+            id: 8,
             date: "12/12/2021",
             client: 'Micromania',
             status: "Expédiée",
@@ -63,25 +66,42 @@ const AdminReview = () => {
 
     ];
 
+    const resultFiltered = data?.filter((order) => (
+        order.id.toString().includes(search.toLowerCase()) ||
+        order.user.toLowerCase().includes(search.toLowerCase()) ||
+        order.client.toLowerCase().includes(search.toLowerCase()) ||
+        order.status.toLowerCase().includes(search.toLowerCase()) ||
+        order.date.toString().includes(search.toLowerCase())
+    ));
 
 
     return (
         <>
-        {/* <Title>Commandes expédiées</Title> */}
+        <div className='flex justify-between'>
+        <Title>Commandes expédiées</Title>
+        <TextInput
+                    className='w-fit'
+                    placeholder='Rechercher'
+                    icon={Search}
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+
+                />
+        </div>
             <Table className="h-full overflow-auto " >
                     <TableHead >
                         <TableRow  >
-                            <TableHeaderCell className='bg-slate-800'>N° </TableHeaderCell>
-                            <TableHeaderCell className='bg-slate-800'>Date</TableHeaderCell>
-                            <TableHeaderCell className='bg-slate-800'>Utilisateur</TableHeaderCell>
-                            <TableHeaderCell className='bg-slate-800'>Client</TableHeaderCell>
-                            <TableHeaderCell className='bg-slate-800'>Statut</TableHeaderCell>
+                            <TableHeaderCell className='dark:bg-dark-tremor-background' >N° </TableHeaderCell>
+                            <TableHeaderCell  className='dark:bg-dark-tremor-background'>Date</TableHeaderCell>
+                            <TableHeaderCell  className='dark:bg-dark-tremor-background'>Utilisateur</TableHeaderCell>
+                            <TableHeaderCell  className='dark:bg-dark-tremor-background'>Client</TableHeaderCell>
+                            <TableHeaderCell  className='dark:bg-dark-tremor-background'>Statut</TableHeaderCell>
                         </TableRow>
                     </TableHead>
-                    <TableBody>
-                        {data?.map((item) => (
-                            <TableRow key={item.name}>
-                                <TableCell>{item.name}</TableCell>
+                    <TableBody > 
+                        {resultFiltered?.map((item) => (
+                            <TableRow key={item.id}>
+                                <TableCell>{item.id}</TableCell>
                                 <TableCell>
                                     <Text>{item.date}</Text>
                                 </TableCell>

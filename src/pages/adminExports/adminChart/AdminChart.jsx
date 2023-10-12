@@ -91,14 +91,6 @@ const AdminChart = () => {
     return (
         <div className="w-full h-full">
             <Title>Détails</Title>
-            {/* <Flex alignItems="start">
-                <Text>Total exportation</Text>
-                <BadgeDelta deltaType="moderateIncrease">23.1%</BadgeDelta>
-            </Flex> */}
-            {/* <Flex justifyContent="start" alignItems="baseline" className="space-x-3 truncate">
-                <Metric>$ 442,276</Metric>
-                <Text>from $ 382,482</Text>
-            </Flex> */}
             <TabGroup index={selectedIndex} onIndexChange={setSelectedIndex} className="mt-6">
                 <TabList>
                     <Tab>Jeux disque </Tab>
@@ -116,11 +108,6 @@ const AdminChart = () => {
                         <ProgressBar value={item.value} />
                     </div>
                 ))}
-            {/* <Flex className="mt-6 pt-4 border-t">
-                <Button size="xs" variant="light" iconPosition="right">
-                    View more
-                </Button>
-            </Flex> */}
         </div>
     );
 };

@@ -1,35 +1,36 @@
-import { Badge, Card, Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRow, Text, Title } from '@tremor/react';
-import React from 'react';
-
+import { Badge, Card, Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRow, Text, TextInput, Title } from '@tremor/react';
+import React, { useState } from 'react';
+import Search from '../../../assets/icons/search.svg?react';
 const MyLastOrders = () => {
 
+    const [search, setSearch] = useState('')
     const data = [
         {
-            name: 1,
+            id: 1,
             date: "12/01/2021",
             client: 'Oclock',
             status: "Expédiée",
         },
         {
-            name: 2,
+            id: 2,
             date: "29/02/2022",
             client: 'Oclock',
             status: "Annulée",
         },
         {
-            name: 3,
+            id: 3,
             date: "12/03/2022",
             client: 'Oclock',
             status: "Expédiée",
         },
         {
-            name: 4,
+            id: 4,
             date: "01/12/2023",
             client: 'CFA',
             status: "Expédiée",
         },
         {
-            name: 5,
+            id: 5,
             date: "19/05/2023",
             client: 'CFA',
             status: "Expédiée",
@@ -37,10 +38,31 @@ const MyLastOrders = () => {
 
     ];
 
+    const resultFiltered = data?.filter((order) => (
+        order.date.toString().includes(search.toLowerCase()) ||
+        order.client.toLowerCase().includes(search.toLowerCase()) ||
+        order.status.toLowerCase().includes(search.toLowerCase()) ||
+        order.id.toString().includes(search.toLowerCase())
+        // order.user.toLowerCase().includes(search.toLowerCase()) ||
+        // order.client.toLowerCase().includes(search.toLowerCase()) ||
+        // order.status.toLowerCase().includes(search.toLowerCase()) ||
+        // order.id.toString().includes(search.toLowerCase()) ||
+    ));
+
 
     return (
         <Card className='h-full  ' >
+            <div className='flex justify-between'>
              <Title>Mes derniers envois</Title>
+             <TextInput
+                    className='w-fit'
+                    placeholder='Rechercher'
+                    icon={Search}
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+
+                />
+            </div>
              <Table className="mt-5 table-orders" >
                     <TableHead>
                         <TableRow>
@@ -51,9 +73,9 @@ const MyLastOrders = () => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {data?.map((item) => (
-                            <TableRow key={item.name}>
-                                <TableCell>{item.name}</TableCell>
+                        {resultFiltered?.map((item) => (
+                            <TableRow key={item.id}>
+                                <TableCell>{item.id}</TableCell>
                                 <TableCell>
                                     <Text>{item.date}</Text>
                                 </TableCell>
