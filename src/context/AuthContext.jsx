@@ -1,4 +1,5 @@
 import { createContext, useEffect, useRef, useState } from "react";
+import { toast } from "react-toastify";
 
 export const AuthContext = createContext()
 
@@ -40,7 +41,7 @@ const AuthProvider = ({ children }) => {
       timeOutTokenRef.current = setTimeout(() => {
 
         logout();
-        // alert('Votre session a expiré, veuillez vous reconnecter')
+        toast.error('Votre session a expiré, veuillez vous reconnecter')
 
       }, expiration);
 

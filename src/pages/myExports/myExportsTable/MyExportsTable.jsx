@@ -1,85 +1,107 @@
-import { Badge, Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRow, Text, TextInput, Title } from '@tremor/react';
-import React, { useState } from 'react';
+import { Badge, Card, Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRow, Text, TextInput, Title } from '@tremor/react';
 import Search from '../../../assets/icons/search.svg?react';
-const AdminReview = () => {
+import { useState } from 'react';
+const MyExportsTable = () => {
+
 
     const [search, setSearch] = useState('')
-
-
     const data = [
         {
             id: 1,
             date: "12/12/2021",
-            client: 'Fnac',
+            client: 'Oclock',
             status: "Expédiée",
-            user : 'Jean',
+            user : 'Alex'
         },
         {
             id: 2,
             date: "12/12/2021",
-            client: 'Darty',
-            status: "Expédiée",
-            user : 'Maxime',
+            client: 'Oclock',
+            status: "Annulée",
+            user : 'Gael'
+
         },
         {
             id: 3,
             date: "12/12/2021",
-            client: 'Boulanger',
+            client: 'Oclock',
             status: "Expédiée",
-            user : 'Antoine',
+            user : 'Joris'
+
         },
         {
             id: 4,
             date: "12/12/2021",
-            client: 'Micromania',
+            client: 'Oclock',
             status: "Expédiée",
-            user : 'Alex',
+            user : 'Arnaud'
+
         },
         {
             id: 5,
             date: "12/12/2021",
-            client: 'Micromania',
-            status: "Expédiée",
-            user : 'Gael',
+            client: 'Oclock',
+            status: "Annulée",
+            user : 'Arnaud'
+
         },
         {
             id: 6,
             date: "12/12/2021",
-            client: 'Boulanger',
+            client: 'Oclock',
             status: "Expédiée",
-            user : 'Antoine',
+            user : 'Alex'
         },
         {
             id: 7,
             date: "12/12/2021",
-            client: 'Micromania',
-            status: "Expédiée",
-            user : 'Alex',
+            client: 'Oclock',
+            status: "Annulée",
+            user : 'Gael'
+
         },
         {
             id: 8,
             date: "12/12/2021",
-            client: 'Micromania',
+            client: 'Oclock',
             status: "Expédiée",
-            user : 'Gael',
+            user : 'Joris'
+
+        },
+        {
+            id: 9,
+            date: "12/12/2021",
+            client: 'Oclock',
+            status: "Expédiée",
+            user : 'Arnaud'
+
+        },
+        {
+            id: 10,
+            date: "12/12/2021",
+            client: 'Oclock',
+            status: "Annulée",
+            user : 'Arnaud'
+
         },
 
     ];
 
+
     const resultFiltered = data?.filter((order) => (
-        order.id.toString().includes(search.toLowerCase()) ||
         order.user.toLowerCase().includes(search.toLowerCase()) ||
         order.client.toLowerCase().includes(search.toLowerCase()) ||
         order.status.toLowerCase().includes(search.toLowerCase()) ||
+        order.id.toString().includes(search.toLowerCase()) ||
         order.date.toString().includes(search.toLowerCase())
     ));
 
 
     return (
-        <>
-        <div className='flex justify-between'>
-        <Title>Commandes expédiées</Title>
-        <TextInput
+        <Card  className='w-2/4'  >
+            <div className='flex justify-between'>
+               <Title>Les commandes expédiées</Title>
+               <TextInput
                     className='w-fit'
                     placeholder='Rechercher'
                     icon={Search}
@@ -87,18 +109,19 @@ const AdminReview = () => {
                     onChange={(e) => setSearch(e.target.value)}
 
                 />
-        </div>
-            <Table className="h-full overflow-auto " >
-                    <TableHead >
-                        <TableRow  >
-                            <TableHeaderCell className='dark:bg-dark-tremor-background' >N° </TableHeaderCell>
-                            <TableHeaderCell  className='dark:bg-dark-tremor-background'>Date</TableHeaderCell>
-                            <TableHeaderCell  className='dark:bg-dark-tremor-background'>Utilisateur</TableHeaderCell>
-                            <TableHeaderCell  className='dark:bg-dark-tremor-background'>Client</TableHeaderCell>
-                            <TableHeaderCell  className='dark:bg-dark-tremor-background'>Statut</TableHeaderCell>
+            </div>
+                <Table className="mt-5 table-orders">
+                    <TableHead>
+                        <TableRow>
+                            <TableHeaderCell>N° </TableHeaderCell>
+                            <TableHeaderCell>Date</TableHeaderCell>
+                            <TableHeaderCell>Client</TableHeaderCell>
+                            <TableHeaderCell>Statut</TableHeaderCell>
+                            <TableHeaderCell>Utilisateur</TableHeaderCell>
+
                         </TableRow>
                     </TableHead>
-                    <TableBody > 
+                    <TableBody>
                         {resultFiltered?.map((item) => (
                             <TableRow key={item.id}>
                                 <TableCell>{item.id}</TableCell>
@@ -106,22 +129,22 @@ const AdminReview = () => {
                                     <Text>{item.date}</Text>
                                 </TableCell>
                                 <TableCell>
-                                    <Text>{item.user}</Text>
-                                </TableCell>
-                                <TableCell>
                                     <Text>{item.client}</Text>
                                 </TableCell>
                                 <TableCell>
-                                    <Badge color={item.status === 'Expédiée' ? 'emerald' : 'orange'} >
+                                    <Badge color={item.status === 'Expédiée' ? 'emerald' : 'red'} >
                                         {item.status}
                                     </Badge>
+                                </TableCell>
+                                <TableCell>
+                                    <Text>{item.user}</Text>
                                 </TableCell>
                             </TableRow>
                         ))}
                     </TableBody>
                 </Table>
-        </>
+        </Card>
     );
 };
 
-export default AdminReview;
+export default MyExportsTable;

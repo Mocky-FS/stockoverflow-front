@@ -1,5 +1,5 @@
 import {Card } from '@tremor/react';
-import AdminReview from './adminReview/AdminReview';
+import ExportsTable from './exportsTable/ExportsTable';
 import AdminChart from './adminChart/AdminChart';
 import AdminChart2 from './adminChart2/AdminChart2';
 
@@ -11,7 +11,7 @@ const AdminExports = () => {
     return (
         <Card className='!rounded-none flex  flex-col gap-4 p-4 overflow-auto'>
             <Card className='h-2/4 overflow-hidden'>
-                <AdminReview />
+                <ExportsTable />
             </Card>
             <div className='flex h-2/4 gap-4'>
                 <Card className='h-full p-6'>

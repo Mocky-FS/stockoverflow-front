@@ -18,13 +18,11 @@ export async function login(body) {
             data: newBody
         })
 
-       
-     
         return res.data;
         
 
     } catch (error) {
-        throw error.response.data;
+        throw new Error(error)
     }
    
 }
@@ -41,7 +39,7 @@ export async function createUser(body) {
         return res
 
     } catch (error) {
-        throw error.response.data;
+        throw new Error(error)
     }
 
 }
@@ -58,7 +56,7 @@ export async function updateUser(body) {
         return res.data
 
     } catch (error) {
-        throw error.response.data;
+        throw new Error(error)
     }
 
 }
@@ -74,14 +72,16 @@ export async function deleteUser(id) {
         return res.data
 
     } catch (error) {
-        throw error.response.data;
+        throw new Error(error)
     }
 
 }
 
 export async function getUsers(id) {
+
+    console.log(id)
     
-    let url = `${import.meta.env.VITE_URL}users`
+    let url = `${import.meta.env.VITE_URL}user/users/all`
 
     if (id) {
         url += `/${id}`
@@ -98,7 +98,7 @@ export async function getUsers(id) {
 
     } catch (error) {
 
-        throw error.response.data;
+        throw new Error(error)
     }
 
 }

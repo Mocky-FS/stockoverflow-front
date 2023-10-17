@@ -2,6 +2,8 @@
 
 
 export function filterArray(selectedOption, data) {
+
+
   switch (selectedOption) {
     case 'Correct':
       return data.filter(item => item.quantity >= 100)
@@ -16,7 +18,7 @@ export function filterArray(selectedOption, data) {
   }
 }
 
-export function badgeColor(quantity) {
+export function badgeColorQuantity(quantity) {
 
   if (quantity < 50) {
     return 'red'
@@ -26,5 +28,18 @@ export function badgeColor(quantity) {
     return 'green'
   }
 
+}
+
+export function badgeColorStatus(status) {
+  switch (status) {
+    case 'Validée':
+      return 'emerald'
+    case 'En attente':
+      return 'orange'
+    case 'Annulée':
+      return 'red'
+    default:
+      return 'emerald'
+  }
 }
 

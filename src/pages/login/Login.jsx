@@ -25,12 +25,13 @@ const Login = () => {
 
         onSuccess : (data) => {
 
+            console.log(data)
+
             // axios.defaults.headers.common['Authorization'] = `Bearer ${data.token}`
 
             setUser({
-                isLogged : true,
-                firstname : data.firstname,
-                lastname : data.lastname,
+                first_name : data.first_name,
+                last_name : data.last_name,
                 email : data.email,
                 id : data.id,
                 token : data.token,
@@ -40,29 +41,29 @@ const Login = () => {
             localStorage.setItem('user', JSON.stringify({
                 ...data,
                 tokenExpiration : getExpirationTime(data.token),
-              
-
-
+            
             }))
             reset()
 
             const hour = new Date().getHours()
             
             if (hour >= 20 || hour <= 6) {
-                toast(`Bonsoir ${data.firstname} !`)
+                toast(`Bonsoir ${data.first_name} !`)
             } else {
-                toast(`Bonjour ${data.firstname} !`)
+                toast(`Bonjour ${data.first_name} !`)
             }
             navigate('/dashboard')
         
         },
 
         onError : (error) => {
-            if (error.code === 401 ) {
+            if (error.code === 401  ) {
                 setError('email', { type: 'manual', message: 'Identifiants incorrects' })
                  setError('password', { type: 'manual', message: 'Identifiants incorrects' })
             } else {
-                // alert('Une erreur est survenue, merci de réessayer')
+                // setError('email', { type: 'manual', message: 'Une erreur est survenue' })
+                // setError('password', { type: 'manual', message: 'Une erreur est survenue' })
+                toast.error('Une erreur est survenue')
             }
         },
 
@@ -72,9 +73,8 @@ const Login = () => {
     })
 
     const onSubmit = (data) => {
-        // toast.success(`Bonjour ${user.firstname} !`)
-        // navigate('/dashboard')
-        loginMutate(data)
+
+            loginMutate(data)
     }
 
     return (

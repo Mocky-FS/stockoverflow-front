@@ -3,6 +3,7 @@ import  { Fragment } from 'react';
 
 const Modal = ({isOpen, closeModal, content}) => {
 
+    console.log( 'isOpen', isOpen)
     return (
         <Transition appear show={isOpen} as={Fragment}>
         <Dialog as="div" className="relative z-50" onClose={closeModal}>

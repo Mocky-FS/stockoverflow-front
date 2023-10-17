@@ -29,7 +29,7 @@ const Register = () => {
       const response = await createUser(data)
 
 
-      if (response.status === 201) {
+      if (response.status === 200) {
           await autoLogin(data)
       }
 

@@ -19,7 +19,7 @@ const AddCategory = ({index}) => {
 
                 <TextInput
                     type="text"
-                    placeholder="Nom de la catégorie"
+                    placeholder="Nom de la catégorie ( ex : PS4 Xbox one )"
                     error={errors.name}
                     {...register("name", {
                         required: "Merci d'indiquer un nom de catégorie",

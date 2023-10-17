@@ -28,7 +28,7 @@ import ExportIcon from './assets/icons/exports.svg?react'
 import ImportIcon from './assets/icons/import.svg?react'
 import UsersIcon from './assets/icons/usersList.svg?react'
 import ProfilIcon from './assets/icons/user.svg?react'
-
+import PackageIcon from './assets/icons/package.svg?react'
 
 
 
@@ -56,7 +56,7 @@ function App() {
       path: 'my-shyppings',
       element: <MyExports />,
       title: 'Mes envois',
-      icon: ExportIcon,
+      icon: PackageIcon,
       navbar: true,
     },
 

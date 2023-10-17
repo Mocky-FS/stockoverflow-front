@@ -2,7 +2,14 @@
 import './dashboard.scss'
 import { AreaChart, Badge, BarChart, Card, DonutChart, Flex, Icon, LineChart, Metric, Subtitle, Text, Title } from '@tremor/react';
 import Doc from '../../assets/icons/doc.svg?react'
-
+import { keys } from '../../../query-key-factory';
+import { getImports } from '../../api/imports';
+import { useQuery } from '@tanstack/react-query';
+import ImportIcon from '../../assets/icons/import.svg?react';
+import LoadingDots from '../../components/LoadingDots/LoadingDots';
+import { Skeleton } from '@nextui-org/react';
+import { useState } from 'react';
+import { Legend } from "@tremor/react";
 const Dashboard = () => {
 
     const chartdata = [
@@ -101,6 +108,27 @@ const Dashboard = () => {
     const dataFormatter1 = (number) => `${Intl.NumberFormat("us").format(number).toString()}%`;
 
 
+    const { data: importsList, isLoading: importsListLoading } = useQuery(
+        keys.imports({}),
+        () => getImports(),
+    )
+
+   
+
+    const ordersWaiting = importsList?.filter((order) => (
+        order?.status === 'En attente'
+    ));
+
+    const canceledOrders = importsList?.filter((order) => (
+        order?.status === 'Refusée'
+    ));
+
+
+
+    if (importsListLoading) {
+        return <LoadingDots />
+    }
+
 
 
     return (
@@ -108,16 +136,23 @@ const Dashboard = () => {
         <Card className='dashboard'>
 
             <div className='top'>
-                <Card  className='test' decorationColor='blue' >
+
+                <Card className='test' decorationColor='blue' >
                     <Flex justifyContent="start" className="space-x-4">
                         <Icon icon={Doc} variant="light" size="xl" color={'blue'} />
+
                         <div className="truncate">
+
                             <Text>{`Commandes Octobre 2023`}</Text>
+
+
                             <Metric className="truncate">36</Metric>
+
                         </div>
+
                     </Flex>
                 </Card>
-                <Card  className='test' decorationColor='blue' >
+                <Card className='test' decorationColor='blue' >
                     <Flex justifyContent="start" className="space-x-4">
                         <Icon icon={Doc} variant="light" size="xl" color={'blue'} />
                         <div className="truncate">
@@ -127,27 +162,27 @@ const Dashboard = () => {
                         </div>
                     </Flex>
                 </Card>
-                <Card  className='test' decorationColor='blue' >
+                <Card className='test' decorationColor='blue' >
                     <Flex justifyContent="start" className="space-x-4">
-                        <Icon icon={Doc} variant="light" size="xl" color={'blue'} />
+                        <Icon icon={ImportIcon} variant="light" size="xl" color={'blue'} />
                         <div className="truncate">
-                            <Text>{`Commande à valider`}</Text>
-                            <Metric className="truncate">5</Metric>
+                            <Text>{`Importations à valider`}</Text>
+                            <Metric className="truncate">{ordersWaiting?.length}</Metric>
                         </div>
                     </Flex>
                 </Card>
-                <Card  className='test' decorationColor='blue' >
+                <Card className='test' decorationColor='blue' >
                     <Flex justifyContent="start" className="space-x-4">
-                        <Icon icon={Doc} variant="light" size="xl" color={'blue'} />
+                        <Icon icon={ImportIcon} variant="light" size="xl" color={'blue'} />
                         <div className="truncate">
-                            <Text>{`Commandes refusées`}</Text>
-                            <Metric className="truncate">0</Metric>
+                            <Text>{`Importations refusées`}</Text>
+                            <Metric className="truncate">{canceledOrders?.length}</Metric>
                         </div>
                     </Flex>
                 </Card>
-                
+
             </div>
-            
+
 
             <div className='middle'>
 
@@ -160,6 +195,8 @@ const Dashboard = () => {
                         categories={["SemiAnalysis", "The Pragmatic Engineer"]}
                         colors={["indigo", "cyan"]}
                         valueFormatter={dataFormatter}
+                        showAnimation={true}
+
                     />
                 </Card>
                 <Card className="w-1/4 graph" >
@@ -170,24 +207,18 @@ const Dashboard = () => {
                         category="sales"
                         index="name"
                         valueFormatter={valueFormatter}
+                        showAnimation={true}
+
                         colors={["slate", "violet", "indigo", "rose", "cyan", "amber"]}
                     />
+                   
                 </Card>
+
 
 
             </div>
             <div className='bottom'>
-                <Card className="w-1/4 graph ">
-                    <Title>Importations</Title>
-                    <DonutChart
-                        className="mt-6"
-                        data={cities}
-                        category="sales"
-                        index="name"
-                        valueFormatter={valueFormatter}
-                        colors={["slate", "violet", "indigo", "rose", "cyan", "amber"]}
-                    />
-                </Card>
+                
 
                 <Card className='w-3/4 graph'>
                     <Title>Exportations / Importations depuis (2020 à 2023)</Title>
@@ -199,10 +230,12 @@ const Dashboard = () => {
                         colors={["emerald", "gray"]}
                         valueFormatter={dataFormatter1}
                         yAxisWidth={40}
+                        showAnimation={true}
                     />
-                    
+
                 </Card>
             </div>
+
         </Card>
     );
 };

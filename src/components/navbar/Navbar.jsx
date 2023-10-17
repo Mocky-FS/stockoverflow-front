@@ -39,7 +39,7 @@ const Navbar = ({ modules }) => {
                     </div>
                 }
 
-                <Tooltip placement="right" content={isMenuOpen ? 'Fermer le menu' : 'Ouvrir le menu'} color='foreground' offset={50}>
+                <Tooltip placement="right" content={isMenuOpen ? 'Fermer le menu' : 'Ouvrir le menu'} color='foreground' >
                     <button onClick={toggleMenu} style={{ alignSelf: !isMenuOpen ? 'center' : '' }}>
                         {isMenuOpen ? <ArrowLeft /> : <ArrowRight />}
                     </button>
@@ -56,7 +56,7 @@ const Navbar = ({ modules }) => {
                             content={link.title}
                             isDisabled={isMenuOpen}
                             color='foreground'
-                            offset={50}
+                            // offset={30}
                         >
                             <NavLink to={`/dashboard/${link.path}`} end={link.end} style={{ width: !isMenuOpen ? 'fit-content' : '' }}
                                 className={({ isActive }) => isActive ?
@@ -82,7 +82,7 @@ const Navbar = ({ modules }) => {
                         <UserIcon /> {isMenuOpen && user.firstname}
                     </button>
                 </Tooltip>
-                <Tooltip placement={!isMenuOpen ? 'right' : 'top'} content={theme === 'dark' ? 'Mode jour' : 'Mode nuit'} color='foreground' offset={50}>
+                <Tooltip placement={!isMenuOpen ? 'right' : 'top'} content={theme === 'dark' ? 'Mode jour' : 'Mode nuit'} color='foreground' >
                     <button
 
                         onClick={() => {

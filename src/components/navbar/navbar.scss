@@ -5,7 +5,7 @@
     gap: 1rem;
     height: 100vh;
     width: fit-content;
-    animation: open 0.2s ease-in-out forwards;
+    animation: open 10s ease-in-out forwards;
 
 
     @keyframes open {
@@ -34,7 +34,7 @@
 
 
         svg {
-            width: 35px;
+            width: 30px;
         }
 
         .titles {
@@ -82,8 +82,8 @@
            
 
             svg {
-                width: 32px;
-                height: 32px;
+                width: 30px;
+                height: 30px;
 
             }
 
@@ -126,8 +126,8 @@
 
 
         svg {
-            width: 40px;
-            height: 40px;
+            width: 30px;
+            height: 30px;
         }
 
         .infos-btn {

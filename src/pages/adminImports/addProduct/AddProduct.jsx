@@ -1,13 +1,45 @@
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Button, NumberInput, Select, SelectItem, Text, TextInput, Title } from '@tremor/react';
 import React, { useEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
+import { addProduct } from '../../../api/products';
+import { toast } from 'react-toastify';
+import { keys } from '../../../../query-key-factory';
 
 const AddProduct = ({index}) => {
 
     const { register, handleSubmit, watch, control, formState: { errors }, setError, reset } = useForm();
 
+
+    const queryClient = useQueryClient();
+    const { mutate: addProductMutation } = useMutation((data) => addProduct(data), {
+
+        onMutate: async () => {
+            // await queryClient.cancelQueries(keys.users({}))
+            // const previousUsers = queryClient.getQueryData(keys.users({}))
+            // queryClient.setQueryData(keys.users({}), (old) => [...old, data])
+            // return { previousUsers }
+
+           
+        },
+
+        onSuccess: () => {
+                toast.success('Utilisateur créé avec succès')
+                reset()
+        },
+        onError: () => {
+            toast.error('Une erreur est survenue lors de la création')
+        },
+        onSettled: () => {
+            queryClient.invalidateQueries({ queryKey: keys.products })
+
+
+        }
+
+    })
+
     const onSubmit = (data) => {
-        console.log(data)
+        addProductMutation(data)
     }
 
     useEffect(() => {
@@ -28,8 +60,12 @@ const AddProduct = ({index}) => {
                             placeholder="Selectionner une catégorie"
                             enableClear={false}
                         >
-                            <SelectItem value="1" >Jeux Disque</SelectItem>
-                            <SelectItem value="2" >Jeux Numérique</SelectItem>
+                            <SelectItem value="1" >Xbox Series</SelectItem>
+                            <SelectItem value="2" >PlayStation 5</SelectItem>
+                            <SelectItem value="3" >PC</SelectItem>
+                            <SelectItem value="4" >Nitendo Switch</SelectItem>
+
+
                         </Select>
                     )}
                 />

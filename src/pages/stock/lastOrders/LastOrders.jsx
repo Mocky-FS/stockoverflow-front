@@ -1,10 +1,11 @@
-import { Card, Flex, Select, SelectItem, Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRow, Text, Title } from '@tremor/react';
+import { Card, Flex, Select, SelectItem, Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRow, Text, TextInput, Title } from '@tremor/react';
 import React, { useState } from 'react';
-import { filterArray } from '../../../utils/functions';
-
+import Search from '../../../assets/icons/search.svg?react';
+import { Skeleton } from '@nextui-org/react';
 const LastOrders = () => {
 
-    const [selectedOption, setSelectedOption] = useState('Tout');
+    // const [selectedOption, setSelectedOption] = useState('Tout');
+    const [search, setSearch] = useState('')
 
 
     const data = [
@@ -56,21 +57,27 @@ const LastOrders = () => {
 
     ];
 
+    const resultFiltered = data?.filter((order) => (
+        order.id.toString().includes(search.toLowerCase()) ||
+        order.category.toLowerCase().includes(search.toLowerCase()) ||
+        order.product.toLowerCase().includes(search.toLowerCase()) ||
+        order.updateDate.toString().includes(search.toLowerCase())
+    ));
+
 
     return (
         <Card className='h-full overflow-hidden'>
             <Flex className="space-x-4 my-4 w-full justify-content">
                 <Title className='title'>Mes dernières commandes </Title>
-                <Select
-                    className='w-3/6'
-                    placeholder='Filtrer par produit'
-                    enableClear
+                
+                <TextInput
+                className='w-fit'
+                placeholder='Rechercher'
+                icon={Search}
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
 
-                >
-                    <SelectItem value="Feuille A4" />
-                    <SelectItem value="Feuille A3" />
-                    <SelectItem value="Papier Bulle" />
-                </Select>
+            />
             </Flex>
             <Table className="mt-5 table-stock ">
                 <TableHead >
@@ -83,7 +90,7 @@ const LastOrders = () => {
                 </TableHead>
                 <TableBody className='overflow-auto' >
                     {
-                        filterArray( selectedOption, data)?.map((item) => (
+                        resultFiltered?.map((item) => (
                             <TableRow key={item.id}>
                                  <TableCell>
                                     {item.updateDate}

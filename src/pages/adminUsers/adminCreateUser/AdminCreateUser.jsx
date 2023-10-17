@@ -1,5 +1,4 @@
 import { Button, TextInput, Title } from '@tremor/react';
-import React from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { createUser } from '../../../api/users';
@@ -15,7 +14,6 @@ const AdminCreateUser = () => {
         handleSubmit,
         formState: { errors },
         reset,
-        setError
     } = useForm();
 
 
@@ -25,7 +23,7 @@ const AdminCreateUser = () => {
 
     const { mutate: addUserMutation } = useMutation((data) => createUser(data), {
 
-        onMutate: async (data) => {
+        onMutate: async () => {
             // await queryClient.cancelQueries(keys.users({}))
             // const previousUsers = queryClient.getQueryData(keys.users({}))
             // queryClient.setQueryData(keys.users({}), (old) => [...old, data])
@@ -118,7 +116,7 @@ const AdminCreateUser = () => {
                 </div>
                 <div>
                     <TextInput
-                        type="text"
+                        type="email"
                         placeholder="Email"
                         error={errors.email}
                         {...register("email", {
