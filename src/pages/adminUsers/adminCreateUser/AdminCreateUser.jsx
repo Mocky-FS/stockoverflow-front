@@ -1,6 +1,7 @@
 import { Button, TextInput, Title } from '@tremor/react';
 import { useForm } from 'react-hook-form';
-import { toast } from 'react-toastify';
+import toast from 'react-hot-toast';
+
 import { createUser } from '../../../api/users';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { keys } from '../../../../query-key-factory';

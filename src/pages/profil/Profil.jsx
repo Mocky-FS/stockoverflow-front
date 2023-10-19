@@ -2,7 +2,8 @@ import { useContext, useState } from "react";
 import { Card, Text, TextInput } from "@tremor/react";
 import { Button, Title } from "@tremor/react";
 import { Controller, useForm } from "react-hook-form";
-import { toast } from "react-toastify";
+import toast from 'react-hot-toast';
+
 
 import "./profil.scss";
 import { AuthContext } from "../../context/AuthContext";

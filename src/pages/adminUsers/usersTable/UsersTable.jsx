@@ -5,12 +5,12 @@ import Edit from '../../../assets/icons/edit.svg?react'
 import { deleteUser, getUsers } from '../../../api/users';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { keys } from '../../../../query-key-factory';
-import { toast } from 'react-toastify';
 import Search from '../../../assets/icons/search.svg?react'
 import Modal from '../../../components/modal/Modal'
 import ModalContent from '../modalContent/ModalContent';
 import { Tooltip } from '@nextui-org/react';
 import LoadingDots from '../../../components/LoadingDots/LoadingDots';
+import toast from 'react-hot-toast';
 const UsersTable = () => {
 
     const queryClient = useQueryClient();
@@ -22,8 +22,6 @@ const UsersTable = () => {
         () => getUsers(),
         
     )
-
-    console.log(usersList)
 
     const [displayModal, setDisplayModal] = useState(false)
 
@@ -47,7 +45,7 @@ const UsersTable = () => {
             // reset()
         },
         onError: () => {
-            toast.error('Une erreur est survenue lors de la création')
+            toast.error('Une erreur est survenue lors de la suppréssion')
         },
         onSettled: () => {
             queryClient.invalidateQueries({ queryKey: keys.users })
@@ -98,9 +96,9 @@ const UsersTable = () => {
                 <TableHead>
                     <TableRow>
                         <TableHeaderCell>Id</TableHeaderCell>
-                        <TableHeaderCell>Email</TableHeaderCell>
                         <TableHeaderCell>Prenom</TableHeaderCell>
                         <TableHeaderCell>Nom</TableHeaderCell>
+                        <TableHeaderCell>Email</TableHeaderCell>
                         <TableHeaderCell>Rôle</TableHeaderCell>
                         <TableHeaderCell>Actions</TableHeaderCell>
 
@@ -113,13 +111,13 @@ const UsersTable = () => {
                         <TableRow key={user.id}>
                             <TableCell>{user.id}</TableCell>
                             <TableCell>
-                                <Text>{user.email}</Text>
-                            </TableCell>
-                            <TableCell>
                                 <Text>{user.first_name}</Text>
                             </TableCell>
                             <TableCell>
                                 <Text>{user.last_name}</Text>
+                            </TableCell>
+                            <TableCell>
+                                <Text>{user.email}</Text>
                             </TableCell>
                             <TableCell>
                                 <Badge color={user.roles.includes("ROLE_ADMIN") ? 'red' : 'blue'}>

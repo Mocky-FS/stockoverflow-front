@@ -1,55 +1,34 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Button, NumberInput, Select, SelectItem, Text, TextInput, Title } from '@tremor/react';
 import React, { useEffect } from 'react';
-import { Controller, useForm } from 'react-hook-form';
-import { addProduct } from '../../../api/products';
-import toast from 'react-hot-toast';
-
 import { keys } from '../../../../query-key-factory';
+import { getProducts } from '../../../api/products';
+import { useQuery } from '@tanstack/react-query';
+import { Controller, useForm } from 'react-hook-form';
 
-const AddProduct = ({index}) => {
+const UpdateProduct = ({index}) => {
 
     const { register, handleSubmit, watch, control, formState: { errors }, setError, reset } = useForm();
 
-
-    const queryClient = useQueryClient();
-    const { mutate: addProductMutation } = useMutation((data) => addProduct(data), {
-
-        onMutate: async () => {
-            // await queryClient.cancelQueries(keys.users({}))
-            // const previousUsers = queryClient.getQueryData(keys.users({}))
-            // queryClient.setQueryData(keys.users({}), (old) => [...old, data])
-            // return { previousUsers }
-
-           
-        },
-
-        onSuccess: () => {
-                toast.success('Utilisateur créé avec succès')
-                reset()
-        },
-        onError: () => {
-            toast.error('Une erreur est survenue lors de la création')
-        },
-        onSettled: () => {
-            queryClient.invalidateQueries({ queryKey: keys.products })
+    const { data: productsList, isLoading: productsLoading } = useQuery(
+        keys.products({}),
+        () => getProducts(),
 
 
-        }
-
-    })
+       
+    )
 
     const onSubmit = (data) => {
-        addProductMutation(data)
+        console.log(data)
     }
 
     useEffect(() => {
         reset()
     }, [index, reset])
 
+
     return (
-        <div className='mt-5 flex flex-col items-center'>
-            <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col gap-4 mt-2 w-3/4 '>
+       
+            <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col gap-4 mt-10 w-full'>
                 <Controller
                     control={control}
                     name='category'
@@ -71,6 +50,28 @@ const AddProduct = ({index}) => {
                     )}
                 />
                 {errors.category && <span className='text-red-500 text-xs '>{errors.category.message}</span>}
+
+                <Controller
+                    control={control}
+                    name='product'
+                    defaultValue={null}
+                    rules={{ required: 'Veuillez selectionner un produit' }}
+                    render={({ field }) => (
+                        <Select
+                            {...field}
+                            placeholder="Selectionner un produit"
+                            enableClear={false}
+                        >
+                            <SelectItem value="1" >Xbox Series</SelectItem>
+                            <SelectItem value="2" >PlayStation 5</SelectItem>
+                            <SelectItem value="3" >PC</SelectItem>
+                            <SelectItem value="4" >Nitendo Switch</SelectItem>
+
+
+                        </Select>
+                    )}
+                />
+                {errors.product && <span className='text-red-500 text-xs '>{errors.product.message}</span>}
 
                 <TextInput
                     type="text"
@@ -120,14 +121,14 @@ const AddProduct = ({index}) => {
                         />
                     )}
                 />
-                <Text className='!text-red-500 text-xs '>Saisir quantité si le produit est déja reçu</Text>
+               
                 {errors.quantity && <span className='text-red-500 text-xs '>{errors.quantity.message}</span>}
                
 
-                <Button type='submit' className='w-fit self-center'>Ajouter</Button>
+                <Button type='submit' className='w-fit self-center'>Modifier</Button>
             </form>
-        </div>
+
     );
 };
 
-export default AddProduct;
+export default UpdateProduct;

@@ -3,7 +3,6 @@ import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom'
 
 
 import './assets/styles/global.scss'
-import 'react-toastify/dist/ReactToastify.css';
 
 import GlobalApp from './components/GlobalApp';
 import Register from './pages/register/Register';

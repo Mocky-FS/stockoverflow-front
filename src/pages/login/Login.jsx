@@ -2,18 +2,21 @@ import { useContext, useState } from 'react';
 import { Controller, useForm } from "react-hook-form"
 import { Link, useNavigate } from 'react-router-dom';
 import { Button, Card, Flex, Text, TextInput, Title } from '@tremor/react';
-import { toast } from 'react-toastify';
+import toast from 'react-hot-toast';
+
 import { useMutation } from '@tanstack/react-query';
 import { AuthContext } from '../../context/AuthContext';
 import { login } from '../../api/users/index';
 import Email from '../../assets/icons/email.svg?react'
 import { getExpirationTime } from '../../utils/token';
+import { ThemeContext } from '../../context/ThemeContext';
 
 
 
 const Login = () => {
 
     const { setUser, user } = useContext(AuthContext)
+    const { theme } = useContext(ThemeContext)
 
     const { register, reset, handleSubmit, watch, formState: { errors }, setError, control } = useForm();
 
@@ -46,12 +49,18 @@ const Login = () => {
             reset()
 
             const hour = new Date().getHours()
+
+            // const toast = toast()
+            toast(` Bonjour ${data.first_name} !`, 
+            {
+                icon : '👋',
+            })
             
-            if (hour >= 20 || hour <= 6) {
-                toast(`Bonsoir ${data.first_name} !`)
-            } else {
-                toast(`Bonjour ${data.first_name} !`)
-            }
+            // if (hour >= 20 || hour <= 6) {
+            //     toast(` 👋 Bonsoir ${data.first_name} !`)
+            // } else {
+            //     toast(` 👋 Bonjour ${data.first_name} !`)
+            // }
             navigate('/dashboard')
         
         },

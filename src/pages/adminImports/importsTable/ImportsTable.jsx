@@ -11,6 +11,9 @@ import { badgeColorStatus } from '../../../utils/functions';
 import { MultiSelect, MultiSelectItem } from "@tremor/react";
 import { Tooltip } from '@nextui-org/react';
 
+import Check from '../../../assets/icons/check.svg?react'
+import Cross from '../../../assets/icons/crossCircle.svg?react'
+import toast from 'react-hot-toast';
 
 
 const ImportsTable = () => {
@@ -63,8 +66,8 @@ const ImportsTable = () => {
         });
 
         // Convertit l'objet Map en un tableau d'objets avec le nom de la personne et le nombre de commandes.
-        const orderCountArray = Array.from(orderCountMap, ([userId, count]) => ({
-            name: `${data.find(order => order.user.id === userId).user.first_name} ${data.find(order => order.user.id === userId).user.last_name}`,
+        const orderCountArray = Array?.from(orderCountMap, ([userId, count]) => ({
+            name: `${data?.find(order => order.user.id === userId).user.first_name} ${data?.find(order => order.user.id === userId).user.last_name}`,
             orderCount: count,
         }));
 
@@ -79,7 +82,7 @@ const ImportsTable = () => {
 
         // Parcourez les données d'export et comptez le nombre de commandes par jeu.
         data?.forEach((order) => {
-            if (order.product && order.product.name) {
+            if (order?.product && order.product.name) {
                 const gameName = order.product.name;
 
                 if (gameOrderCountMap.has(gameName)) {
@@ -95,12 +98,12 @@ const ImportsTable = () => {
             .sort((a, b) => b[1] - a[1])
             .slice(0, 3);
 
-        const top3Games = sortedGames.map(([game, count]) => ({ name: game, orderCount: count }));
+        const top3Games = sortedGames?.map(([game, count]) => ({ name: game, orderCount: count }));
 
         return top3Games;
     }
 
-    const topOrderedGames = getTopOrderedGames(importsList.filter((e) => e.status === 'Validée'));
+    const topOrderedGames = getTopOrderedGames(importsList?.filter((e) => e.status === 'Validée'));
 
     if (importsListLoading) {
         return <LoadingDots />
@@ -165,8 +168,8 @@ const ImportsTable = () => {
                                     <Select
                                         placeholder='Statut'
                                         className='w-fit'
-                                        
-                                       
+
+
                                     >
                                         <SelectItem value="1">Tous</SelectItem>
                                         <SelectItem value="2">En attente</SelectItem>
@@ -176,7 +179,7 @@ const ImportsTable = () => {
                                     <Select
                                         className='w-fit'
                                         placeholder='Catégorie'
-                                       
+
                                     >
                                         <SelectItem value="1">PC</SelectItem>
                                         <SelectItem value="2">PS5</SelectItem>
@@ -188,7 +191,7 @@ const ImportsTable = () => {
                                     <Select
                                         className='w-fit'
                                         placeholder='Montant'
-                                       
+
                                     >
                                         <SelectItem value="1">Jusqu'à 500 EUR</SelectItem>
                                         <SelectItem value="2">500 à 1000 EUR</SelectItem>
@@ -208,11 +211,11 @@ const ImportsTable = () => {
 
                             />
                             <Tooltip placement="top" content={displayFilters ? 'Fermer les filtres' : 'Afficher les filtres'} color='foreground' >
-                            <button
-                                onClick={() => setDisplayFilters(!displayFilters)}
-                            >
-                                <Filters className='w-5 text-tremor-content dark:text-tremor-content' />
-                            </button>
+                                <button
+                                    onClick={() => setDisplayFilters(!displayFilters)}
+                                >
+                                    <Filters className='w-5 text-tremor-content dark:text-tremor-content' />
+                                </button>
                             </Tooltip>
                         </div>
                     </div>
@@ -229,12 +232,13 @@ const ImportsTable = () => {
                                 <TableHeaderCell>Quantité</TableHeaderCell>
                                 <TableHeaderCell>Montant</TableHeaderCell>
                                 <TableHeaderCell className='text-center'>Statut</TableHeaderCell>
+                                <TableHeaderCell className='text-center'>Actions</TableHeaderCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
                             {resultFiltered?.map((order) => (
 
-                                <TableRow className='cursor-pointer' key={order.id} onClick={() => {
+                                <TableRow key={order.id} onClick={() => {
                                 }}>
 
                                     <TableCell>{order.id}</TableCell>
@@ -260,6 +264,33 @@ const ImportsTable = () => {
                                         <Badge color={badgeColorStatus(order.status)} >
                                             {order.status}
                                         </Badge>
+                                    </TableCell>
+                                    <TableCell className='text-right flex gap-4'>
+                                        {order.status === 'En attente' &&
+                                            <>
+                                             <Tooltip placement={'left'} content={'Refuser'} color='foreground' >
+                                                <button onClick={() => {
+                                                    if (window.confirm('Voulez-vous vraiment refuser cette commande ?')) {
+                                                        // setOrderStatus('Annulée')
+                                                        toast.error('Commande refusée avec succès !')
+                                                    }
+                                                }} className=''>
+                                                    <Cross className='w-6 h-6 text-dark-tremor-brand' />
+                                                </button>
+                                                </Tooltip>
+                                                <Tooltip placement={'right'} content={'Valider'} color='foreground' >
+                                                <button onClick={() => {
+
+                                                    if (window.confirm('Voulez-vous vraiment valider cette commande ?')) {
+                                                        // setOrderStatus('Validée')
+                                                        toast.success('Commande validée avec succès !')
+                                                    }
+                                                }}>
+                                                    <Check className='w-6 h-6 text-dark-tremor-brand' />
+                                                </button>
+                                                </Tooltip>
+                                            </>
+                                        }
                                     </TableCell>
                                 </TableRow>
                             ))}

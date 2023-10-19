@@ -32,9 +32,9 @@ const StockTable = () => {
         product?.price.toString().includes(search.toLowerCase())
     ));
 
-    // if (productsLoading) {
-    //     return <LoadingDots />
-    // }
+    if (productsLoading) {
+        return <LoadingDots />
+    }
 
 
     return (
@@ -98,7 +98,7 @@ const StockTable = () => {
                 />
 
 
-                <Select
+                {/* <Select
                     placeholder='Filtrer par état'
                     value={selectedOption}
                     onChange={(e) => setSelectedOption(e)}
@@ -110,7 +110,7 @@ const StockTable = () => {
                     <SelectItem value="Correct" />
                     <SelectItem value="Faible" />
                     <SelectItem value="Critique" />
-                </Select>
+                </Select> */}
                 {/* </div> */}
             </Flex>
             

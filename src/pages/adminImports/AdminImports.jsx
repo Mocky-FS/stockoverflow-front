@@ -7,6 +7,8 @@ import { useState } from 'react';
 import { keys } from '../../../query-key-factory';
 import { getImports } from '../../api/imports';
 import { useQuery } from '@tanstack/react-query';
+import UpdateProduct from './updateProduct/UpdateProduct';
+import UpdateCategory from './updateCategory/UpdateCategory';
 
 
 const AdminImports = () => {
@@ -39,7 +41,21 @@ const AdminImports = () => {
                     </Card> 
                 </div>
                 <Card className='h-2/4 w-full'>
-
+                <TabGroup onIndexChange={(val) => setIndex(val)}>
+                            <TabList>
+                                <Tab >Modifier un  produit</Tab>
+                                <Tab >Modifier une catégorie</Tab>
+                            </TabList>
+                            <TabPanels>
+                                <TabPanel>
+                                    <UpdateProduct index={index} />
+                                </TabPanel>
+                                <TabPanel>
+                                    <UpdateCategory index={index} />
+                                </TabPanel>
+                            </TabPanels>
+                        </TabGroup>
+                       
                 </Card>
             </div> 
         </Card>

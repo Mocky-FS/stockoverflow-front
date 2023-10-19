@@ -1,9 +1,9 @@
 import { Title, NumberInput, Button, Text } from '@tremor/react';
 import React from 'react';
 import { useForm, Controller } from 'react-hook-form';
-import { toast } from 'react-toastify';
 import { Input } from "@nextui-org/react";
 import { Select, SelectItem } from "@tremor/react";
+import toast from 'react-hot-toast';
 
 const OrderForm = () => {
 

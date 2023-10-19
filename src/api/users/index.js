@@ -14,7 +14,7 @@ export async function login(body) {
     
         const res = await axios({
             method: 'post',
-            url: `${import.meta.env.VITE_URL}login`,
+            url: `${import.meta.env.VITE_URL}api/login`,
             data: newBody
         })
 

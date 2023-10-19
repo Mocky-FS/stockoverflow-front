@@ -1,6 +1,7 @@
 import { Button, Card, Title } from "@tremor/react";
 import { useForm } from "react-hook-form";
-import { toast } from "react-toastify";
+import toast from 'react-hot-toast';
+
 import { TextInput } from "@tremor/react";
 import { useNavigate } from "react-router-dom";
 import { createUser, login } from "../../api/users";

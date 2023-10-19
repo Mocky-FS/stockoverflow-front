@@ -13,6 +13,7 @@ import { Tooltip } from "@nextui-org/react";
 import { Card } from '@tremor/react';
 import { ThemeContext } from '../../context/ThemeContext';
 import './navbar.scss'
+import toast from 'react-hot-toast';
 
 const Navbar = ({ modules }) => {
 
@@ -56,7 +57,7 @@ const Navbar = ({ modules }) => {
                             content={link.title}
                             isDisabled={isMenuOpen}
                             color='foreground'
-                            // offset={30}
+                        // offset={30}
                         >
                             <NavLink to={`/dashboard/${link.path}`} end={link.end} style={{ width: !isMenuOpen ? 'fit-content' : '' }}
                                 className={({ isActive }) => isActive ?
@@ -73,13 +74,15 @@ const Navbar = ({ modules }) => {
 
             </div>
             <Card className={`infos text-tremor-content dark:text-dark-tremor-content`} style={{ justifyContent: !isMenuOpen ? 'flex-start' : '', flexDirection: !isMenuOpen ? 'column' : 'row', gap: '1rem' }}>
-                <Tooltip placement={!isMenuOpen ? 'right' : 'top'} content={'Profil'} color='foreground' offset={50}>
+                <Tooltip placement={!isMenuOpen ? 'right' : 'top'} content={'Profil'} color='foreground' >
                     <button
                         className='infos-btn'
                         onClick={() => {
                             navigate('/dashboard/profil')
                         }}>
-                        <UserIcon /> {isMenuOpen && user.firstname}
+                        {/* <UserIcon /> {isMenuOpen && user.firstname} */}
+                        <UserIcon /> { isMenuOpen && 'Alexandre'}
+
                     </button>
                 </Tooltip>
                 <Tooltip placement={!isMenuOpen ? 'right' : 'top'} content={theme === 'dark' ? 'Mode jour' : 'Mode nuit'} color='foreground' >
@@ -100,16 +103,18 @@ const Navbar = ({ modules }) => {
                         {theme === 'dark' ? <Sun /> : <Moon />}
                     </button>
                 </Tooltip>
-                <Tooltip placement={!isMenuOpen ? 'right' : 'top'} content={'Se déconnecter'} color='foreground' offset={50}>
+                <Tooltip placement={!isMenuOpen ? 'right' : 'top'} content={'Se déconnecter'} color='foreground' >
                     <button
                         onClick={() => {
                             if (window.confirm('Voulez-vous vous déconnecter ?')) {
                                 logout()
                                 navigate('/')
                             }
+                            toast.dismiss('toast')
                         }}>
                         < Logout />
                     </button>
+                   
                 </Tooltip>
             </Card>
         </div>
