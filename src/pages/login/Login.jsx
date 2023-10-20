@@ -10,6 +10,8 @@ import { login } from '../../api/users/index';
 import Email from '../../assets/icons/email.svg?react'
 import { getExpirationTime } from '../../utils/token';
 import { ThemeContext } from '../../context/ThemeContext';
+import { hash } from '../../utils/functions';
+import axios from 'axios';
 
 
 
@@ -81,9 +83,16 @@ const Login = () => {
 
     })
 
-    const onSubmit = (data) => {
+    const onSubmit = async (data) => {
+
+
+            // const body = {
+            //     email : data.email,
+            //     password : await hash(data.password)
+            // }
 
             loginMutate(data)
+
     }
 
     return (

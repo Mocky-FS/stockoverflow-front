@@ -285,8 +285,8 @@ const ImportsTable = () => {
                                                         // setOrderStatus('Validée')
                                                         toast.success('Commande validée avec succès !')
                                                     }
-                                                }}>
-                                                    <Check className='w-6 h-6 text-dark-tremor-brand' />
+                                                }} >
+                                                    <Check className='w-6 h-6 text-dark-tremor-brand ' />
                                                 </button>
                                                 </Tooltip>
                                             </>

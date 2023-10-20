@@ -5,6 +5,7 @@ import toast from 'react-hot-toast';
 import { createUser } from '../../../api/users';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { keys } from '../../../../query-key-factory';
+import { hash } from '../../../utils/functions';
 
 const AdminCreateUser = () => {
 
@@ -54,7 +55,14 @@ const AdminCreateUser = () => {
 
     const onSubmit = async (data) => {
 
-        addUserMutation(data)
+        const body = {
+            firstname: data.firstname,
+            lastname: data.lastname,
+            email: data.email,
+            password: await hash(data.password),
+            role: 'user'
+        }
+        addUserMutation(body)
 
         //     try {
         //     const response = await createUser(data)

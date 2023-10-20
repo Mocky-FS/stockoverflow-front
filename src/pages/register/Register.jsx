@@ -8,6 +8,7 @@ import { createUser, login } from "../../api/users";
 import { AuthContext } from "../../context/AuthContext";
 import { useContext } from "react";
 import { getExpirationTime } from "../../utils/token";
+import { hash } from "../../utils/functions";
 
 
 const Register = () => {
@@ -25,13 +26,20 @@ const Register = () => {
 
   const onSubmit = async (data) => {
 
+    const body = {
+      firstname: data.firstname,
+      lastname: data.lastname,
+      email: data.email,
+      password: await hash(data.password),
+    };
+
     try {
 
-      const response = await createUser(data)
+      const response = await createUser(body)
 
 
       if (response.status === 200) {
-          await autoLogin(data)
+          await autoLogin(body)
       }
 
     } catch (error) {

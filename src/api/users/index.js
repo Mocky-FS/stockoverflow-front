@@ -66,7 +66,7 @@ export async function deleteUser(id) {
     try {
         const res = await axios({
             method: 'delete',
-            url: `${import.meta.env.VITE_URL}users/${id}`,
+            url: `${import.meta.env.VITE_URL}user/${id}`,
         })
       
         return res.data

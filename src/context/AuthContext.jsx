@@ -10,6 +10,12 @@ const AuthProvider = ({ children }) => {
 
   const storedUser = JSON.parse(localStorage.getItem('user'));
 
+  // if (storedUser){
+  //           axios.defaults.headers.common['Authorization'] = `Bearer ${storedUser?.token}`
+    
+  // }
+  
+
   const [user, setUser] = useState({
         id: storedUser?.id || null,
         firstname: storedUser?.firstname || null,
