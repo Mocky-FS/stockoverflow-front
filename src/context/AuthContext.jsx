@@ -1,3 +1,4 @@
+import axios from "axios";
 import { createContext, useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
 
@@ -11,7 +12,7 @@ const AuthProvider = ({ children }) => {
   const storedUser = JSON.parse(localStorage.getItem('user'));
 
   // if (storedUser){
-  //           axios.defaults.headers.common['Authorization'] = `Bearer ${storedUser?.token}`
+  //             axios.defaults.headers.common['Authorization'] = `Bearer ${storedUser.token}`
     
   // }
   

@@ -1,11 +1,24 @@
 import { Title, NumberInput, Button, Text } from '@tremor/react';
-import React from 'react';
+import React, { useContext } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { Input } from "@nextui-org/react";
 import { Select, SelectItem } from "@tremor/react";
 import toast from 'react-hot-toast';
+import { useQuery } from '@tanstack/react-query';
+import { keys } from '../../../../query-key-factory';
+import { getCateories } from '../../../api/categories';
+import { getImports } from '../../../api/imports';
+import { AuthContext } from '../../../context/AuthContext';
+import LoadingDots from '../../../components/LoadingDots/LoadingDots';
 
-const OrderForm = () => {
+const OrderForm = ({
+    categoriesList, 
+    categoriesLoadding,
+    productsList,
+    productsListLoading
+
+
+}) => {
 
     const { register, handleSubmit, watch, control, formState: { errors }, setError, reset } = useForm();
 
@@ -16,12 +29,8 @@ const OrderForm = () => {
         reset()
     }
 
-    const options = [
-        { label: 'Chocolate', value: 'chocolate', },
-        { label: 'Strawberry', value: 'strawberry', },
-        { label: 'Strawberry', value: 'Apple' },
+    const filterProductBySelectedCategory = productsList?.filter((product) => product.product_category.id === watch('category'))
 
-    ]
 
 
     return (
@@ -42,11 +51,14 @@ const OrderForm = () => {
                             placeholder="Selectionner une catégorie"
                             className=" w-full text-tremor-content dark:text-dark-tremor-content-muted "
                             enableClear={false}
+                            disabled={categoriesLoadding}
                         // errorMessage={errors.category ? 'Veuillez selectionner une catégorie' : ''}
                         >
-                            <SelectItem value="1" >Papiers</SelectItem>
-                            <SelectItem value="2" >Feuilles</SelectItem>
-                            <SelectItem value="3" >Divers</SelectItem>
+                            {categoriesList?.map((category) => {
+                                return (
+                                    <SelectItem key={category.id} value={category.id} >{category.name}</SelectItem>
+                                )
+                            })}
                         </Select>
 
                     )}
@@ -68,10 +80,15 @@ const OrderForm = () => {
                             placeholder="Selectionnez un produit"
                             className=" w-full text-tremor-content dark:text-dark-tremor-content-muted "
                             enableClear={false}
+                            disabled={productsListLoading}
                         >
-                            <SelectItem value="1">Feuille A4</SelectItem>
-                            <SelectItem value="2">Feuille A3</SelectItem>
-                            <SelectItem value="3">Papier Bulle</SelectItem>
+                           { filterProductBySelectedCategory?.map((product) => {
+                                return (
+                                    <SelectItem key={product.id} value={product.id} >{product.name}</SelectItem>
+                                )
+                            }
+                            )
+                           }
 
                         </Select>
                     )}
@@ -89,7 +106,7 @@ const OrderForm = () => {
                             type="number"
                             placeholder='Quantité'
                             min={0}
-                            // error={errors.quantity}
+                        // error={errors.quantity}
 
                         />
                     )}

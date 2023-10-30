@@ -28,10 +28,6 @@ const Navbar = ({ modules }) => {
         setIsMenuOpen(!isMenuOpen)
     }
 
-    // if window width is less than 768px, close the menu
-
-
-
     useEffect(() => {
         if (window.innerWidth < 768) {
             setIsMenuOpen(false)
@@ -41,11 +37,7 @@ const Navbar = ({ modules }) => {
     return (
         <div className={`bg-tremor-background   dark:bg-dark-tremor-background  dashboard-nav ${!isMenuOpen ? 'close-menu' : ''} `}>
             <Card className='top text-tremor-content dark:text-dark-tremor-content' style={{ flexDirection: !isMenuOpen ? 'column' : 'row', alignItems: 'center', gap: !isMenuOpen ? '1rem' : '' }}>
-
-
                 <Logo className='w-8 h-8' />
-
-
                 {isMenuOpen &&
                     <div className='titles'>
                         <h2>Stock&apos;Overflow </h2>
@@ -92,29 +84,12 @@ const Navbar = ({ modules }) => {
                         onClick={() => {
                             navigate('/dashboard/profil')
                         }}>
-                        {/* <UserIcon /> {isMenuOpen && user.firstname} */}
-                        <UserIcon className='w-7 h-7' /> {isMenuOpen && 'Alexandre'}
-
+                        <UserIcon className='w-7 h-7' /> {isMenuOpen && user.firstname}
                     </button>
                 </Tooltip>
                 <Tooltip placement={!isMenuOpen ? 'right' : 'top'} content={theme === 'dark' ? 'Mode jour' : 'Mode nuit'} color='foreground' >
                     <button onClick={() => toggleTheme(theme)}> {theme === 'light' ? <Moon /> : <Sun />}</button>
-                    {/* <button
-
-                        onClick={() => {
-                            setTheme(theme === 'light' ? 'dark' : 'light')
-                            document.body.classList.toggle('dark')
-
-                            if (theme === 'light') {
-                                localStorage.setItem('theme', 'dark')
-                            } else {
-                                localStorage.setItem('theme', 'light')
-                            }
-                        }
-                        }
-                    >
-                        {theme === 'dark' ? <Sun className='w-7 h-7' /> : <Moon className='w-7 h-7' />}
-                    </button> */}
+                   
                 </Tooltip>
                 <Tooltip placement={!isMenuOpen ? 'right' : 'top'} content={'Se déconnecter'} color='foreground' >
                     <button

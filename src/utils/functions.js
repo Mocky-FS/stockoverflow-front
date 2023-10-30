@@ -55,3 +55,11 @@ export async function hash (string) {
     return hashHex;
   });
 }
+
+export function formatDate (date){
+
+
+  const options = {year: 'numeric', month: 'long', day: 'numeric' };
+  const d = new Date(date)
+  return d.toLocaleDateString('fr-FR', options)
+}

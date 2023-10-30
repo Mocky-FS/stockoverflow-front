@@ -1,4 +1,4 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Button, NumberInput, Select, SelectItem, Text, TextInput, Title } from '@tremor/react';
 import React, { useEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
@@ -6,13 +6,14 @@ import { addProduct } from '../../../api/products';
 import toast from 'react-hot-toast';
 
 import { keys } from '../../../../query-key-factory';
+import { getCateories } from '../../../api/categories';
 
-const AddProduct = ({index}) => {
+const AddProduct = ({index, categoriesList}) => {
 
     const { register, handleSubmit, watch, control, formState: { errors }, setError, reset } = useForm();
 
-
     const queryClient = useQueryClient();
+
     const { mutate: addProductMutation } = useMutation((data) => addProduct(data), {
 
         onMutate: async () => {
@@ -25,7 +26,7 @@ const AddProduct = ({index}) => {
         },
 
         onSuccess: () => {
-                toast.success('Utilisateur créé avec succès')
+                toast.success('Le produit a été ajouté avec succès')
                 reset()
         },
         onError: () => {
@@ -60,11 +61,16 @@ const AddProduct = ({index}) => {
                             {...field}
                             placeholder="Selectionner une catégorie"
                             enableClear={false}
+                            
                         >
-                            <SelectItem value="1" >Xbox Series</SelectItem>
+                            {/* <SelectItem value={null} >Selectionner une catégorie</SelectItem> */}
+                            {categoriesList?.map((category) => (
+                                <SelectItem key={category.id} value={category.id} >{category.name}</SelectItem>
+                            ))}
+                            {/* <SelectItem value="1" >Xbox Series</SelectItem>
                             <SelectItem value="2" >PlayStation 5</SelectItem>
                             <SelectItem value="3" >PC</SelectItem>
-                            <SelectItem value="4" >Nitendo Switch</SelectItem>
+                            <SelectItem value="4" >Nitendo Switch</SelectItem> */}
 
 
                         </Select>

@@ -5,5 +5,6 @@ export const keys = {
     shippings: ({ id }) => ['orders', { id }],
     imports : ({ id }) => ['imports', { id }],
     exports : ({ id }) => ['exports', { id }],
+    clients : ({ id }) => ['clients', { id }],
 
 }

@@ -29,16 +29,26 @@ return res.data
 
 
 export async function addProduct(body) {
+
+    const newBody = {
+        name: body.name,
+        price: +body.price,
+        description: body.description,
+        image: body.image,
+        product_category: body.category,
+        isActive : body.quantity > 0 ? true : false,
+        quantity: +body.quantity,
+    }
     
 
-    console.log(body)
+    // console.log(body)
 
     try {
 
         const res = await axios({
-            method: 'get',
+            method: 'post',
             url: `${import.meta.env.VITE_URL}product/new-products`,
-            data  : body
+            data  : newBody
         })
         
         return res.data

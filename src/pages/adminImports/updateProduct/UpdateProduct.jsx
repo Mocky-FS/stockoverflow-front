@@ -4,18 +4,11 @@ import { keys } from '../../../../query-key-factory';
 import { getProducts } from '../../../api/products';
 import { useQuery } from '@tanstack/react-query';
 import { Controller, useForm } from 'react-hook-form';
+import { getCateories } from '../../../api/categories';
 
-const UpdateProduct = ({index}) => {
+const UpdateProduct = ({index, productsList, categoriesList}) => {
 
     const { register, handleSubmit, watch, control, formState: { errors }, setError, reset } = useForm();
-
-    const { data: productsList, isLoading: productsLoading } = useQuery(
-        keys.products({}),
-        () => getProducts(),
-
-
-       
-    )
 
     const onSubmit = (data) => {
         console.log(data)
@@ -40,10 +33,11 @@ const UpdateProduct = ({index}) => {
                             placeholder="Selectionner une catégorie"
                             enableClear={false}
                         >
-                            <SelectItem value="1" >Xbox Series</SelectItem>
-                            <SelectItem value="2" >PlayStation 5</SelectItem>
-                            <SelectItem value="3" >PC</SelectItem>
-                            <SelectItem value="4" >Nitendo Switch</SelectItem>
+                            {categoriesList?.map((category) => {
+                                return (
+                                    <SelectItem key={category.id} value={category.id} >{category.name}</SelectItem>
+                                )
+                            })}
 
 
                         </Select>
@@ -62,10 +56,13 @@ const UpdateProduct = ({index}) => {
                             placeholder="Selectionner un produit"
                             enableClear={false}
                         >
-                            <SelectItem value="1" >Xbox Series</SelectItem>
-                            <SelectItem value="2" >PlayStation 5</SelectItem>
-                            <SelectItem value="3" >PC</SelectItem>
-                            <SelectItem value="4" >Nitendo Switch</SelectItem>
+                            {productsList?.map((product) => {
+                                return (
+                                    <SelectItem key={product.id} value={product.id} >{product.name}</SelectItem>
+                                )
+
+                            })
+                            }
 
 
                         </Select>

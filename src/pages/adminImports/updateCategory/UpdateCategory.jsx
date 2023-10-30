@@ -1,8 +1,11 @@
 import { Button, Select, SelectItem, TextInput } from '@tremor/react';
 import React, { useEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
+import { getCateories } from '../../../api/categories';
+import { useQuery } from '@tanstack/react-query';
+import { keys } from '../../../../query-key-factory';
 
-const UpdateCategory = ({ index }) => {
+const UpdateCategory = ({ index, categoriesList }) => {
 
     const { register, handleSubmit, watch, control, formState: { errors }, setError, reset, getValues } = useForm();
 
@@ -37,11 +40,11 @@ const UpdateCategory = ({ index }) => {
                             placeholder="Selectionner une catégorie"
                             enableClear={false}
                         >
-                            <SelectItem value="1" >Xbox Series</SelectItem>
-                            <SelectItem value="2" >PlayStation 5</SelectItem>
-                            <SelectItem value="3" >PC</SelectItem>
-                            <SelectItem value="4" >Nitendo Switch</SelectItem>
-
+                            {categoriesList?.map((category) => {
+                                return (
+                                    <SelectItem key={category.id} value={category.id} >{category.name}</SelectItem>
+                                )
+                            })}
 
                         </Select>
                     )}

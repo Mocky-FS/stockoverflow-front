@@ -26,46 +26,51 @@ const Login = () => {
 
 
 
-    const { mutate : loginMutate} = useMutation((data) => login(data), {
+    const { mutate: loginMutate } = useMutation((data) => login(data), {
 
-        onSuccess : (data) => {
+        onSuccess: (data) => {
 
-            // axios.defaults.headers.common['Authorization'] = `Bearer ${data.token}`
+            axios.defaults.headers.common['Authorization'] = `Bearer ${data.token}`
+
 
             setUser({
-                first_name : data.first_name,
-                last_name : data.last_name,
+                id : data.userid,
+                firstname : data.firstName,
+                lastname : data.lastName,
                 email : data.email,
-                id : data.id,
                 token : data.token,
-                tokenExpiration : getExpirationTime(data.token),
+                tokenExpiration : getExpirationTime(data.token)
             })
 
             localStorage.setItem('user', JSON.stringify({
-                ...data,
-                tokenExpiration : getExpirationTime(data.token),
-            
+                id : data.userid,
+                firstname : data.firstName,
+                lastname : data.lastName,
+                email : data.email,
+                token : data.token,
+                tokenExpiration: getExpirationTime(data.token),
+
             }))
 
             reset()
 
-            toast(` Bonjour ${data.first_name} !`, 
-            {
-                icon : '👋',
-            })
-            
+            toast(` Bonjour ${data.firstName} !`,
+                {
+                    icon: '👋',
+                })
+
             navigate('/dashboard')
-        
+
         },
 
-        onError : (error) => {
+        onError: (error) => {
 
-            if (error.code === 401  ) {
+            if (error.code === 401) {
                 setError('email', { type: 'manual', message: 'Identifiants incorrects' })
-                 setError('password', { type: 'manual', message: 'Identifiants incorrects' })
-                 toast.error('Identifiants incorrects')
+                setError('password', { type: 'manual', message: 'Identifiants incorrects' })
+                toast.error('Identifiants incorrects')
             } else {
-               
+
                 toast.error('Une erreur est survenue')
             }
         },
@@ -78,12 +83,12 @@ const Login = () => {
     const onSubmit = async (data) => {
 
 
-            // const body = {
-            //     email : data.email,
-            //     password : await hash(data.password)
-            // }
+        // const body = {
+        //     email : data.email,
+        //     password : await hash(data.password)
+        // }
 
-            loginMutate(data)
+        loginMutate(data)
 
     }
 
@@ -109,7 +114,7 @@ const Login = () => {
                         error={errors.email}
                         autoFocus={true}
                         maxLength={50}
-                        // icon={Email}
+                    // icon={Email}
                     />
 
                     {errors.email && <span className='text-red-500 text-sm '>{errors.email.message}</span>}

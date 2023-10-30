@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export async function getImports(id) {
+export async function getImports() {
 
 
     try {
@@ -20,20 +20,21 @@ export async function getImports(id) {
    
 }
 
-export async function getImportByUser(userId){
-    // try {
+// /order/id
 
-    
-    //     const res = await axios({
-    //         method: 'get',
-    //         url: `${import.meta.env.VITE_URL}order/${userId}`,
-    //     })
+export async function updateStatus(data){
 
-    //     return res.data;
-        
+    console.log(data)
 
-    // } catch (error) {
-    //     throw new Error(error)
-    // }
+   
+
+        const res = await axios({
+            method: 'put',
+            url: `${import.meta.env.VITE_URL}order/edit/${data.product_id}`,
+            data : data
+        })
+
+        return res.data;
+
 }
 

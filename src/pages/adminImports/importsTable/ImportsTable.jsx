@@ -3,31 +3,55 @@ import React, { useState } from 'react';
 import Search from '../../../assets/icons/search.svg?react';
 import Filters from '../../../assets/icons/filters.svg?react';
 
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { keys } from '../../../../query-key-factory';
 import { getImports } from '../../../api/imports';
 import LoadingDots from '../../../components/LoadingDots/LoadingDots';
 import { badgeColorStatus } from '../../../utils/functions';
-import { MultiSelect, MultiSelectItem } from "@tremor/react";
 import { Tooltip } from '@nextui-org/react';
 
 import Check from '../../../assets/icons/check.svg?react'
 import Cross from '../../../assets/icons/crossCircle.svg?react'
 import toast from 'react-hot-toast';
+import { updateStatus } from '../../../api/imports';
 
 
 const ImportsTable = () => {
+    
 
     const [search, setSearch] = useState('')
     const [displayFilters, setDisplayFilters] = useState(false)
 
+    const queryClient = useQueryClient();
 
+
+    const { mutate: updateMutation } = useMutation((data) => updateStatus(data), {
+
+        onMutate: async () => {
+            // await queryClient.cancelQueries(keys.users({}))
+            // const previousUsers = queryClient.getQueryData(keys.users({}))
+            // queryClient.setQueryData(keys.users({}), (old) => [...old, data])
+            // return { previousUsers }
+
+           
+        },
+
+        onSuccess: (data) => {
+                toast.success(`La commande a bien été ${data.status} !`)
+        },
+        onError: () => {
+            toast.error('Une erreur est survenue lors de la création')
+        },
+        onSettled: () => {
+            queryClient.invalidateQueries({ queryKey: keys.imports })
+        }
+
+    })
 
     const { data: importsList, isLoading: importsListLoading } = useQuery(
         keys.imports({}),
         () => getImports(),
     )
-
 
     const resultFiltered = importsList?.filter((order) => (
         order?.user?.first_name?.toLowerCase().includes(search.toLowerCase()) ||
@@ -42,10 +66,21 @@ const ImportsTable = () => {
         return newDate.toLocaleDateString()
     }
 
-
     const formatNumber = (number) => {
         return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
     }
+
+    const validateImport = (order, isValidate) => {
+
+        const update = {
+            product_id : order.id,
+            status: isValidate ? 'Validée' : 'Annulée'
+        } 
+        updateMutation(update)
+
+    }
+
+
 
 
     const getCountOrdersByUser = importsList?.reduce((acc, currentV) => {
@@ -254,7 +289,7 @@ const ImportsTable = () => {
                                                     <button onClick={() => {
                                                         if (window.confirm('Voulez-vous vraiment refuser cette commande ?')) {
                                                             // setOrderStatus('Annulée')
-                                                            toast.error('Commande refusée avec succès !')
+                                                            validateImport(order, false)
                                                         }
                                                     }} className=''>
                                                         <Cross className='w-6 h-6 text-dark-tremor-brand' />
@@ -264,8 +299,7 @@ const ImportsTable = () => {
                                                     <button onClick={() => {
 
                                                         if (window.confirm('Voulez-vous vraiment valider cette commande ?')) {
-                                                            // setOrderStatus('Validée')
-                                                            toast.success('Commande validée avec succès !')
+                                                            validateImport(order, true)  
                                                         }
                                                     }} >
                                                         <Check className='w-6 h-6 text-dark-tremor-brand ' />

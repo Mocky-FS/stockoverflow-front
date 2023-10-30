@@ -1,7 +1,10 @@
+import { useQuery } from '@tanstack/react-query';
 import { NumberInput, Select, SelectItem, Text, Title, Button, Card } from '@tremor/react';
 import { useEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
+import { keys } from '../../../../query-key-factory';
+import { getClients } from '../../../api/clients';
 const OrderForm = () => {
 
 
@@ -10,9 +13,15 @@ const OrderForm = () => {
 
 
 
+    const { data: clientsList, isLoading: clientsLoading } = useQuery(
+        keys.clients({}),
+        () => getClients(),
+
+    )
+
     const sendOrder = (data) => {
 
-        
+
         if (window.confirm('Etes-vous sûr de vouloir expédier cette commande ?')) {
             console.log(data)
             reset()
@@ -24,7 +33,7 @@ const OrderForm = () => {
         <Card className='w-2/4 overflow-auto  '  >
             <Title>Expédier une commande</Title>
             <form className='mt-5 flex flex-col   w-full self-center gap-4' onSubmit={handleSubmit(sendOrder)} >
-            <div className='flex flex-col gap-1'>
+                <div className='flex flex-col gap-1'>
                     <Controller
                         control={control}
                         name='client'
@@ -38,8 +47,12 @@ const OrderForm = () => {
                                 placeholder="Client"
                                 enableClear={false}
                             >
-                                <SelectItem value="1" className='text-tremor-content dark:text-dark-tremor-content-muted '>Oclock</SelectItem>
-                                <SelectItem value="2" className='text-tremor-content dark:text-dark-tremor-content-muted '>CFA</SelectItem>
+                                {clientsList?.map((client) => {
+                                    return (
+                                        <SelectItem key={client.id} value={client.id} >{client.name}</SelectItem>
+                                    )
+                                })}
+
                             </Select>
 
                         )}

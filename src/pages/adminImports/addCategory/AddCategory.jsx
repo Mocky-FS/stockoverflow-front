@@ -1,12 +1,45 @@
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Button, NumberInput, Select, SelectItem, TextInput, Title } from '@tremor/react';
 import React, { useEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
+import { createCategory } from '../../../api/categories';
 
 const AddCategory = ({index}) => {
     const { register, handleSubmit, watch, control, formState: { errors }, setError, reset } = useForm();
 
+    const queryClient = useQueryClient();
+
+    const { mutate: addCategory } = useMutation((data) => createCategory(data), {
+
+        onMutate: async () => {
+            // await queryClient.cancelQueries(keys.users({}))
+            // const previousUsers = queryClient.getQueryData(keys.users({}))
+            // queryClient.setQueryData(keys.users({}), (old) => [...old, data])
+            // return { previousUsers }
+
+           
+        },
+
+        onSuccess: () => {
+                toast.success('La catégorie a été ajoutée avec succès')
+                reset()
+        },
+        onError: () => {
+            toast.error('Une erreur est survenue lors de la création')
+        },
+        onSettled: () => {
+            // queryClient.invalidateQueries({ queryKey: keys.products })
+
+
+        }
+
+    })
+
+
+
     const onSubmit = (data) => {
-        console.log(data)
+        addCategory(data)
     }
 
     useEffect(() => {
