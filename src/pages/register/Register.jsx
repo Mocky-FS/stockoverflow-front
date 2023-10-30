@@ -1,9 +1,9 @@
-import { Button, Card, Title } from "@tremor/react";
+import { Button, Card, Text, Title } from "@tremor/react";
 import { useForm } from "react-hook-form";
 import toast from 'react-hot-toast';
 
 import { TextInput } from "@tremor/react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { createUser, login } from "../../api/users";
 import { AuthContext } from "../../context/AuthContext";
 import { useContext } from "react";
@@ -183,6 +183,8 @@ const Register = () => {
             Créer
           </Button>
         </form>
+        {/* <Link to={'/'} className="text">Retour page connexion</Link> */}
+        <Text className='text-center mt-2'><Link to={'/'}>Retour à la connexion</Link></Text>
       </Card>
     </Card>
   );

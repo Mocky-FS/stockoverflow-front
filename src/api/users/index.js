@@ -22,7 +22,7 @@ export async function login(body) {
         
 
     } catch (error) {
-        throw new Error(error)
+        throw error.response.data;
     }
    
 }
@@ -65,7 +65,7 @@ export async function deleteUser(id) {
 
     try {
         const res = await axios({
-            method: 'delete',
+            method: 'post',
             url: `${import.meta.env.VITE_URL}user/${id}`,
         })
       

@@ -5,23 +5,35 @@ export const ThemeContext = createContext()
 
 const ThemeProvider = ({ children }) => {
 
-    const [theme, setTheme] = useState('light')
+    const actualTheme = window.localStorage.getItem('theme')
+
+    const [theme, setTheme] = useState(actualTheme || 'light')
+
 
     useEffect(() => {
-        
-        const themeLocal = window.localStorage.getItem('theme')
-
-        if (themeLocal){
-            setTheme(themeLocal)
-            document.body.classList.add(themeLocal)
+        if (theme === 'dark') {
+            
+            document.body?.classList.add('dark');
+            document.body?.classList.add('bg-dark-tremor-background');
         } else {
-            window.localStorage.setItem('theme', 'light')
+            document.body?.classList.remove('dark');
+            document.body?.classList.remove('bg-dark-tremor-background');
         }
-    }
-    , [theme])
+
+        window.localStorage.setItem('theme', theme);
+    }, [theme]);
+
+
+    const toggleTheme = () => {
+        if (theme === 'light') {
+          setTheme('dark');
+        } else {
+          setTheme('light');
+        }
+      };
 
     return (
-        <ThemeContext.Provider value={{ theme, setTheme}}>
+        <ThemeContext.Provider value={{ theme, toggleTheme }}>
             {children}
         </ThemeContext.Provider>
     )

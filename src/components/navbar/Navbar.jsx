@@ -1,6 +1,6 @@
 
 import { NavLink, useNavigate } from 'react-router-dom';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 import Logo from '../../assets/icons/logo.svg?react'
 import Logout from '../../assets/icons/logout.svg?react'
@@ -20,7 +20,7 @@ const Navbar = ({ modules }) => {
     const navigate = useNavigate()
 
     const { user, logout } = useContext(AuthContext)
-    const { theme, setTheme } = useContext(ThemeContext)
+    const { theme, toggleTheme } = useContext(ThemeContext)
 
     const [isMenuOpen, setIsMenuOpen] = useState(true)
 
@@ -28,11 +28,23 @@ const Navbar = ({ modules }) => {
         setIsMenuOpen(!isMenuOpen)
     }
 
+    // if window width is less than 768px, close the menu
 
+
+
+    useEffect(() => {
+        if (window.innerWidth < 768) {
+            setIsMenuOpen(false)
+        }
+    } , [])
+       
     return (
         <div className={`bg-tremor-background   dark:bg-dark-tremor-background  dashboard-nav ${!isMenuOpen ? 'close-menu' : ''} `}>
             <Card className='top text-tremor-content dark:text-dark-tremor-content' style={{ flexDirection: !isMenuOpen ? 'column' : 'row', alignItems: 'center', gap: !isMenuOpen ? '1rem' : '' }}>
-                <Logo />
+
+
+                <Logo className='w-8 h-8' />
+
 
                 {isMenuOpen &&
                     <div className='titles'>
@@ -42,7 +54,7 @@ const Navbar = ({ modules }) => {
 
                 <Tooltip placement="right" content={isMenuOpen ? 'Fermer le menu' : 'Ouvrir le menu'} color='foreground' >
                     <button onClick={toggleMenu} style={{ alignSelf: !isMenuOpen ? 'center' : '' }}>
-                        {isMenuOpen ? <ArrowLeft /> : <ArrowRight />}
+                        {isMenuOpen ? <ArrowLeft className='w-6 h-6' /> : <ArrowRight className='w-6 h-6' />}
                     </button>
                 </Tooltip>
             </Card>
@@ -65,7 +77,7 @@ const Navbar = ({ modules }) => {
                                     '  dark:text-tremor-content-subtle'
                                 }
                             >
-                                <link.icon />
+                                <link.icon className=' w-6 h-6' />
                                 {isMenuOpen && <p >{link.title}</p>}
                             </NavLink>
                         </Tooltip>
@@ -81,12 +93,13 @@ const Navbar = ({ modules }) => {
                             navigate('/dashboard/profil')
                         }}>
                         {/* <UserIcon /> {isMenuOpen && user.firstname} */}
-                        <UserIcon /> { isMenuOpen && 'Alexandre'}
+                        <UserIcon className='w-7 h-7' /> {isMenuOpen && 'Alexandre'}
 
                     </button>
                 </Tooltip>
                 <Tooltip placement={!isMenuOpen ? 'right' : 'top'} content={theme === 'dark' ? 'Mode jour' : 'Mode nuit'} color='foreground' >
-                    <button
+                    <button onClick={() => toggleTheme(theme)}> {theme === 'light' ? <Moon /> : <Sun />}</button>
+                    {/* <button
 
                         onClick={() => {
                             setTheme(theme === 'light' ? 'dark' : 'light')
@@ -100,8 +113,8 @@ const Navbar = ({ modules }) => {
                         }
                         }
                     >
-                        {theme === 'dark' ? <Sun /> : <Moon />}
-                    </button>
+                        {theme === 'dark' ? <Sun className='w-7 h-7' /> : <Moon className='w-7 h-7' />}
+                    </button> */}
                 </Tooltip>
                 <Tooltip placement={!isMenuOpen ? 'right' : 'top'} content={'Se déconnecter'} color='foreground' >
                     <button
@@ -112,9 +125,9 @@ const Navbar = ({ modules }) => {
                             }
                             toast.dismiss('toast')
                         }}>
-                        < Logout />
+                        < Logout className='w-7 h-7' />
                     </button>
-                   
+
                 </Tooltip>
             </Card>
         </div>

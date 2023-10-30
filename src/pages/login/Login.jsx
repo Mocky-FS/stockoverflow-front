@@ -30,8 +30,6 @@ const Login = () => {
 
         onSuccess : (data) => {
 
-            console.log(data)
-
             // axios.defaults.headers.common['Authorization'] = `Bearer ${data.token}`
 
             setUser({
@@ -48,32 +46,26 @@ const Login = () => {
                 tokenExpiration : getExpirationTime(data.token),
             
             }))
+
             reset()
 
-            const hour = new Date().getHours()
-
-            // const toast = toast()
             toast(` Bonjour ${data.first_name} !`, 
             {
                 icon : '👋',
             })
             
-            // if (hour >= 20 || hour <= 6) {
-            //     toast(` 👋 Bonsoir ${data.first_name} !`)
-            // } else {
-            //     toast(` 👋 Bonjour ${data.first_name} !`)
-            // }
             navigate('/dashboard')
         
         },
 
         onError : (error) => {
+
             if (error.code === 401  ) {
                 setError('email', { type: 'manual', message: 'Identifiants incorrects' })
                  setError('password', { type: 'manual', message: 'Identifiants incorrects' })
+                 toast.error('Identifiants incorrects')
             } else {
-                // setError('email', { type: 'manual', message: 'Une erreur est survenue' })
-                // setError('password', { type: 'manual', message: 'Une erreur est survenue' })
+               
                 toast.error('Une erreur est survenue')
             }
         },

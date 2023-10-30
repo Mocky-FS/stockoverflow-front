@@ -48,7 +48,7 @@ const AddProduct = ({index}) => {
     }, [index, reset])
 
     return (
-        <div className='mt-5 flex flex-col items-center'>
+        <div className='mt-5 flex flex-col items-center overflow-hidden'>
             <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col gap-4 mt-2 w-3/4 '>
                 <Controller
                     control={control}

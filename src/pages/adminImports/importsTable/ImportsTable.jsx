@@ -48,62 +48,44 @@ const ImportsTable = () => {
     }
 
 
+    const getCountOrdersByUser = importsList?.reduce((acc, currentV) => {
+        const user = currentV.user.first_name + ' ' + currentV.user.last_name;
+        const findedUser = acc.find((e) => e.user === user)
 
-    const getOrdersCountByUser = (data) => {
-        // Crée un objet pour stocker le nombre de commandes par utilisateur.
-        const orderCountMap = new Map();
+        if (!findedUser) {
 
-        // Parcourez les données d'export et comptez le nombre de commandes par utilisateur.
-        data?.forEach((order) => {
-            const userId = order.user.id;
-            // const userName = `${order.user.first_name} ${order.user.last_name}`;
+            return [...acc, {
+                user: user,
+                orderCount: 1
+            }]
+        }
 
-            if (orderCountMap.has(userId)) {
-                orderCountMap.set(userId, orderCountMap.get(userId) + 1);
-            } else {
-                orderCountMap.set(userId, 1);
-            }
-        });
+        else {
+            findedUser.orderCount += 1
+            return acc
+        }
 
-        // Convertit l'objet Map en un tableau d'objets avec le nom de la personne et le nombre de commandes.
-        const orderCountArray = Array?.from(orderCountMap, ([userId, count]) => ({
-            name: `${data?.find(order => order.user.id === userId).user.first_name} ${data?.find(order => order.user.id === userId).user.last_name}`,
-            orderCount: count,
-        }));
+    }, [])
 
-        return orderCountArray;
-    }
+    const getTopGames = importsList?.filter((e) => e.status === 'Validée').reduce((acc, currentV ) => {
 
-    const userOrderCounts = getOrdersCountByUser(importsList);
+        const product = currentV.product.name
 
-    const getTopOrderedGames = (data) => {
-        // Crée un objet pour stocker le nombre de commandes par jeu.
-        const gameOrderCountMap = new Map();
+        const findedProduct = acc.find((e) => e.game === product)
 
-        // Parcourez les données d'export et comptez le nombre de commandes par jeu.
-        data?.forEach((order) => {
-            if (order?.product && order.product.name) {
-                const gameName = order.product.name;
+        if (!findedProduct){
+            return [...acc, {
+                product : product,
+                orderQuantity : currentV.quantity
+            }]
+        } else {
+            findedProduct.orderQuantity += currentV.quantity
+            return acc
+        }
 
-                if (gameOrderCountMap.has(gameName)) {
-                    gameOrderCountMap.set(gameName, gameOrderCountMap.get(gameName) + 1);
-                } else {
-                    gameOrderCountMap.set(gameName, 1);
-                }
-            }
-        });
+        
+    }, [])
 
-        // Triez les jeux en fonction du nombre de commandes.
-        const sortedGames = [...gameOrderCountMap.entries()]
-            .sort((a, b) => b[1] - a[1])
-            .slice(0, 3);
-
-        const top3Games = sortedGames?.map(([game, count]) => ({ name: game, orderCount: count }));
-
-        return top3Games;
-    }
-
-    const topOrderedGames = getTopOrderedGames(importsList?.filter((e) => e.status === 'Validée'));
 
     if (importsListLoading) {
         return <LoadingDots />
@@ -119,7 +101,7 @@ const ImportsTable = () => {
                     <div className='flex'>
                         <DonutChart
                             className="mt-6 w-2/4"
-                            data={userOrderCounts}
+                            data={getCountOrdersByUser}
                             category="orderCount"
                             index="name"
                             showAnimation={true}
@@ -127,7 +109,7 @@ const ImportsTable = () => {
                         <div className='flex flex-col'>
                             <Legend
                                 className="mt-3"
-                                categories={userOrderCounts.map((user) => user.name)}
+                                categories={getCountOrdersByUser.map((staff) => staff.user)}
 
                             />
                         </div>
@@ -141,15 +123,15 @@ const ImportsTable = () => {
 
                         <DonutChart
                             className="mt-6 w-2/4"
-                            data={topOrderedGames}
-                            category="orderCount"
-                            index="name"
+                            data={getTopGames}
+                            category="orderQuantity"
+                            index="product"
                             showAnimation={true}
                         />
                         <div className='flex flex-col w-2/5'>
                             <Legend
                                 className="mt-3"
-                                categories={topOrderedGames?.map((game) => game.name)}
+                                categories={getTopGames?.map((article) => article.product)}
                             />
                         </div>
 
@@ -268,26 +250,26 @@ const ImportsTable = () => {
                                     <TableCell className='text-right flex gap-4'>
                                         {order.status === 'En attente' &&
                                             <>
-                                             <Tooltip placement={'left'} content={'Refuser'} color='foreground' >
-                                                <button onClick={() => {
-                                                    if (window.confirm('Voulez-vous vraiment refuser cette commande ?')) {
-                                                        // setOrderStatus('Annulée')
-                                                        toast.error('Commande refusée avec succès !')
-                                                    }
-                                                }} className=''>
-                                                    <Cross className='w-6 h-6 text-dark-tremor-brand' />
-                                                </button>
+                                                <Tooltip placement={'left'} content={'Refuser'} color='foreground' >
+                                                    <button onClick={() => {
+                                                        if (window.confirm('Voulez-vous vraiment refuser cette commande ?')) {
+                                                            // setOrderStatus('Annulée')
+                                                            toast.error('Commande refusée avec succès !')
+                                                        }
+                                                    }} className=''>
+                                                        <Cross className='w-6 h-6 text-dark-tremor-brand' />
+                                                    </button>
                                                 </Tooltip>
                                                 <Tooltip placement={'right'} content={'Valider'} color='foreground' >
-                                                <button onClick={() => {
+                                                    <button onClick={() => {
 
-                                                    if (window.confirm('Voulez-vous vraiment valider cette commande ?')) {
-                                                        // setOrderStatus('Validée')
-                                                        toast.success('Commande validée avec succès !')
-                                                    }
-                                                }} >
-                                                    <Check className='w-6 h-6 text-dark-tremor-brand ' />
-                                                </button>
+                                                        if (window.confirm('Voulez-vous vraiment valider cette commande ?')) {
+                                                            // setOrderStatus('Validée')
+                                                            toast.success('Commande validée avec succès !')
+                                                        }
+                                                    }} >
+                                                        <Check className='w-6 h-6 text-dark-tremor-brand ' />
+                                                    </button>
                                                 </Tooltip>
                                             </>
                                         }
