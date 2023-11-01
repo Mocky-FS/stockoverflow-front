@@ -1,18 +1,16 @@
-import { Title, NumberInput, Button, Text } from '@tremor/react';
-import React, { useContext } from 'react';
+import { Title, NumberInput, Button } from '@tremor/react';
 import { useForm, Controller } from 'react-hook-form';
-import { Input } from "@nextui-org/react";
 import { Select, SelectItem } from "@tremor/react";
 import toast from 'react-hot-toast';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { createOrder } from '../../../api/imports';
 import { keys } from '../../../../query-key-factory';
-import { getCateories } from '../../../api/categories';
-import { getImports } from '../../../api/imports';
 import { AuthContext } from '../../../context/AuthContext';
-import LoadingDots from '../../../components/LoadingDots/LoadingDots';
+import { useContext } from 'react';
+
 
 const OrderForm = ({
-    categoriesList, 
+    categoriesList,
     categoriesLoadding,
     productsList,
     productsListLoading
@@ -20,18 +18,42 @@ const OrderForm = ({
 
 }) => {
 
-    const { register, handleSubmit, watch, control, formState: { errors }, setError, reset } = useForm();
+    const { handleSubmit, watch, control, formState: { errors }, reset } = useForm();
+
+    const { user } = useContext(AuthContext)
+
+    const queryClient = useQueryClient();
+
+    const { mutate: newOrderMutation, isLoading } = useMutation((data) => createOrder(data), {
+
+        onSuccess: () => {
+            toast.success('Votre commande a été prise en compte !', { icon: '👍' })
+            reset()
+        },
+        onError: () => {
+            toast.error('Une erreur est survenue lors création de la commande')
+        },
+        onSettled: () => {
+            queryClient.invalidateQueries({ queryKey: keys.imports })
+        }
+
+    })
+
 
 
     const submitForm = (data) => {
-        console.log(data)
-        toast.success('Commande effectuée !')
-        reset()
+
+        const newBody = {
+            quantity: Number(data.quantity),
+            product_id: Number(data.product),
+            user_id: user?.id,
+            date : new Date()
+
+        }
+        newOrderMutation(newBody)
     }
 
     const filterProductBySelectedCategory = productsList?.filter((product) => product.product_category.id === watch('category'))
-
-
 
     return (
         <>
@@ -52,7 +74,6 @@ const OrderForm = ({
                             className=" w-full text-tremor-content dark:text-dark-tremor-content-muted "
                             enableClear={false}
                             disabled={categoriesLoadding}
-                        // errorMessage={errors.category ? 'Veuillez selectionner une catégorie' : ''}
                         >
                             {categoriesList?.map((category) => {
                                 return (
@@ -80,15 +101,15 @@ const OrderForm = ({
                             placeholder="Selectionnez un produit"
                             className=" w-full text-tremor-content dark:text-dark-tremor-content-muted "
                             enableClear={false}
-                            disabled={productsListLoading}
+                            disabled={watch('category') === null || productsList?.filter((product) => product.product_category.id === watch('category')).length === 0  }
                         >
-                           { filterProductBySelectedCategory?.map((product) => {
+                            {filterProductBySelectedCategory?.map((product) => {
                                 return (
                                     <SelectItem key={product.id} value={product.id} >{product.name}</SelectItem>
                                 )
                             }
                             )
-                           }
+                            }
 
                         </Select>
                     )}
@@ -106,16 +127,26 @@ const OrderForm = ({
                             type="number"
                             placeholder='Quantité'
                             min={0}
-                        // error={errors.quantity}
 
                         />
                     )}
                 />
                 {errors.quantity && <span className='text-red-500 text-sm '>{errors.quantity.message}</span>}
-                <Button type='submit' className='w-1/4 m-auto mt-5 p-2'>Valider</Button>
+                <Button 
+                disabled={isLoading}
+                type='submit' 
+                className='w-1/4 m-auto mt-5 p-2'
+                >Valider</Button>
             </form>
         </>
     );
 };
+
+// OrderForm.propTypes = {
+//     categoriesList: PropsTypes.array.isRequired,
+//     categoriesLoadding: PropsTypes.bool.isRequired,
+//     productsList: PropsTypes.array.isRequired,
+//     productsListLoading: PropsTypes.bool.isRequired
+// }
 
 export default OrderForm;

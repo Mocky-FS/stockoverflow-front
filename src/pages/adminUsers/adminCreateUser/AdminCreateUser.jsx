@@ -23,7 +23,7 @@ const AdminCreateUser = () => {
 
 
 
-    const { mutate: addUserMutation } = useMutation((data) => createUser(data), {
+    const { mutate: addUserMutation, isLoading } = useMutation((data) => createUser(data), {
 
         onMutate: async () => {
             // await queryClient.cancelQueries(keys.users({}))
@@ -63,27 +63,6 @@ const AdminCreateUser = () => {
             role: 'user'
         }
         addUserMutation(body)
-
-        //     try {
-        //     const response = await createUser(data)
-
-
-        //     if (response.status === 201) {
-        //       toast.success("L'utilisateur a bien été créé")        
-        //       reset() 
-        //     }
-
-        //   } catch (error) {
-
-        //     if (error.code === 409 && error.message === `L'adresse e-mail existe déjà`) {
-        //       return setError('email', { type: 'manual', message: 'L\'adresse e-mail existe déjà' });
-        //     } else {
-        //       alert('Une erreur est survenue, merci de réessayer')
-        //     }
-
-        //   }
-
-
 
     };
 
@@ -178,7 +157,10 @@ const AdminCreateUser = () => {
                         </span>
                     )}
                 </div>
-                <Button className="w-fit self-center mt-2" type="submit"> Créer</Button>
+                <Button 
+                loading={isLoading}
+                className="w-fit self-center mt-2" 
+                type="submit"> Créer</Button>
 
 
             </form>

@@ -2,40 +2,40 @@ import { Badge, BadgeDelta, Card, DonutChart, Flex, Legend, List, ListItem, Titl
 
 const Chart = () => {
 
-    const data = [
-        {
-            name: 'Alex',
-            export: 21
-        },
-        {
-            name: 'Gael',
-            export: 13
-        },
-        {
-            name: 'Joris',
-            export: 25
-        },
-        {
-            name: 'Arnaud',
-            export: 21
-        },
-    ]
+    // const data = [
+    //     {
+    //         name: 'Alex',
+    //         export: 21
+    //     },
+    //     {
+    //         name: 'Gael',
+    //         export: 13
+    //     },
+    //     {
+    //         name: 'Joris',
+    //         export: 25
+    //     },
+    //     {
+    //         name: 'Arnaud',
+    //         export: 21
+    //     },
+    // ]
 
 
     return (
         <Card className="w-2/4 mx-auto overflow-auto  flex flex-col" >
             
-                <Title>Nombre de commandes par employés</Title>
+                <Title>Top clients</Title>
 
-            <Legend categories={data.map((user) => user.name)} className="my-2 self-center" />
+            {/* <Legend categories={data.map((user) => user.name)} className="my-2 self-center" /> */}
             <DonutChart
-                data={data}
+                // data={data}
                 category="export"
                 index="name"
                 // className="mt-2"
             />
             <List>
-                {data.map((user) => (
+                {/* {data.map((user) => (
                     <ListItem key={user.name}>
                         {user.name}
                         <Badge size="xs">
@@ -43,7 +43,7 @@ const Chart = () => {
                         </Badge>
                         
                     </ListItem>
-                ))}
+                ))} */}
             </List>
         </Card>
     );

@@ -4,50 +4,15 @@ import Search from '../../../assets/icons/search.svg?react';
 const MyLastOrders = () => {
 
     const [search, setSearch] = useState('')
-    const data = [
-        {
-            id: 1,
-            date: "12/01/2021",
-            client: 'Oclock',
-            status: "Expédiée",
-        },
-        {
-            id: 2,
-            date: "29/02/2022",
-            client: 'Oclock',
-            status: "Annulée",
-        },
-        {
-            id: 3,
-            date: "12/03/2022",
-            client: 'Oclock',
-            status: "Expédiée",
-        },
-        {
-            id: 4,
-            date: "01/12/2023",
-            client: 'CFA',
-            status: "Expédiée",
-        },
-        {
-            id: 5,
-            date: "19/05/2023",
-            client: 'CFA',
-            status: "Expédiée",
-        },
+    
 
-    ];
-
-    const resultFiltered = data?.filter((order) => (
-        order.date.toString().includes(search.toLowerCase()) ||
-        order.client.toLowerCase().includes(search.toLowerCase()) ||
-        order.status.toLowerCase().includes(search.toLowerCase()) ||
-        order.id.toString().includes(search.toLowerCase())
-        // order.user.toLowerCase().includes(search.toLowerCase()) ||
-        // order.client.toLowerCase().includes(search.toLowerCase()) ||
-        // order.status.toLowerCase().includes(search.toLowerCase()) ||
-        // order.id.toString().includes(search.toLowerCase()) ||
-    ));
+    // const resultFiltered = data?.filter((order) => (
+    //     order.date.toString().includes(search.toLowerCase()) ||
+    //     order.client.toLowerCase().includes(search.toLowerCase()) ||
+    //     order.status.toLowerCase().includes(search.toLowerCase()) ||
+    //     order.id.toString().includes(search.toLowerCase())
+       
+    // ));
 
 
     return (
@@ -72,7 +37,7 @@ const MyLastOrders = () => {
                             <TableHeaderCell>Statut</TableHeaderCell>
                         </TableRow>
                     </TableHead>
-                    <TableBody>
+                    {/* <TableBody>
                         {resultFiltered?.map((item) => (
                             <TableRow key={item.id}>
                                 <TableCell>{item.id}</TableCell>
@@ -89,7 +54,7 @@ const MyLastOrders = () => {
                                 </TableCell>
                             </TableRow>
                         ))}
-                    </TableBody>
+                    </TableBody> */}
                 </Table>
         </Card>
     );

@@ -14,7 +14,7 @@ const AddProduct = ({index, categoriesList}) => {
 
     const queryClient = useQueryClient();
 
-    const { mutate: addProductMutation } = useMutation((data) => addProduct(data), {
+    const { mutate: addProductMutation, isLoading } = useMutation((data) => addProduct(data), {
 
         onMutate: async () => {
             // await queryClient.cancelQueries(keys.users({}))
@@ -130,7 +130,10 @@ const AddProduct = ({index, categoriesList}) => {
                 {errors.quantity && <span className='text-red-500 text-xs '>{errors.quantity.message}</span>}
                
 
-                <Button type='submit' className='w-fit self-center'>Ajouter</Button>
+                <Button 
+                loading={isLoading}
+                type='submit' 
+                className='w-fit self-center'>Ajouter</Button>
             </form>
         </div>
     );

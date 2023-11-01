@@ -1,23 +1,22 @@
-import { useQuery } from '@tanstack/react-query';
 import { NumberInput, Select, SelectItem, Text, Title, Button, Card } from '@tremor/react';
-import { useEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
-import { keys } from '../../../../query-key-factory';
-import { getClients } from '../../../api/clients';
-const OrderForm = () => {
+const OrderForm = ({
+
+    categoriesList,
+    categoriesLoading,
+    productsList,
+    productsLoading,
+    clientsList,
+    clientsLoading
+
+}) => {
 
 
     const { register, handleSubmit, watch, control, formState: { errors }, setError, reset } = useForm();
 
 
 
-
-    const { data: clientsList, isLoading: clientsLoading } = useQuery(
-        keys.clients({}),
-        () => getClients(),
-
-    )
 
     const sendOrder = (data) => {
 
@@ -29,6 +28,9 @@ const OrderForm = () => {
         }
 
     }
+
+    const filterProductBySelectedCategory = productsList?.filter((product) => product.product_category.id === watch('category'))
+
     return (
         <Card className='w-2/4 overflow-auto  '  >
             <Title>Expédier une commande</Title>
@@ -49,7 +51,7 @@ const OrderForm = () => {
                             >
                                 {clientsList?.map((client) => {
                                     return (
-                                        <SelectItem key={client.id} value={client.id} >{client.name}</SelectItem>
+                                        <SelectItem key={client.id} value={client.id} >{client.company}</SelectItem>
                                     )
                                 })}
 
@@ -74,9 +76,14 @@ const OrderForm = () => {
 
                             >
 
-                                <SelectItem value="1" className='text-tremor-content dark:text-dark-tremor-content-muted '>Feuilles</SelectItem>
-                                <SelectItem value="2" className='text-tremor-content dark:text-dark-tremor-content-muted '>Papier</SelectItem>
-                                <SelectItem value="3" className='text-tremor-content dark:text-dark-tremor-content-muted '>Carton</SelectItem>
+                                {
+                                    categoriesList?.map((category) => {
+                                        return (
+                                            <SelectItem key={category.id} value={category.id} >{category.name}</SelectItem>
+                                        )
+                                    })
+
+                                }
 
                             </Select>
                         )}
@@ -94,11 +101,18 @@ const OrderForm = () => {
                                 {...field}
                                 label="product"
                                 placeholder="Produit"
+                                disabled={watch('category') === null || filterProductBySelectedCategory?.filter((product) => product.quantity > 0).length === 0}
+                                enableClear={false}
                             >
 
-                                <SelectItem value="1" className='text-tremor-content dark:text-dark-tremor-content-muted '>Feuilles A4</SelectItem>
-                                <SelectItem value="2" className='text-tremor-content dark:text-dark-tremor-content-muted '>Feuilles 13</SelectItem>
-                                <SelectItem value="3" className='text-tremor-content dark:text-dark-tremor-content-muted '>Papier carton</SelectItem>
+                                {
+                                    filterProductBySelectedCategory?.map((product) => {
+                                        return (
+                                            <SelectItem key={product.id} value={product.id} >{product.name}</SelectItem>
+                                        )
+                                    })
+
+                                }
 
                             </Select>
                         )}

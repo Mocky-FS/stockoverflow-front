@@ -1,5 +1,5 @@
-import { useContext, useState } from 'react';
-import { Controller, useForm } from "react-hook-form"
+import { useContext } from 'react';
+import { useForm } from "react-hook-form"
 import { Link, useNavigate } from 'react-router-dom';
 import { Button, Card, Flex, Text, TextInput, Title } from '@tremor/react';
 import toast from 'react-hot-toast';
@@ -7,7 +7,6 @@ import toast from 'react-hot-toast';
 import { useMutation } from '@tanstack/react-query';
 import { AuthContext } from '../../context/AuthContext';
 import { login } from '../../api/users/index';
-import Email from '../../assets/icons/email.svg?react'
 import { getExpirationTime } from '../../utils/token';
 import { ThemeContext } from '../../context/ThemeContext';
 import { hash } from '../../utils/functions';
@@ -30,7 +29,7 @@ const Login = () => {
 
         onSuccess: (data) => {
 
-            axios.defaults.headers.common['Authorization'] = `Bearer ${data.token}`
+            // axios.defaults.headers.common['Authorization'] = `Bearer ${data.token}`
 
 
             setUser({
@@ -75,20 +74,17 @@ const Login = () => {
             }
         },
 
-
-
-
     })
 
     const onSubmit = async (data) => {
 
 
-        // const body = {
-        //     email : data.email,
-        //     password : await hash(data.password)
-        // }
+        const body = {
+            email : data.email,
+            password : await hash(data.password)
+        }
 
-        loginMutate(data)
+        loginMutate(body)
 
     }
 

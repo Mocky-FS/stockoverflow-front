@@ -1,5 +1,5 @@
 import { Badge, Card, DonutChart, Legend, Select, SelectItem, Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRow, Text, TextInput, Title } from '@tremor/react';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Search from '../../../assets/icons/search.svg?react';
 import Filters from '../../../assets/icons/filters.svg?react';
 
@@ -17,7 +17,7 @@ import { updateStatus } from '../../../api/imports';
 
 
 const ImportsTable = () => {
-    
+
 
     const [search, setSearch] = useState('')
     const [displayFilters, setDisplayFilters] = useState(false)
@@ -27,20 +27,11 @@ const ImportsTable = () => {
 
     const { mutate: updateMutation } = useMutation((data) => updateStatus(data), {
 
-        onMutate: async () => {
-            // await queryClient.cancelQueries(keys.users({}))
-            // const previousUsers = queryClient.getQueryData(keys.users({}))
-            // queryClient.setQueryData(keys.users({}), (old) => [...old, data])
-            // return { previousUsers }
-
-           
-        },
-
         onSuccess: (data) => {
-                toast.success(`La commande a bien été ${data.status} !`)
+            toast.success(`La commande a bien été ${data.data.status === 'Validée' ? 'validée' : 'annulée'} !`)
         },
         onError: () => {
-            toast.error('Une erreur est survenue lors de la création')
+            toast.error('Une erreur est survenue lors de mise à jour du statut')
         },
         onSettled: () => {
             queryClient.invalidateQueries({ queryKey: keys.imports })
@@ -59,7 +50,11 @@ const ImportsTable = () => {
         order?.product?.name?.toLowerCase().includes(search.toLowerCase() ||
             order?.status?.toLowerCase().includes(search.toLowerCase()))
 
-    ));
+    )).sort((a, b) => b.id - a.id)
+
+    // sort by status
+
+
 
     const formatDate = (date) => {
         const newDate = new Date(date)
@@ -72,16 +67,12 @@ const ImportsTable = () => {
 
     const validateImport = (order, isValidate) => {
 
-        const update = {
-            product_id : order.id,
+        const newStatus = {
+            product_id: order.id,
             status: isValidate ? 'Validée' : 'Annulée'
-        } 
-        updateMutation(update)
-
+        }
+        updateMutation(newStatus)
     }
-
-
-
 
     const getCountOrdersByUser = importsList?.reduce((acc, currentV) => {
         const user = currentV.user.first_name + ' ' + currentV.user.last_name;
@@ -102,24 +93,28 @@ const ImportsTable = () => {
 
     }, [])
 
-    const getTopGames = importsList?.filter((e) => e.status === 'Validée').reduce((acc, currentV ) => {
+
+
+    const getTopGames = importsList?.filter((e) => e.status === 'Validée').reduce((acc, currentV) => {
 
         const product = currentV.product.name
 
-        const findedProduct = acc.find((e) => e.game === product)
+        const findedProduct = acc.find((e) => e.product === product)
 
-        if (!findedProduct){
+        if (!findedProduct) {
             return [...acc, {
-                product : product,
-                orderQuantity : currentV.quantity
+                product: product,
+                orderQuantity: currentV.quantity
             }]
         } else {
+
             findedProduct.orderQuantity += currentV.quantity
             return acc
         }
 
-        
-    }, [])
+
+    }, []).sort((a, b) => b.orderQuantity - a.orderQuantity).slice(0, 3)
+
 
 
     if (importsListLoading) {
@@ -128,10 +123,10 @@ const ImportsTable = () => {
 
 
     return (
-        <div className='w-3/4 flex flex-col gap-4'>
+        <div className='w-3/4 flex flex-col gap-4 '>
             <div className='flex h-1/4 gap-4'>
 
-                <Card className='w-2/4 h-full'>
+                <Card className='w-2/4 h-full overflow-auto'>
                     <Title>Commandes par employés</Title>
                     <div className='flex'>
                         <DonutChart
@@ -141,7 +136,7 @@ const ImportsTable = () => {
                             index="name"
                             showAnimation={true}
                         />
-                        <div className='flex flex-col'>
+                        <div className='flex flex-col w-fit'>
                             <Legend
                                 className="mt-3"
                                 categories={getCountOrdersByUser.map((staff) => staff.user)}
@@ -151,7 +146,7 @@ const ImportsTable = () => {
                     </div>
 
                 </Card>
-                <Card className='w-2/4 h-full'>
+                <Card className='w-2/4 h-full overflow-auto'>
                     <Title>Top 3 commandes </Title>
                     <div className='flex'>
 
@@ -173,9 +168,9 @@ const ImportsTable = () => {
                     </div>
                 </Card>
             </div>
-            <Card className='h-3/4'>
-                <div className='flex flex-col'>
-                    <div className='flex justify-between'>
+            <Card className='h-3/4 overflow-hidden '>
+                <div className='flex flex-col h-full'>
+                    <div className='flex justify-between '>
                         <Title>Toutes les commandes</Title>
                         <div className='flex gap-4 w-2/4 justify-end'>
 
@@ -227,7 +222,7 @@ const ImportsTable = () => {
                                 onChange={(e) => setSearch(e.target.value)}
 
                             />
-                            <Tooltip placement="top" content={displayFilters ? 'Fermer les filtres' : 'Afficher les filtres'} color='foreground' >
+                            <Tooltip placement="top" content={displayFilters ? 'Cacher les filtres' : 'Afficher les filtres'} color='foreground' >
                                 <button
                                     onClick={() => setDisplayFilters(!displayFilters)}
                                 >
@@ -238,8 +233,8 @@ const ImportsTable = () => {
                     </div>
 
 
-                    <Table className="mt-5 table-orders">
-                        <TableHead>
+                    <Table className="mt-5 table-orders h-11/12 overflow-auto ">
+                    <TableHead className='sticky top-0 dark:bg-dark-tremor-background bg-tremor-background' >
                             <TableRow>
                                 <TableHeaderCell >N° </TableHeaderCell>
                                 <TableHeaderCell>Date</TableHeaderCell>
@@ -299,7 +294,7 @@ const ImportsTable = () => {
                                                     <button onClick={() => {
 
                                                         if (window.confirm('Voulez-vous vraiment valider cette commande ?')) {
-                                                            validateImport(order, true)  
+                                                            validateImport(order, true)
                                                         }
                                                     }} >
                                                         <Check className='w-6 h-6 text-dark-tremor-brand ' />

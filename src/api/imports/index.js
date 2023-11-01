@@ -20,14 +20,8 @@ export async function getImports() {
    
 }
 
-// /order/id
-
 export async function updateStatus(data){
-
-    console.log(data)
-
-   
-
+    
         const res = await axios({
             method: 'put',
             url: `${import.meta.env.VITE_URL}order/edit/${data.product_id}`,
@@ -37,4 +31,18 @@ export async function updateStatus(data){
         return res.data;
 
 }
+
+// Create a new order
+export async function createOrder(data){
+
+        const res = await axios({
+            method: 'post',
+            url: `${import.meta.env.VITE_URL}order/new`,
+            data : data
+        })
+
+        return res.data;
+
+}
+
 

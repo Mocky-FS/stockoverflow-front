@@ -61,3 +61,28 @@ export async function addProduct(body) {
 
 }
 
+export async function updateProducts(body) {
+
+    const newBody = {
+        product_category: body.category,
+        id : body.product,
+    }
+
+    if (body.price){
+        newBody.price = +body.price
+    }
+
+    if (body.quantity){
+        newBody.quantity = +body.quantity
+    }
+    
+        const res = await axios({
+            method: 'post',
+            url: `${import.meta.env.VITE_URL}product/edit/${newBody.id}`,
+            data  : newBody
+        })
+        
+        return res.data
+
+}
+

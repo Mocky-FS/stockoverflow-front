@@ -1,17 +1,48 @@
-import { Button, NumberInput, Select, SelectItem, Text, TextInput, Title } from '@tremor/react';
-import React, { useEffect } from 'react';
+import { Button, NumberInput, Select, SelectItem, TextInput } from '@tremor/react';
+import { useEffect } from 'react';
 import { keys } from '../../../../query-key-factory';
-import { getProducts } from '../../../api/products';
-import { useQuery } from '@tanstack/react-query';
+import { updateProducts } from '../../../api/products';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Controller, useForm } from 'react-hook-form';
-import { getCateories } from '../../../api/categories';
+import toast from 'react-hot-toast';
 
 const UpdateProduct = ({index, productsList, categoriesList}) => {
 
-    const { register, handleSubmit, watch, control, formState: { errors }, setError, reset } = useForm();
+    const { register, handleSubmit, control, formState: { errors }, reset } = useForm();
+
+    const queryClient = useQueryClient();
+
+
+    const { mutate: updateMutation } = useMutation((data) => updateProducts(data), {
+
+        onSuccess: () => {
+            toast.success(`Le produit a bien été modifié`, {
+                icon: '👏',
+            })
+            reset()
+        },
+        onError: () => {
+            toast.error('Une erreur est survenue lors de mise à jour du produit')
+        },
+        onSettled: () => {
+            queryClient.invalidateQueries({ queryKey: keys.products })
+        }
+
+    })
+
+
 
     const onSubmit = (data) => {
-        console.log(data)
+       
+        const newData = Object.keys(data).reduce((acc, key) => {
+            if (data[key] !== '') {
+                acc[key] = data[key]
+            }
+            return acc
+        }, {})
+
+        updateMutation(newData)
+
     }
 
     useEffect(() => {
@@ -74,7 +105,7 @@ const UpdateProduct = ({index, productsList, categoriesList}) => {
                     type="text"
                     placeholder="Nom du produit"
                     {...register("name", {
-                        required: "Merci d'indiquer un nom de produit",
+                        // required: "Merci d'indiquer un nom de produit",
                     })}
                 />
                 {errors.name && (<span className="text-red-500 text-xs "> {errors.name.message} </span>)}
@@ -83,7 +114,7 @@ const UpdateProduct = ({index, productsList, categoriesList}) => {
                     type="text"
                     placeholder="Courte description"
                     {...register("description", {
-                        required: "Merci d'indiquer une courte description",
+                        // required: "Merci d'indiquer une courte description",
                     })}
                 />
                 {errors.description && (<span className="text-red-500 text-xs "> {errors.description.message} </span>)}
@@ -91,7 +122,7 @@ const UpdateProduct = ({index, productsList, categoriesList}) => {
                     control={control}
                     name='price'
                     defaultValue={''}
-                    rules={{ required: 'Veuillez indiquer un prix' }}
+                    // rules={{ required: 'Veuillez indiquer un prix' }}
                     render={({ field }) => (
                         <NumberInput
                             {...field}

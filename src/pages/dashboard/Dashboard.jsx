@@ -1,15 +1,15 @@
 
 import './dashboard.scss'
-import { AreaChart, Badge, BarChart, Card, DonutChart, Flex, Icon, LineChart, Metric, Subtitle, Text, Title } from '@tremor/react';
+import { AreaChart, Card, DonutChart, Flex, Icon, Legend, LineChart, Metric, Subtitle, Text, Title } from '@tremor/react';
 import Doc from '../../assets/icons/doc.svg?react'
 import { keys } from '../../../query-key-factory';
 import { getImports } from '../../api/imports';
 import { useQuery } from '@tanstack/react-query';
 import ImportIcon from '../../assets/icons/import.svg?react';
 import LoadingDots from '../../components/LoadingDots/LoadingDots';
-import { Skeleton } from '@nextui-org/react';
-import { useState } from 'react';
-import { Legend } from "@tremor/react";
+
+
+
 const Dashboard = () => {
 
     const chartdata = [
@@ -113,23 +113,41 @@ const Dashboard = () => {
         () => getImports(),
     )
 
-   
+    const getTopGames = importsList?.filter((e) => e.status === 'Validée').reduce((acc, currentV) => {
 
-    const ordersWaiting = importsList?.filter((order) => (
-        order?.status === 'En attente'
-    ));
+        const product = currentV.product.name
 
-    const canceledOrders = importsList?.filter((order) => (
-        order?.status === 'Refusée'
-    ));
+        const findedProduct = acc.find((e) => e.game === product)
+
+        if (!findedProduct) {
+            return [...acc, {
+                product: product,
+                orderQuantity: currentV.quantity,
+                price: currentV.product.price
+            }]
+        } else {
+            findedProduct.orderQuantity += currentV.quantity
+            return acc
+        }
+
+
+    }, [])
+
+
+    // calcul from getTopGames the total amount of sales
+
+    const totalBuy = getTopGames?.reduce((acc, currentV) => {
+        return acc + (currentV.orderQuantity * currentV.price)
+    }, 0)
+
+    console.log(totalBuy)
+
 
 
 
     if (importsListLoading) {
         return <LoadingDots />
     }
-
-
 
     return (
 
@@ -167,7 +185,7 @@ const Dashboard = () => {
                         <Icon icon={ImportIcon} variant="light" size="xl" color={'blue'} />
                         <div className="truncate">
                             <Text>{`Importations à valider`}</Text>
-                            <Metric className="truncate">{ordersWaiting?.length}</Metric>
+                            <Metric className="truncate">{importsList?.filter((order) => order.status === 'En attente').length}</Metric>
                         </div>
                     </Flex>
                 </Card>
@@ -176,7 +194,7 @@ const Dashboard = () => {
                         <Icon icon={ImportIcon} variant="light" size="xl" color={'blue'} />
                         <div className="truncate">
                             <Text>{`Importations refusées`}</Text>
-                            <Metric className="truncate">{canceledOrders?.length}</Metric>
+                            <Metric className="truncate">{importsList?.filter((order) => order.status === 'Annulée')?.length}</Metric>
                         </div>
                     </Flex>
                 </Card>
@@ -186,20 +204,35 @@ const Dashboard = () => {
 
             <div className='middle'>
 
-                <Card className='w-3/4 graph' >
-                    <Title>Newsletter revenue over time (USD)</Title>
-                    <AreaChart
-                        className="h-72 mt-4"
-                        data={chartdata}
-                        index="date"
-                        categories={["SemiAnalysis", "The Pragmatic Engineer"]}
-                        colors={["indigo", "cyan"]}
-                        valueFormatter={dataFormatter}
-                        showAnimation={true}
+            
+                <Card className="w-2/4 graph" >
+                    <div className='flex justify-between'>
+                            <Title>Importations</Title>
+                            <Title>{totalBuy} €</Title>
 
-                    />
+                    </div>
+                    {/* <Title>Toutes les importations </Title> */}
+                    <div className='flex'>
+
+
+                        <DonutChart
+                            className="mt-6 w-2/4"
+                            data={getTopGames}
+                            category="orderQuantity"
+                            index="product"
+                            showAnimation={true}
+                        />
+                        <div className=' w-full flex flex-col justify-center'>
+                            <Legend
+                                className="mt-3"
+                                categories={getTopGames?.map((article) => article.product)}
+                            />
+                        </div>
+
+                    </div>
+
                 </Card>
-                <Card className="w-1/4 graph" >
+                <Card className="w-2/4 graph" >
                     <Title>Exportations</Title>
                     <DonutChart
                         className="mt-6"
@@ -211,30 +244,14 @@ const Dashboard = () => {
 
                         colors={["slate", "violet", "indigo", "rose", "cyan", "amber"]}
                     />
-                   
+
                 </Card>
+
 
 
 
             </div>
-            <div className='bottom'>
-                
-
-                <Card className='w-3/4 graph'>
-                    <Title>Exportations / Importations depuis (2020 à 2023)</Title>
-                    <LineChart
-                        className="mt-6"
-                        data={chartdata1}
-                        index="year"
-                        categories={["Exportations", "Importations"]}
-                        colors={["emerald", "gray"]}
-                        valueFormatter={dataFormatter1}
-                        yAxisWidth={40}
-                        showAnimation={true}
-                    />
-
-                </Card>
-            </div>
+            
 
         </Card>
     );

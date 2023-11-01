@@ -1,21 +1,33 @@
 import axios from "axios";
 
-export async function createCategory (data){
+export async function createCategory(data) {
 
-console.log(data)
-    try {
-
-        
-    
         const res = await axios({
             method: 'post',
             url: `${import.meta.env.VITE_URL}product/category/new`,
             data: data
-            
+
+        })
+        
+        return res.data;
+}
+
+
+export async function getCateories() {
+
+    try {
+
+
+
+        const res = await axios({
+            method: 'get',
+            url: `${import.meta.env.VITE_URL}product/category`,
+
+
         })
 
         return res.data;
-        
+
 
     } catch (error) {
         throw new Error(error)
@@ -24,24 +36,16 @@ console.log(data)
 }
 
 
-export async function getCateories (){
+export async function updateCategories(body) {
 
-        try {
+
     
-            
-        
-            const res = await axios({
-                method: 'get',
-                url: `${import.meta.env.VITE_URL}product/category`,
-      
-                
-            })
-    
-            return res.data;
-            
-    
-        } catch (error) {
-            throw new Error(error)
-        }
-    
-    }
+
+        const res = await axios({
+            method: 'post',
+            url: `${import.meta.env.VITE_URL}product/category/edit/${body.category}`,
+            data: body
+        })
+
+        return res.data;
+}

@@ -4,8 +4,10 @@ import React, { useEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { createCategory } from '../../../api/categories';
+import { keys } from '../../../../query-key-factory';
 
 const AddCategory = ({index}) => {
+    
     const { register, handleSubmit, watch, control, formState: { errors }, setError, reset } = useForm();
 
     const queryClient = useQueryClient();
@@ -29,7 +31,7 @@ const AddCategory = ({index}) => {
             toast.error('Une erreur est survenue lors de la création')
         },
         onSettled: () => {
-            // queryClient.invalidateQueries({ queryKey: keys.products })
+            queryClient.invalidateQueries({ queryKey: keys.categories })
 
 
         }

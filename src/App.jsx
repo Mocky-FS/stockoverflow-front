@@ -28,6 +28,9 @@ import ImportIcon from './assets/icons/import.svg?react'
 import UsersIcon from './assets/icons/usersList.svg?react'
 import ProfilIcon from './assets/icons/user.svg?react'
 import PackageIcon from './assets/icons/package.svg?react'
+import ClientsIcon from './assets/icons/clients.svg?react'
+import AdminClients from './pages/adminClients/AdminClients';
+
 
 
 
@@ -80,6 +83,13 @@ function App() {
         element: <AdminUsers />,
         title: 'Utilisateurs',
         icon: UsersIcon,
+        navbar: true,
+      },
+      {
+        path: 'clients',
+        element: <AdminClients />,
+        title: 'Clients',
+        icon: ClientsIcon,
         navbar: true,
       },
     ] : []),

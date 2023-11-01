@@ -29,6 +29,8 @@ export async function login(body) {
 
 export async function createUser(body) {
 
+    // console.log(body)
+
     try {
         const res = await axios({
             method: 'post',
