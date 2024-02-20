@@ -1,6 +1,3 @@
-
-
-
 export function filterArray(selectedOption, data) {
 
 

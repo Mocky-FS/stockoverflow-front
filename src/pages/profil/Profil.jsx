@@ -31,8 +31,6 @@ const Profil = () => {
   const [update, setUpdate] = useState(false);
 
   const onSubmit = (data) => {
-    
-    
     reset();
     toast.success("Mot de passe a été changé");
     setUpdate(false);

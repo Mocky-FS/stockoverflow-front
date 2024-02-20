@@ -5,7 +5,6 @@ export async function getImports() {
 
     try {
 
-    
         const res = await axios({
             method: 'get',
             url: `${import.meta.env.VITE_URL}order`,
@@ -13,7 +12,6 @@ export async function getImports() {
 
         return res.data;
         
-
     } catch (error) {
         throw new Error(error)
     }

@@ -15,7 +15,6 @@ export function isTokenValid(token) {
       return false;
     }
   
-  
     const expirationTime = payload.exp * 1000; // Convertit en millisecondes
   
     const currentTime = Date.now();
@@ -25,8 +24,6 @@ export function isTokenValid(token) {
       return false;
     }
 
-    // console.log(token)
-  
     // Le JWT est valide
     return true;
 }
@@ -72,12 +69,6 @@ export function isAdmin(token) {
     return null; 
   }
 
-  // const isAdmin = payload.map((val) => 
-  // {
-  //   if (val.roles === "ROLE_ADMIN") {
-  //     return true;
-  //   }
-  // })
   const isAdmin = payload.roles.includes("ROLE_ADMIN");
 
   return isAdmin;
